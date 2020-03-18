@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1584478645 source:c:\devel\c\expansion_calc\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
