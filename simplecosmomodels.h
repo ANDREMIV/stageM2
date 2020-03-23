@@ -14,3 +14,4 @@ void derivs(double t, double*y, double*dydt);
 void desitter();
 void einsteindesitter();
 double expansion(double t, double a);
+double BoltzmanH2ROP(double T);

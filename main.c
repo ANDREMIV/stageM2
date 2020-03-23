@@ -130,6 +130,8 @@ int main(void)
         fprintf(XEE,"%.13lf\t%.13lf\n",i*0.01,XE(i*0.01));
     fclose(XEE);
 
+    FILE* RAD=fopen("radoutComp.txt","w");
+    fclose(RAD);
     FILE* LEVELS=fopen("levels.txt","w");
     FILE* ROP=fopen("rop.txt","w"); //ratio ORTHO PARA
     fprintf(LEVELS,"POP UP\t\t\tPOP LOW\n");
@@ -150,6 +152,7 @@ int main(void)
             double H= 0.05*(1+z)*(1+z)*(1+z)*H0*H0*3/8/M_PI/G/1.67265e-27*1e0;//*1e-6; in cm^3
             radexinp(Trado*(1+z), Trado*D(a,ieq2)*(1+z)*(1+z), H, H*1e-4);
             system("C:\\Radex\\bin\\radex.exe < h2o.inp");
+            system("cat < radex.out >> radoutComp.txt");
 
 
             double* levels;
@@ -162,7 +165,7 @@ int main(void)
             double rortho=0,rpara=0; rpara+=*(levels+2*0+1%2); rortho+=*(levels+2*1+1%2);
             for (i = 0; i < nlines; i++)
                 if(i%2)rortho+=*(levels+2*i+0%2); else rpara+=*(levels+2*i+0%2);
-            fprintf(ROP,"%d\t%le\t\n",z,rortho/rpara);
+            fprintf(ROP,"%d\t%le\t%le\t%le\t\n",z,rortho/rpara,BoltzmanH2ROP(Trado*(1+z)),BoltzmanH2ROP(Trado*D(a,ieq2)*(1+z)*(1+z)));
 
             free(levels);
         }

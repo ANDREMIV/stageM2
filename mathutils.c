@@ -103,3 +103,32 @@ double rk4(double(*f)(double, double), double dt, double t, double a)
     return a + (k1 + 2 * k2 + 2 * k3 + k4) / 6;
 }
 
+double BoltzmanH2ROP(double T)
+{
+const double EsH2[]={
+0.0000,
+118.5040,
+354.3612,
+705.5620,
+1168.8171,
+1740.2654,
+2414.8367,
+3187.6708,
+4051.8582};
+
+const double GH2[]={
+1.0,
+9.0,
+5.0,
+21.0,
+9.0,
+33.0,
+13.0,
+45.0,
+17.0};
+double Zortho=0,Zpara=0; int i;
+for (i = 0; i < 9; i++)
+    if(i%2)Zpara+=GH2[i]*exp(-2.99792458e10*6.62606876e-34/1.380649e-23*EsH2[i]/T);else \
+        Zortho+=GH2[i]*exp(-2.99792458e10*6.62606876e-34/1.380649e-23*EsH2[i]/T);
+return Zpara/Zortho;
+}

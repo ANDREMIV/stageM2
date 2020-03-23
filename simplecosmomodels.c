@@ -4,7 +4,7 @@
 #include <math.h>
 
 const double G=6.674e-11;
-const double H0=2.42e-19;
+const double H0=2.42e-18;
 const double Ol=0.6847,Omo=0.3153;
 const double Oro=9.877e-7;
 const double Trado=2.7255;
@@ -62,3 +62,4 @@ void einsteindesitter()
     }
     fclose(eindesit);
 }
+
