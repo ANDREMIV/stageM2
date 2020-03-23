@@ -131,6 +131,7 @@ int main(void)
     fclose(XEE);
 
     FILE* LEVELS=fopen("levels.txt","w");
+    FILE* ROP=fopen("rop.txt","w"); //ratio ORTHO PARA
     fprintf(LEVELS,"POP UP\t\t\tPOP LOW\n");
     int nlines=7;
     {
@@ -161,7 +162,7 @@ int main(void)
             double rortho=0,rpara=0; rpara+=*(levels+2*0+1%2); rortho+=*(levels+2*1+1%2);
             for (i = 0; i < nlines; i++)
                 if(i%2)rortho+=*(levels+2*i+0%2); else rpara+=*(levels+2*i+0%2);
-            fprintf(LEVELS,"%le\t\n\n",rortho/rpara);
+            fprintf(ROP,"%d\t%le\t\n",z,rortho/rpara);
 
             free(levels);
         }
@@ -171,6 +172,7 @@ int main(void)
 
     fclose(results);
     fclose(LEVELS);
+    fclose(ROP);
 
     return 0;
 }
