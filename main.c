@@ -7,6 +7,7 @@
 ///t is the cosmic time t multiplied by Hubble constant Ho
 ///a is the scale factor
 ///f(a,t)= da/dt
+///DANGERS WITH THE GLOBAL VARS SEE SIMPLECOSMOMODELS.H BE CAREFULL !!!
 
 void radexinp(double Trad, double Tbar, double densityH, double densityp);
 double* radexout(int n);
@@ -140,7 +141,7 @@ int main(void)
         int z;
         int i;
         int ieq2;
-        int zeq2=300;
+        int zeq2=150;
         for(i=0; i<imax; i++)
             if(1/(*(*(a+i/n)+(i%n)))-1>=zeq2)
                 break;

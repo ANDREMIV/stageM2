@@ -28,7 +28,8 @@ for i in range(0,L,1):
     B=A[i+2].split('\t')
     X[i]=float(B[0])
     Y[i]=float(B[1])
-   
+
+
 """   
 f.close()
 
@@ -57,6 +58,8 @@ plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
 plt.plot(X,Y)
 plt.savefig("Scale_factor.png")
 plt.show()
+f.close()
+
 
 for i in range(0,L,1):
     B=A[i+2].split('\t')
@@ -67,13 +70,16 @@ for i in range(0,L,1):
 ax = plt.subplot(111)
 plt.ylabel('Temperatures')
 plt.xlabel('Cosmic doppler shift z')
-#plt.xlim(-7500,0)
-plt.ylim(0,19000)
+plt.xlim(-10000,0)
+plt.ylim(0,25000)
 plt.plot(X,Y,label="Trad")
 plt.plot(X,Z,label="Tbar")
 leg = plt.legend(loc='best', ncol=2, shadow=True, fancybox=True)
 leg.get_frame().set_alpha(0.5)
 plt.grid(True)
+plt.grid(b=True, which='major', color='#666666', linestyle='-')
+plt.minorticks_on()
+plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
 plt.savefig("Temperatures.png")
 plt.show()
 
@@ -106,9 +112,14 @@ plt.ylim(0,1)
 plt.ylabel('ionization')
 plt.xlabel('Ti/Tbar')
 plt.grid(True)
+plt.grid(b=True, which='major', color='#666666', linestyle='-')
+plt.minorticks_on()
+plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
 plt.plot(X,Y)
 plt.savefig("XE.png")
 plt.show()
+f.close()
+
 
 file = "expansionDS.txt"
 f = open(file, "r")
@@ -144,6 +155,8 @@ plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
 plt.plot(X,Y)
 plt.savefig("DeSitter.png")
 plt.show()
+f.close()
+
 
 file = "expansionEDS.txt"
 f = open(file, "r")
@@ -181,6 +194,8 @@ plt.plot(X,Y)
 
 plt.savefig("EinsteinDeSitter.png")
 plt.show()
+f.close()
+
 
 file = "rop.txt"
 f = open(file, "r")
@@ -212,7 +227,7 @@ for i in range(0,L,1):
 
 ax = plt.subplot(111)
 plt.ylim(0,3.2)
-plt.xlim(10,300)
+plt.xlim(10,150)
 plt.xscale("log")
 ax.invert_xaxis()
 plt.ylabel('Ortho Para ratio')
@@ -220,6 +235,8 @@ plt.xlabel('cosmological doppler shift Z')
 plt.plot(X,Y,label="Radex")
 plt.plot(X,W,'g.',label="Boltzman's Trad")
 plt.plot(X,Z,'r--',label="Boltzman's Tbar")
+f.close()
+
 
 file = "PD.txt"
 f = open(file, "r")
@@ -245,13 +262,62 @@ for i in range(0,L,1):
     Y[i]=float(B[1])
 
 plt.plot(X,Y,"r.",label="Pineau De Flower")
-leg = plt.legend(loc='upper left', ncol=4, shadow=True, fancybox=True)
+leg = plt.legend(loc='best', shadow=True, fancybox=True)
 leg.get_frame().set_alpha(0.5)
 plt.grid(b=True, which='major', color='#666666', linestyle='-')
 plt.minorticks_on()
 plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
 plt.savefig("rop.png")
 plt.show()
+f.close()
+
+
+file = "rop.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)
+
+for i in range(0,L,1):
+    B=A[i].split('\t')
+    if B[3] == "1.#INF00e+000":
+        B[3] = "3.017931e+255"
+        break
+L=i
+X=randn(L)
+Y=randn(L)
+W=randn(L)
+Z=randn(L)
+
+for i in range(0,L,1):
+    B=A[i].split('\t')
+    X[i]=float(B[0])
+    Y[i]=float(B[1])
+    W[i]=float(B[2])
+    Z[i]=float(B[3])
+
+
+ax = plt.subplot(111)
+plt.ylim(0,3.2)
+plt.xlim(10,150)
+
+plt.ylabel('Ortho Para ratio')
+plt.xlabel('cosmological doppler shift Z')
+plt.plot(X,Y,label="Radex")
+plt.plot(X,W,'g.',label="Boltzman's Trad")
+plt.plot(X,Z,'r--',label="Boltzman's Tbar")
+leg = plt.legend(loc='best', shadow=True, fancybox=True)
+leg.get_frame().set_alpha(0.5)
+plt.grid(b=True, which='major', color='#666666', linestyle='-')
+plt.minorticks_on()
+plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
+plt.savefig("rop2.png")
+plt.show()
+f.close()
+
 
 """
 file = "PD.txt"
