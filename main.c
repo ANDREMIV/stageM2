@@ -140,7 +140,7 @@ int main(void)
         int z;
         int i;
         int ieq2;
-        int zeq2=150;
+        int zeq2=300;
         for(i=0; i<imax; i++)
             if(1/(*(*(a+i/n)+(i%n)))-1>=zeq2)
                 break;
@@ -149,8 +149,8 @@ int main(void)
         for(z=0; z<zeq2; z++)
         {
 
-            double H= 0.05*(1+z)*(1+z)*(1+z)*H0*H0*3/8/M_PI/G/1.67265e-27*1e0;//*1e-6; in cm^3
-            radexinp(Trado*(1+z), Trado*D(a,ieq2)*(1+z)*(1+z), H, H*1e-4);
+            double H= 0.05*(1+z)*(1+z)*(1+z)*H0*H0*3/8/M_PI/G/MH*1e-6;//*1e-6; in cm^3
+            radexinp(Trado*(1+z), Trado*D(a,ieq2)*(1+z)*(1+z), H, H*4e-4);
             system("C:\\Radex\\bin\\radex.exe < h2o.inp");
             system("cat < radex.out >> radoutComp.txt");
 

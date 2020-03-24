@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "simplecosmomodels.h"
 
 void rk62(void (*derivs)(double, double*, double*), int n\
           ,double dt, double t, double*yo, double *Oy)
@@ -128,7 +129,7 @@ const double GH2[]={
 17.0};
 double Zortho=0,Zpara=0; int i;
 for (i = 0; i < 9; i++)
-    if(i%2)Zpara+=GH2[i]*exp(-2.99792458e10*6.62606876e-34/1.380649e-23*EsH2[i]/T);else \
-        Zortho+=GH2[i]*exp(-2.99792458e10*6.62606876e-34/1.380649e-23*EsH2[i]/T);
+    if(i%2)Zpara+=GH2[i]*exp(-100*C*hPl/KB*EsH2[i]/T);else \
+        Zortho+=GH2[i]*exp(-100*C*hPl/KB*EsH2[i]/T);
 return Zpara/Zortho;
 }

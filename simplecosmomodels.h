@@ -3,11 +3,16 @@
 
 extern const double G;
 extern const double H0;
+extern const double hPl;
+extern const double AR;
+extern const double MH;
+extern const double TS;
+extern const double KB;
+extern const double C;
 extern const double Ol,Omo;
 extern const double Oro;
 extern const double Trado;
 extern const double TI; //13.6eV/kb in Kelvin
-extern const double DC; //Compton coupling constant
 extern const double zeq;//+-26 plank 2018
 
 void derivs(double t, double*y, double*dydt);

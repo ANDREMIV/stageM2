@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib
 import numpy as np
 from numpy.random import randn
 
@@ -210,14 +211,41 @@ for i in range(0,L,1):
 
 
 ax = plt.subplot(111)
-plt.ylim(0,3)
-plt.xlim(10,150)
+plt.ylim(0,3.2)
+plt.xlim(10,300)
+plt.xscale("log")
+ax.invert_xaxis()
 plt.ylabel('Ortho Para ratio')
 plt.xlabel('cosmological doppler shift Z')
 plt.plot(X,Y,label="Radex")
 plt.plot(X,W,'g.',label="Boltzman's Trad")
 plt.plot(X,Z,'r--',label="Boltzman's Tbar")
-leg = plt.legend(loc='best', ncol=3, shadow=True, fancybox=True)
+
+file = "PD.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)
+
+for i in range(0,L,1):
+    B=A[i].split('\t')
+    if B[1] == "1.#INF00e+000":
+        B[1] = "3.017931e+255"
+        break
+L=i
+X=randn(L)
+Y=randn(L)
+
+for i in range(0,L,1):
+    B=A[i].split('\t')
+    X[i]=float(B[0])
+    Y[i]=float(B[1])
+
+plt.plot(X,Y,"r.",label="Pineau De Flower")
+leg = plt.legend(loc='upper left', ncol=4, shadow=True, fancybox=True)
 leg.get_frame().set_alpha(0.5)
 plt.grid(b=True, which='major', color='#666666', linestyle='-')
 plt.minorticks_on()
@@ -225,4 +253,44 @@ plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
 plt.savefig("rop.png")
 plt.show()
 
+"""
+file = "PD.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)
+
+for i in range(0,L,1):
+    B=A[i].split('\t')
+    if B[1] == "1.#INF00e+000":
+        B[1] = "3.017931e+255"
+        break
+L=i
+X=randn(L)
+Y=randn(L)
+
+for i in range(0,L,1):
+    B=A[i].split('\t')
+    X[i]=float(B[0])
+    Y[i]=float(B[1])
+
+
+ax = plt.subplot(111)
+plt.ylim(0,3.5)
+plt.xlim(1,1100)
+plt.xscale("log")
+ax.invert_xaxis()
+plt.ylabel('Ortho Para ratio')
+plt.xlabel('cosmological doppler shift Z')
+plt.plot(X,Y,"r.",label="PD")
+plt.grid(b=True, which='major', color='#666666', linestyle='-')
+plt.minorticks_on()
+plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
+plt.savefig("PD.png")
+plt.show()
+
+"""
 
