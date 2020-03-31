@@ -32,7 +32,7 @@ void derivs(double t, double*y, double*dydt)//n=3
     dydt[0]=y[1];
     dydt[1]=-1/2*(Ol*y[0]-Omo/y[0]/y[0]-2*Oro/y[0]/y[0]/y[0]);
     dydt[2]=-2*y[1]/y[0]*y[2]\
-            -DC*y[3]*y[3]*y[3]*y[3]*(y[3]-y[2])*XE(TI/y[2])*1;
+            +DC*y[3]*y[3]*y[3]*y[3]*fabs(y[3]-y[2])*1e-4;//*XE(TI/y[2]);
     dydt[3]=-y[3]*y[1]/y[0];
 }
 
@@ -69,3 +69,97 @@ void einsteindesitter()
     fclose(eindesit);
 }
 
+
+
+int expansion_calc(double **t, double **a, double **Trad,double **Tb)
+{
+    FILE* results=fopen("expansion.txt","w");
+    int i, n = MEMORYBLOC, m=NBMEMBLOC;
+    double t0 = 0, t1 = -0.96, dt=-1e-4;
+    double DT=fabs(dt);
+    **a=1;
+    **Trad=Trado;
+    **t=t0;
+    fprintf(results,"t'\ta(t')\tTrad(t')\tTb(t')\ti\n------------\n");
+    for (i = 1; *(*(t+i/n)+(i%n)) > t1 && i<n*m; i++)
+    {
+        double tp=*(*(t+(i-1)/n)+((i-1)%n));
+        double ap=*(*(a+(i-1)/n)+((i-1)%n));
+
+
+
+        if(!(i%n))
+        {
+            (*(t+i/n))=(double *)malloc(sizeof(double) * (n));
+            (*(a+i/n))=(double *)malloc(sizeof(double) * (n));
+            (*(Trad+i/n))=(double *)malloc(sizeof(double) * (n));
+            (*(Tb+i/n))=(double *)malloc(sizeof(double) * (n));
+        }
+        *(*(a+i/n)+(i%n)) = rk4(expansion, dt, tp, ap);
+
+        double A=*(*(a+i/n)+(i%n));
+        *(*(Trad+i/n)+(i%n)) = Trado/A;
+        //Variable step
+        double TVAR=fabs(ap)/A;
+        if(TVAR>1+5*DT)
+            dt/=2;
+        else if(TVAR<1+0.01*DT && TVAR>1)
+            dt*=1.5;
+        *(*(t+i/n)+(i%n))=tp+dt;
+
+        if(fabs(dt)<1e-12)
+            break;
+    }
+    int imax=i;
+
+
+
+    //Initial condition for Tb = Tr
+    for (i = 0; i < imax; i++)
+        if(1/(*(*(a+i/n)+(i%n)))-1>=zeq)
+            break;
+    int ieq=i;
+    *(*(Tb+ieq/n)+(ieq%n))=*(*(Trad+ieq/n)+(ieq%n));
+
+
+
+    for (i = ieq; i > 0; i--)
+    {
+        double TRAD=*(*(Trad+i/n)+(i%n));
+        double A=*(*(a+i/n)+(i%n));
+        double TB=D(Tb,i);
+        double tr=*(*(t+i/n)+(i%n));
+        double dt=(*(*(t+(i-1)/n)+((i-1)%n))-tr);
+        double yo[4];
+        double Oy[4];
+        yo[0]=A;
+        yo[1]=expansion(tr,A);
+        yo[2]=TB;
+        yo[3]=TRAD;
+        rk62(derivs,4,dt,tr,yo,Oy);
+        *(*(Tb+(i-1)/n)+((i-1)%n))=Oy[2];
+
+    }
+    for (i = ieq; i < imax-1; i++)
+    {
+        double TRAD=*(*(Trad+i/n)+(i%n));
+        double A=*(*(a+i/n)+(i%n));
+        double TB=*(*(Tb+i/n)+(i%n));
+        double tr=*(*(t+i/n)+(i%n));
+        double dt=(*(*(t+(i+1)/n)+((i+1)%n))-tr);
+        double yo[4];
+        double Oy[4];
+        yo[0]=A;
+        yo[1]=expansion(tr,A);
+        yo[2]=TB;
+        yo[3]=TRAD;
+        rk62(derivs,4,dt,tr,yo,Oy);
+        *(*(Tb+(i+1)/n)+((i+1)%n))=Oy[2];
+
+    }
+    for (i = 0; i < imax; i++)
+        fprintf(results,"%.13lf\t%.13lf\t%.13lf\t%.13lf\t%d\n",\
+                *(*(t+i/n)+(i%n)), *(*(a+i/n)+(i%n)),*(*(Trad+i/n)+(i%n)),*(*(Tb+i/n)+(i%n)),i);
+    fclose(results);
+    return imax;
+}

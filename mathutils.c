@@ -133,3 +133,12 @@ for (i = 0; i < 9; i++)
         Zortho+=GH2[i]*exp(-100*C*hPl/KB*EsH2[i]/T);
 return Zpara/Zortho;
 }
+
+void XEplot()
+{
+    int i;
+        FILE* XEE=fopen("XE.txt","w");
+    for (i = 0; i < 1e4; i++)
+        fprintf(XEE,"%.13lf\t%.13lf\n",i*0.01,XE(i*0.01));
+    fclose(XEE);
+}

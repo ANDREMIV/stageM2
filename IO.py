@@ -15,12 +15,11 @@ S=f.read()
 
 A=S.splitlines()
 L=len(A)-2
-
 for i in range(0,L,1):
     B=A[i+2].split('\t')
-    if B[3] == "-1.#IND000000000" or B[3] == "1.#QNAN00000000" :
+    if B[3] == "-1.#IND000000000" or B[3] == "1.#QNAN00000000" or B[3] == "-1.#INF000000000":
         break
-L=i-2
+L=i
 X=randn(L)
 Y=randn(L)
 Z=randn(L)
@@ -63,15 +62,18 @@ f.close()
 
 for i in range(0,L,1):
     B=A[i+2].split('\t')
-    X[i]=-1/float(B[1])+1
+    X[i]=1/float(B[1])
     Y[i]=float(B[2])
     Z[i]=float(B[3])
 
 ax = plt.subplot(111)
 plt.ylabel('Temperatures')
-plt.xlabel('Cosmic doppler shift z')
-plt.xlim(-10000,0)
-plt.ylim(0,25000)
+plt.xlabel('Cosmic doppler shift z+1')
+plt.xlim(1,14000)
+plt.xscale("log")
+ax.invert_xaxis()
+plt.ylim(1,40000)
+plt.yscale("log")
 plt.plot(X,Y,label="Trad")
 plt.plot(X,Z,label="Tbar")
 leg = plt.legend(loc='best', ncol=2, shadow=True, fancybox=True)
@@ -232,9 +234,41 @@ plt.xscale("log")
 ax.invert_xaxis()
 plt.ylabel('Ortho Para ratio')
 plt.xlabel('cosmological doppler shift Z')
-plt.plot(X,Y,label="Radex")
+plt.plot(X,Y,label="Radex H + p")
 plt.plot(X,W,'g.',label="Boltzman's Trad")
 plt.plot(X,Z,'r--',label="Boltzman's Tbar")
+f.close()
+
+file = "rop2.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)
+
+for i in range(0,L,1):
+    B=A[i].split('\t')
+    if B[3] == "1.#INF00e+000":
+        B[3] = "3.017931e+255"
+        break
+L=i
+X=randn(L)
+Y=randn(L)
+W=randn(L)
+Z=randn(L)
+
+for i in range(0,L,1):
+    B=A[i].split('\t')
+    X[i]=float(B[0])
+    Y[i]=float(B[1])
+    W[i]=float(B[2])
+    Z[i]=float(B[3])
+
+
+plt.plot(X,Y,label="Radex H")
+
 f.close()
 
 
