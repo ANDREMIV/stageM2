@@ -10,7 +10,7 @@ const double TS=6.6524587158e-29;
 const double AR=7.5657e-16;
 const double hPl=6.62606876e-34;
 const double G=6.674e-11;
-const double H0=2.18e-19;
+const double H0=6.732e1*1e3/1e6/3.08567758149e16;
 const double Ol=0.6847,Omo=0.3153;
 const double Oro=9.877e-7;
 const double Trado=2.7255;
@@ -111,7 +111,7 @@ int expansion_calc(double **t, double **a, double **Tr,double **Tb)
         yo[2]=D(Tr,i);
         double tc=D(t,i); //current time
 
-        rk62(derivs2,3,dt,tc,yo,Oy);
+        rk42(derivs2,3,dt,tc,yo,Oy);
 
         D(a,i+1)=Oy[0];
         D(Tb,i+1)=Oy[1];
