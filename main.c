@@ -18,7 +18,7 @@ int main(void)
     desitter();
     einsteindesitter();
 
-    double **a,**Trad, **Tb, **t;
+    double **a,**Tr, **Tb, **t;
     int n = MEMORYBLOC, m=NBMEMBLOC;
 
 
@@ -26,12 +26,12 @@ int main(void)
     *t = (double *)malloc(sizeof(double) * (n));
     a = (double **)malloc(sizeof(double*) * (m));
     *a = (double *)malloc(sizeof(double) * (n));
-    Trad= (double **)malloc(sizeof(double) * (m));
-    *Trad= (double *)malloc(sizeof(double) * (n));
+    Tr= (double **)malloc(sizeof(double) * (m));
+    *Tr= (double *)malloc(sizeof(double) * (n));
     Tb= (double **)malloc(sizeof(double) * (m));
     *Tb= (double *)malloc(sizeof(double) * (n));
 
-    int imax = expansion_calc(t,a,Trad,Tb);
+    int imax = expansion_calc(t,a,Tr,Tb);
 
     XEplot();
 

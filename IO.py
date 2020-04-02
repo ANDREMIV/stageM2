@@ -27,6 +27,7 @@ for i in range(0,L,1):
     B=A[i+2].split('\t')
     X[i]=float(B[0])
     Y[i]=float(B[1])
+    
 
 
 """   
@@ -65,14 +66,15 @@ for i in range(0,L,1):
     X[i]=1/float(B[1])
     Y[i]=float(B[2])
     Z[i]=float(B[3])
+    
 
 ax = plt.subplot(111)
 plt.ylabel('Temperatures')
 plt.xlabel('Cosmic doppler shift z+1')
-plt.xlim(1,14000)
+plt.xlim(1,3402)
 plt.xscale("log")
 ax.invert_xaxis()
-plt.ylim(1,40000)
+plt.ylim(1,10000)
 plt.yscale("log")
 plt.plot(X,Y,label="Trad")
 plt.plot(X,Z,label="Tbar")
