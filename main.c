@@ -31,6 +31,8 @@ int main(void)
     Tb= (double **)malloc(sizeof(double) * (m));
     *Tb= (double *)malloc(sizeof(double) * (n));
 
+    double xe1e_4(){return 1e-4;}
+
     int imax = expansion_calc(t,a,Tr,Tb);
 
     XEplot();
