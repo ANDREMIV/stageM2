@@ -44,11 +44,17 @@ void derivs2(double t, double*y, double*dydt)//n=3
 {
     double DC=8/3*TS*AR/Me/C/H0; //Compton coupling constant
     dydt[0]=expansion(0,y[0]);
-    double x= (-2*dydt[0]/y[0]*y[1]\
+    /*double x= (-2*dydt[0]/y[0]*y[1]\
             +DC*y[2]*y[2]*y[2]*y[2]*(y[2]-y[1])*1e-4);
-    dydt[1]=0 > x ? x : -y[2]*dydt[0]/y[0]; ///Overcompensation protection
-    /*-2*dydt[0]/y[0]*y[1]\
-            +DC*y[2]*y[2]*y[2]*y[2]*(y[2]-y[1])*1e-1;//XE(TI/y[2]);*/
+    double xx= -y[2]*dydt[0]/y[0];
+    dydt[1]=x > xx ? xx : x; ///Overcompensation protection
+    if(dydt[1]==-y[2]*dydt[0]/y[0])
+        {
+            int qsdsq;
+    qsdsq+=5;
+            ;}//debug purposes*/
+    dydt[1]=-2*dydt[0]/y[0]*y[1]\
+            +DC*y[2]*y[2]*y[2]*y[2]*(y[2]-y[1])*1e0;//XE(TI/y[2]);
     dydt[2]=-y[2]*dydt[0]/y[0];
 }
 
@@ -92,13 +98,21 @@ int expansion_calc(double **t, double **a, double **Tr,double **Tb, double (*xe)
     FILE* results=fopen("expansion.txt","w");
     int i, n = MEMORYBLOC, m=NBMEMBLOC;
     double t0 = 0; //t0 = 0 when we are in zeq
-    double dt=1e-11;
+    double dt=1e-17;
     **a=1.0/(zeq+1);
     **Tr=Trado*(zeq+1);
     **Tb=**Tr;
     **t=t0;
     double DT=1e-4;
     fprintf(results,"t'\ta(t')\tTrad(t')\tTb(t')\tz(t')\ti\n------------\n");
+
+    i=0;
+    double yo[3]; //initial condition for RK
+    yo[0]=D(a,i);
+        yo[1]=D(Tb,i);
+        yo[2]=D(Tr,i);
+        double tc=D(t,i); //current time
+        double Oy[3]; //output of RK
 
     for (i = 0; D(a,i)<1 && i<n*m-1; i++)
     {
@@ -109,20 +123,23 @@ int expansion_calc(double **t, double **a, double **Tr,double **Tb, double (*xe)
             (*(Tr+(i+1)/n))=(double *)malloc(sizeof(double) * (n));
             (*(Tb+(i+1)/n))=(double *)malloc(sizeof(double) * (n));
         }
-        double yo[3]; //initial condition for RK
-        double Oy[3]; //output of RK
-        yo[0]=D(a,i);
-        yo[1]=D(Tb,i);
-        yo[2]=D(Tr,i);
-        double tc=D(t,i); //current time
 
-        rk42(derivs2,3,dt,tc,yo,Oy);
+        int j;
+        for(j=0;j<1000;j++){
+        rk62(derivs2,3,dt,tc,yo,Oy);
+
+        yo[0]=Oy[0];
+        yo[1]=Oy[1];
+        yo[2]=Oy[2];
+        tc=tc+dt;}
+
+
 
         D(a,i+1)=Oy[0];
         //if(Oy[1]>Oy[2])Oy[1]=Oy[2];//Delete positive surcompensation
         D(Tb,i+1)=Oy[1];
         D(Tr,i+1)=Oy[2];
-        D(t,i+1)=tc+dt;
+        D(t,i+1)=tc;//+dt;
 
         /*double yo[4]; //initial condition for RK
         double Oy[4]; //output of RK
@@ -144,9 +161,9 @@ int expansion_calc(double **t, double **a, double **Tr,double **Tb, double (*xe)
         if(TVAR>1+10*DT)
             dt/=2;
         else if(TVAR<1+DT)
-            dt*=3;
+            dt*=2;
 
-        fprintf(results,"%.5le\t%.5le\t%.5le\t%.5le\t%.5le\t%d\n",\
+        fprintf(results,"%.7le\t%.7le\t%.7le\t%.7le\t%.7le\t%d\n",\
                 D(t,i), D(a,i),D(Tr,i),D(Tb,i),1/D(a,i)-1,i);
     }
     int imax=i;
