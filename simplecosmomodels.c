@@ -54,7 +54,7 @@ void derivs2(double t, double*y, double*dydt)//n=3
     qsdsq+=5;
             ;}//debug purposes*/
     dydt[1]=-2*dydt[0]/y[0]*y[1]\
-            +DC*y[2]*y[2]*y[2]*y[2]*(y[2]-y[1])*1e0;//XE(TI/y[2]);
+            +DC*y[2]*y[2]*y[2]*y[2]*(y[2]-y[1])*4e-4;
     dydt[2]=-y[2]*dydt[0]/y[0];
 }
 
@@ -103,7 +103,7 @@ int expansion_calc(double **t, double **a, double **Tr,double **Tb, double (*xe)
     **Tr=Trado*(zeq+1);
     **Tb=**Tr;
     **t=t0;
-    double DT=1e-4;
+    double DT=1e-3;
     fprintf(results,"t'\ta(t')\tTrad(t')\tTb(t')\tz(t')\ti\n------------\n");
 
     i=0;
@@ -125,7 +125,7 @@ int expansion_calc(double **t, double **a, double **Tr,double **Tb, double (*xe)
         }
 
         int j;
-        for(j=0;j<1000;j++){
+        for(j=0;j<10000;j++){
         rk62(derivs2,3,dt,tc,yo,Oy);
 
         yo[0]=Oy[0];

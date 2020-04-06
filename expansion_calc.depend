@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1585917179 source:c:\devel\c\expansion_calc\main.c
+1586182918 source:c:\devel\c\expansion_calc\main.c
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -22,7 +22,7 @@
 	<math.h>
 	"simplecosmomodels.h"
 
-1586171631 source:c:\devel\c\expansion_calc\simplecosmomodels.c
+1586186775 source:c:\devel\c\expansion_calc\simplecosmomodels.c
 	<stdio.h>
 	<stdlib.h>
 	"mathutils.h"

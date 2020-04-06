@@ -80,10 +80,54 @@ int main(void)
         }
 
     }*/
+    void ROPTHp()
+    {
+        system("cp radexHH+.out radex.out");
+         FILE* LEVELS=fopen("levelsT.txt","w");
+    FILE* ROP=fopen("ropT.txt","w"); //ratio ORTHO PARA
+    fprintf(LEVELS,"POP UP\t\t\tPOP LOW\n");
+    int nlines=7;
+        int z;
+        int i;
+
+        for(z=10; z<zeq; z++)
+        {
+            for(i=0; 1/D(a,i)-1>z; i++);int ic=i;
+
+            double H= 0.05*(1+z)*(1+z)*(1+z)*H0*H0*3/8/M_PI/G/MH*1e-6;//*1e-6; in cm^3
+            radexinpHp(D(Tr,ic), D(Tb,ic), H, H*4e-4);
+            system("C:\\Radex\\bin\\radex.exe < h2o.inp");
+            system("cat < radex.out >> radoutTComp.txt");
+
+
+
+
+            fprintf(LEVELS,"Trad: %le\tTbar: %le\tNH: %le\tNp: %le\n",\
+                    D(Tr,ic), D(Tb,ic), H, H*4e-4);
+
+            double* levels;
+            levels=radexoutHp(nlines);
+
+            for (i = 0; i < nlines; i++)
+                fprintf(LEVELS,"%le\t%le\n",*(levels+2*i+0%2),*(levels+2*i+1%2));
+            double rortho=0,rpara=0; rpara+=*(levels+2*0+1%2); rortho+=*(levels+2*1+1%2);
+            for (i = 0; i < nlines; i++)
+                if(i%2)rortho+=*(levels+2*i+0%2); else rpara+=*(levels+2*i+0%2);
+            fprintf(ROP,"%d\t%le\t%le\t%le\t\n",z,rortho/rpara,BoltzmanH2ROP(D(Tr,ic)),BoltzmanH2ROP(D(Tb,ic)));
+
+            free(levels);
+        }
+        fclose(LEVELS);
+    fclose(ROP);
+
+    }
+
+
+
 
     void ROPHp()
     {
-        system("mv radexHH+.out radex.out");
+        system("cp radexHH+.out radex.out");
          FILE* LEVELS=fopen("levels.txt","w");
     FILE* ROP=fopen("rop.txt","w"); //ratio ORTHO PARA
     fprintf(LEVELS,"POP UP\t\t\tPOP LOW\n");
@@ -129,7 +173,7 @@ int main(void)
     }
     void ROPH()
     {
-        system("mv radexH.out radex.out");
+        system("cp radexH.out radex.out");
          FILE* LEVELS=fopen("levels2.txt","w");
     FILE* ROP=fopen("rop2.txt","w"); //ratio ORTHO PARA
     fprintf(LEVELS,"POP UP\t\t\tPOP LOW\n");
@@ -173,8 +217,9 @@ int main(void)
     fclose(ROP);
 
     }
-    ROPH();
-    ROPHp();
+    ROPTHp();
+    //ROPH();
+    //ROPHp();
 
 
 

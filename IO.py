@@ -43,10 +43,9 @@ f = open(file, "w")
 for i in range(0,nbcase,1):
     f.write("%d\n" %Z[i])
    
-
-
-f.close()
 """
+
+
 plt.xlim(-1,0)
 plt.ylim(0,1)
 plt.ylabel('Scale factor')
@@ -77,8 +76,195 @@ ax.invert_xaxis()
 plt.ylim(1,10000)
 plt.yscale("log")
 plt.plot(X,Y,label="Trad")
-plt.plot(X,Z,label="Tbar")
-leg = plt.legend(loc='best', ncol=2, shadow=True, fancybox=True)
+#plt.plot(X,Z,label="Tbar")
+
+
+file = "expansion1e0.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)-2
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    if B[3] == "-1.#IND000000000" or B[3] == "1.#QNAN00000000" or B[3] == "-1.#INF000000000":
+        break
+L=i
+X=randn(L)
+Y=randn(L)
+Z=randn(L)
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    X[i]=1/float(B[1])
+    Y[i]=float(B[2])
+    Z[i]=float(B[3])
+
+plt.plot(X,Z,label="Tbar 1e-0")
+
+f.close()
+
+file = "expansion1e-1.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)-2
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    if B[3] == "-1.#IND000000000" or B[3] == "1.#QNAN00000000" or B[3] == "-1.#INF000000000":
+        break
+L=i
+X=randn(L)
+Y=randn(L)
+Z=randn(L)
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    X[i]=1/float(B[1])
+    Y[i]=float(B[2])
+    Z[i]=float(B[3])
+
+plt.plot(X,Z,label="Tbar 1e-1")
+
+f.close()
+
+file = "expansion1e-2.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)-2
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    if B[3] == "-1.#IND000000000" or B[3] == "1.#QNAN00000000" or B[3] == "-1.#INF000000000":
+        break
+L=i
+X=randn(L)
+Y=randn(L)
+Z=randn(L)
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    X[i]=1/float(B[1])
+    Y[i]=float(B[2])
+    Z[i]=float(B[3])
+
+plt.plot(X,Z,label="Tbar 1e-2")
+
+f.close()
+
+file = "expansion1e-3.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)-2
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    if B[3] == "-1.#IND000000000" or B[3] == "1.#QNAN00000000" or B[3] == "-1.#INF000000000":
+        break
+L=i
+X=randn(L)
+Y=randn(L)
+Z=randn(L)
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    X[i]=1/float(B[1])
+    Y[i]=float(B[2])
+    Z[i]=float(B[3])
+
+plt.plot(X,Z,label="Tbar 1e-3")
+
+f.close()
+
+file = "expansion1e-4.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)-2
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    if B[3] == "-1.#IND000000000" or B[3] == "1.#QNAN00000000" or B[3] == "-1.#INF000000000":
+        break
+L=i
+X=randn(L)
+Y=randn(L)
+Z=randn(L)
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    X[i]=1/float(B[1])
+    Y[i]=float(B[2])
+    Z[i]=float(B[3])
+
+plt.plot(X,Z,label="Tbar 1e-4")
+
+f.close()
+
+file = "expansion1e-5.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)-2
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    if B[3] == "-1.#IND000000000" or B[3] == "1.#QNAN00000000" or B[3] == "-1.#INF000000000":
+        break
+L=i
+X=randn(L)
+Y=randn(L)
+Z=randn(L)
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    X[i]=1/float(B[1])
+    Y[i]=float(B[2])
+    Z[i]=float(B[3])
+
+plt.plot(X,Z,label="Tbar 1e-5")
+
+f.close()
+
+file = "expansion_xe.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)-2
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    if B[3] == "-1.#IND000000000" or B[3] == "1.#QNAN00000000" or B[3] == "-1.#INF000000000":
+        break
+L=i
+X=randn(L)
+Y=randn(L)
+Z=randn(L)
+for i in range(0,L,1):
+    B=A[i+2].split('\t')
+    X[i]=1/float(B[1])
+    Y[i]=float(B[2])
+    Z[i]=float(B[3])
+
+plt.plot(X,Z,label="Tbar Bxe(Tbar)")
+
+f.close()
+
+
+
+
+leg = plt.legend(loc='best', shadow=True, fancybox=True)
 leg.get_frame().set_alpha(0.5)
 plt.grid(True)
 plt.grid(b=True, which='major', color='#666666', linestyle='-')
@@ -201,7 +387,7 @@ plt.show()
 f.close()
 
 
-file = "rop.txt"
+file = "ropT.txt"
 f = open(file, "r")
 
 S=f.read()
@@ -241,6 +427,7 @@ plt.plot(X,W,'g.',label="Boltzman's Trad")
 plt.plot(X,Z,'r--',label="Boltzman's Tbar")
 f.close()
 
+"""
 file = "rop2.txt"
 f = open(file, "r")
 
@@ -272,7 +459,7 @@ for i in range(0,L,1):
 plt.plot(X,Y,label="Radex H")
 
 f.close()
-
+"""
 
 file = "PD.txt"
 f = open(file, "r")
@@ -308,7 +495,7 @@ plt.show()
 f.close()
 
 
-file = "rop.txt"
+file = "ropT.txt"
 f = open(file, "r")
 
 S=f.read()
