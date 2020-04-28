@@ -7,7 +7,6 @@ void rk62(void (*derivs)(double, double*, double*), int n\
           ,double dt, double t, double*yo, double *Oy)
 {
     double *Y = malloc(sizeof(double)*n);
-    double *dydt = malloc(sizeof(double)*n);
     double *k1 = malloc(sizeof(double)*n);
     double *k2 = malloc(sizeof(double)*n);
     double *k3 = malloc(sizeof(double)*n);
@@ -40,7 +39,6 @@ void rk62(void (*derivs)(double, double*, double*), int n\
     for(i=0; i<n; i++) //final step
         Oy[i]=yo[i]+dt*(c1*k1[i]+c3*k3[i]+c4*k4[i]+c6*k6[i]);
 
-    free(dydt);
     free(Y);
     free(k1);
     free(k2);
@@ -54,35 +52,25 @@ void rk42(void (*derivs)(double, double*, double*), int n\
           ,double dt, double t, double*yo, double *Oy)
 {
     double *Y = malloc(sizeof(double)*n);
-    double *dydt = malloc(sizeof(double)*n);
     double *k1 = malloc(sizeof(double)*n);
     double *k2 = malloc(sizeof(double)*n);
     double *k3 = malloc(sizeof(double)*n);
     double *k4 = malloc(sizeof(double)*n);
 
     int i;
-    derivs(t,yo,dydt);
-    for(i=0; i<n; i++) //first step
-        k1[i]=dt*dydt[i];
+    derivs(t,yo,k1);
     for(i=0; i<n; i++)
-        Y[i]=yo[i]+k1[i]/2;
-    derivs(t+dt/2,Y,dydt);
-    for(i=0; i<n; i++) //second step
-        k2[i]=dt*dydt[i];
+        Y[i]=yo[i]+dt*k1[i]/2;
+    derivs(t+dt/2,Y,k2);
     for(i=0; i<n; i++)
-        Y[i]=yo[i]+k2[i]/2;
-    derivs(t+dt/2,Y,dydt);
-    for(i=0; i<n; i++) //third step
-        k3[i]=dt*dydt[i];
+        Y[i]=yo[i]+dt*k2[i]/2;
+    derivs(t+dt/2,Y,k3);
     for(i=0; i<n; i++)
-        Y[i]=yo[i]+k3[i];
-    derivs(t+dt,Y,dydt);
-    for(i=0; i<n; i++) //fourth step
-        k4[i]=dt*dydt[i];
+        Y[i]=yo[i]+dt*k3[i];
+    derivs(t+dt,Y,k4);
     for(i=0; i<n; i++) //final step
-        Oy[i]=yo[i]+(k1[i]+2*k2[i]+2*k3[i]+k4[i])/6;
+        Oy[i]=yo[i]+dt*(k1[i]+2*k2[i]+2*k3[i]+k4[i])/6;
 
-    free(dydt);
     free(Y);
     free(k1);
     free(k2);

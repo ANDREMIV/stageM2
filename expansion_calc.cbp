@@ -41,6 +41,7 @@
 		<Unit filename="parsing.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="parsing.h" />
 		<Unit filename="simplecosmomodels.c">
 			<Option compilerVar="CC" />
 		</Unit>

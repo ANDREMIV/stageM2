@@ -1,30 +1,35 @@
 # depslib dependency file v1.0
-1586182918 source:c:\devel\c\expansion_calc\main.c
-	<stdio.h>
-	<stdlib.h>
-	<math.h>
-	"mathutils.h"
-	"simplecosmomodels.h"
-
-1585225235 source:c:\devel\c\expansion_calc\parsing.c
-	<stdio.h>
-	<stdlib.h>
-
-1585913058 c:\devel\c\expansion_calc\mathutils.h
-
-1585917191 c:\devel\c\expansion_calc\simplecosmomodels.h
-	<stdio.h>
-	<stdlib.h>
-
-1585913058 source:c:\devel\c\expansion_calc\mathutils.c
-	<stdio.h>
-	<stdlib.h>
-	<math.h>
-	"simplecosmomodels.h"
-
-1586186775 source:c:\devel\c\expansion_calc\simplecosmomodels.c
+1587752079 source:c:\devel\c\expansion_calc\main.c
 	<stdio.h>
 	<stdlib.h>
 	"mathutils.h"
+	"simplecosmomodels.h"
+	"parsing.h"
+
+1587752888 source:c:\devel\c\expansion_calc\parsing.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
 	<math.h>
+	"parsing.h"
+	"mathutils.h"
+
+1587668620 c:\devel\c\expansion_calc\mathutils.h
+
+1587668190 c:\devel\c\expansion_calc\simplecosmomodels.h
+
+1587668494 source:c:\devel\c\expansion_calc\mathutils.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"simplecosmomodels.h"
+
+1587646473 source:c:\devel\c\expansion_calc\simplecosmomodels.c
+	<stdio.h>
+	<stdlib.h>
+	"mathutils.h"
+	<math.h>
+
+1587745175 c:\devel\c\expansion_calc\parsing.h
+	"simplecosmomodels.h"
 
