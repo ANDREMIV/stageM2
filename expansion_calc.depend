@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1587752079 source:c:\devel\c\expansion_calc\main.c
+1588162700 source:c:\devel\c\expansion_calc\main.c
 	<stdio.h>
 	<stdlib.h>
 	"mathutils.h"

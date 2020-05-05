@@ -42,8 +42,8 @@ int main(void)
     /*FILE* RAD=fopen("radoutComp.txt","w"); //forces new empty file for later cat >> commands
     fclose(RAD);*/
 
-    //ROPT("h2-h.dat");
-    //ROPT("hd-h-rot.dat");
+    ROPT("h2-h.dat");
+    ROPT("hd-h-rot.dat");
     ROPT("h2-h-H+-rot.dat");
 
     return 0;

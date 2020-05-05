@@ -526,21 +526,49 @@ La figure \ref{fig:T} résume les résultats de notre intégrateur pour différe
 Les atomes et molécules considérés pour un modèle possèdent des états d'énergie interne outre leur énergie cinétique qui sont décrits par un certain jeu de nombres quantiques. Le but est de trouver la densité particulaire de chaque espèce dans chaque configuration quantique donnée. Cette dernière densité est aussi égale à la densité totale de l'espèce, fois sa proportion dans l'état quantique. Les densités sont décrites par des équations différentielles qui forment un réseau.\bigskip
 \large
 
-Listons les termes sources et dissipatifs susceptibles d'intervenir pour $\frac{dn_i}{dt}$ \\
+Listons les termes sources et dissipatifs susceptibles de faire varier les densités $\frac{dn_i}{dt}$ :\\
 
-\begin{itemize}
-	\item [$\bullet$] Les désexcitations radiatives spontanées : $\sum\limits_{j>i} n_jA_{ji}-n_i\sum\limits_{j<i} A_{ij}$
-	\item [$\bullet$] Les absorptions et les émissions stimulées : $\sum\limits_{j<i} n_jB_{ji}J_{ij}+\sum\limits_{j>i} n_jB_{ji}J_{ji}-n_i\sum\limits_{j<i}B_{ij}J_{ij}$
-	\item [$\bullet$] Les excitations et désexcitations collisionnelles avec chaque collisionneur (exemple ici avec un seul collisionneur, les protons) : $n_p\sum\limits_{j<i}n_j C_{ji}-n_pn_i\sum\limits C_{ij}+n_p\sum\limits_{j>i}n_j C_{ij}$
-	\item [$\bullet$] Une dilution dû à l'expansion du volume : $-3Hn_i$\\
-	\item [$\bullet$] Les termes de réactions chimiques formant ou détruisant l'espèce dans un état quantique donné.
-\end{itemize}
+\begin{enumerate}
+	\item Les désexcitations radiatives spontanées : $\sum\limits_{j>i} n_jA_{ji}-n_i\sum\limits_{j<i} A_{ij}$
+	\item Les absorptions et les émissions stimulées : $\sum\limits_{j<i} n_jB_{ji}J_{ij}+\sum\limits_{j>i} n_jB_{ji}J_{ji}-n_i\sum\limits_{j<i}B_{ij}J_{ij}$
+	\item Les excitations et désexcitations collisionnelles avec chaque collisionneur p : \\ $\sum\limits_p\left(\sum\limits_{j<i}n_p n_j C_{ji}-n_pn_i\sum\limits_j C_{ij}+n_p\sum\limits_{j>i}n_j C_{ji}\right)$
+	\item Une dilution dû à l'expansion du volume : $-3Hn_i$\\
+	\item Les termes de réactions chimiques formant ou détruisant l'espèce dans un état quantique donné.
+\end{enumerate}
 \medskip
 \normalsize
 La température radiative intervient dans l'expression des moyennes de l'intensité $J_{ij}$, tandis que la température baryonique intervient implicitement dans les taux de collisions $C_{ij}$. Les moyennes de l'intensité et le refroidissement dépendent de l'épaisseur optique de sorte qu'un code qui modélise le transfert de rayonnement est nécessaire. 
-\bigskip
-\large 
 %\subsection{\uppercase{é}léments de transfert de rayonnement}
+\subsection{Réchauffement/Refroidissement}
+Nous ne pouvons définir une température thermodynamique de notre système global prenant en compte l'énergie potentielle des états internes et gravitationnels, l'énergie cinétique et l'énergie radiative. Par contre dans notre bulle d'effondrement, nous pouvons définir une température cinétique locale, celle de la distribution des vitesses de Maxwell relié à l'énergie cinétique volumique locale. On suppose que toutes les espèces possèdent la même température cinétique, l'hypothèse se justifie à l'aide de l'argument de la thermalisation de la matière, induite par collisions avec les électrons. 
+\bigskip
+\large
+
+Listons les termes sources et dissipatifs susceptibles de faire varier l'énergie cinétique volumique locale $\frac{dE_{CV} }{dt}$ :\\
+
+\begin{enumerate}
+	\item La diffusion Compton, de manière générale, la diffusion des photons avec la matière baryonique (voir sections précédantes).
+	\item Réchauffement par désexcitations collisionnelles avec chaque collisionneur p :\\ $\sum\limits_p\sum\limits_{j>i}\sum\limits_i n_p n_j C_{ji}E_{ji}$
+	\item Refroidissement par excitations collisionnelles avec chaque collisionneur p :\\ $-\sum\limits_p\sum\limits_{j>i}\sum\limits_i n_p n_j C_{ij}E_{ij}$
+	\item Perte d'énergie cinétique dû à l'expansion de la longueur d'onde (hypothèse de De Broglie): $-2H E_{CV}$
+	\item Pertes volumiques dû à l'expansion du volume : $-3H E_{CV}$
+	\item Les termes de réactions chimiques exo/endothermique provenant des créations/destructions de molécules.
+	\item L'excès d'énergie éventuel lors des absorptions, qui se transforme en énergie cinétique ? rien trouvé sur le sujet. A supprimer probablement.
+\end{enumerate}
+\medskip
+\normalsize
+Les désexcitations radiatives interviennent indirectement en modifiant les populations et l'intensité radiative.
+\subsection{Relation entre énergie cinétique et température cinétique}
+Un calcul classique de théorie cinétique des gaz permet de relier l'énergie cinétique volumique $E_{CV}$ à la température cinétique $T_C$ des m espèces:
+\begin{equation} \label{eq:ECTC}
+ \boxed{E_{CV} = \sum\limits_m  \frac{3 n_i k_b T_C}{2}}
+\end{equation}
+Ainsi, grâce aux termes des listes précédantes, le nécessaire est là pour calculer la variation de la température cinétique des $m$ atomes/molécules :
+\begin{equation} \label{eq:VTC}
+ \boxed{\frac{dT_C }{dt} = \frac{d}{dt}\left(\frac{E_{CV}}{\sum\limits_m  \frac{3 n_i k_b}{2}}\right)}
+\end{equation}
+
+
 \subsection{Le programme RADEX}
 RADEX\textsuperscript{\cite{RADEX}} est un programme livré avec le code source qui résout l'équilibre statique du réseau, i.e. avec les dérivées temporelles des densités particulaires nulles. Il modélise la partie transfert de rayonnement avec une probabilité d'échappement du photon. Le logiciel est capable de fonctionner sans équilibre thermodynamique local et peut prendre ainsi en compte une température radiative différente de la température baryonique. Il a déja fait ses preuves dans la communauté astrophysique et est utilisé dans ce stage.
 \subsection{La molécule $H_2$}

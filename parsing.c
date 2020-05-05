@@ -39,9 +39,7 @@ sprintf(com, "levels%s.txt",unptr);
          memset(com, 0, sizeof(com));
          sprintf(com, "ROP%s.txt",unptr);
     FILE* ROP=fopen(com,"w"); //ratio ORTHO PARA
-    fprintf(LEVELS,"z\tTrad\tTbar\t");
-            for (i = 0; i < Col_nb; i++)fprintf(LEVELS,"%s\t",Cols[i]);
-            fprintf(LEVELS,"\n");
+
 
     ///copy DAT file here for examination
     memset(com, 0, sizeof(com));
@@ -67,8 +65,15 @@ sprintf(com, "levels%s.txt",unptr);
     strcat(com,"del ");strcat(com,DAT_file_name);
     system(com);
 
+    ///write levels info
+    for (i = 0; i < npop; i++)fprintf(LEVELS,"v=%d___j=%d\t",QNs[i][0],QNs[i][1]);
+            fprintf(LEVELS,"\n");
+        fprintf(LEVELS,"z\tTrad\tTbar\t");
+            for (i = 0; i < Col_nb; i++)fprintf(LEVELS,"%s\t",Cols[i]);
+            fprintf(LEVELS,"\n");
 
-        for(z=10; z<1000; z+=10)
+
+        for(z=10; z<zeq; z+=10)
         {
             char outinp[64]={0};
             for(i=0; 1/D(GD.a,i)-1>z; i++);
@@ -146,7 +151,6 @@ double* radexout(int Col_nb,int npop,int nlines,int (*QNs)[2])
 
     FILE* Fradexout=fopen("radex.out","r");
 
-    int k;
     int i;
     skip_n_lines(Fradexout,10+Col_nb);
     double *levels;
