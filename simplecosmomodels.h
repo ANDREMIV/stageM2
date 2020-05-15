@@ -17,6 +17,7 @@ void derivs2(double t, double*y, double*dydt);
 void desitter();
 void deLCDM();
 void einsteindesitter();
+double reciprocal_coef(double Tkin, double Eul, int gl, int gu, double coef_ul);
 double expansion(double t, double a);
 double BoltzmanH2ROP(double T);
 int expansion_calc(double **t, double **a, double **Trad,double **Tb);

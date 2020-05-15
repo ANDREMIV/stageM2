@@ -18,6 +18,10 @@ const double TI=1.579e5; //13.6eV/kb in Kelvin
 const double zeq=3402;//+-26 plank 2018
 const double Oro=9.28e-5;
 
+double reciprocal_coef(double Tkin, double Eul, int gl, int gu, double coef_ul)
+{
+    return coef_ul*gu/gl*exp(-Eul/KB/Tkin);
+}
 
 double expansion(double t, double a)
 {

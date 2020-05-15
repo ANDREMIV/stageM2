@@ -522,11 +522,11 @@ La figure \ref{fig:T} résume les résultats de notre intégrateur pour différe
 \end{figure}
 
 \section{Refroidissement moléculaire}
-\subsection{Généralités $\&$ réseau}
+\subsection{Population $\&$ réseau}
 Les atomes et molécules considérés pour un modèle possèdent des états d'énergie interne outre leur énergie cinétique qui sont décrits par un certain jeu de nombres quantiques. Le but est de trouver la densité particulaire de chaque espèce dans chaque configuration quantique donnée. Cette dernière densité est aussi égale à la densité totale de l'espèce, fois sa proportion dans l'état quantique. Les densités sont décrites par des équations différentielles qui forment un réseau.\bigskip
 \large
 
-Listons les termes sources et dissipatifs susceptibles de faire varier les densités $\frac{dn_i}{dt}$ :\\
+Listons les termes sources et dispersifs susceptibles de faire varier les densités $\frac{dn_i}{dt}$ :\\
 
 \begin{enumerate}
 	\item Les désexcitations radiatives spontanées : $\sum\limits_{j>i} n_jA_{ji}-n_i\sum\limits_{j<i} A_{ij}$
@@ -539,7 +539,7 @@ Listons les termes sources et dissipatifs susceptibles de faire varier les densi
 \normalsize
 La température radiative intervient dans l'expression des moyennes de l'intensité $J_{ij}$, tandis que la température baryonique intervient implicitement dans les taux de collisions $C_{ij}$. Les moyennes de l'intensité et le refroidissement dépendent de l'épaisseur optique de sorte qu'un code qui modélise le transfert de rayonnement est nécessaire. 
 %\subsection{\uppercase{é}léments de transfert de rayonnement}
-\subsection{Réchauffement/Refroidissement}
+\subsection{\uppercase{é}volution de l'énergie cinétique et température baryonique}
 Nous ne pouvons définir une température thermodynamique de notre système global prenant en compte l'énergie potentielle des états internes et gravitationnels, l'énergie cinétique et l'énergie radiative. Par contre dans notre bulle d'effondrement, nous pouvons définir une température cinétique locale, celle de la distribution des vitesses de Maxwell relié à l'énergie cinétique volumique locale. On suppose que toutes les espèces possèdent la même température cinétique, l'hypothèse se justifie à l'aide de l'argument de la thermalisation de la matière, induite par collisions avec les électrons. 
 \bigskip
 \large
@@ -553,12 +553,11 @@ Listons les termes sources et dissipatifs susceptibles de faire varier l'énergi
 	\item Perte d'énergie cinétique dû à l'expansion de la longueur d'onde (hypothèse de De Broglie): $-2H E_{CV}$
 	\item Pertes volumiques dû à l'expansion du volume : $-3H E_{CV}$
 	\item Les termes de réactions chimiques exo/endothermique provenant des créations/destructions de molécules.
-	\item L'excès d'énergie éventuel lors des absorptions, qui se transforme en énergie cinétique ? rien trouvé sur le sujet. A supprimer probablement.
 \end{enumerate}
 \medskip
 \normalsize
 Les désexcitations radiatives interviennent indirectement en modifiant les populations et l'intensité radiative.
-\subsection{Relation entre énergie cinétique et température cinétique}
+
 Un calcul classique de théorie cinétique des gaz permet de relier l'énergie cinétique volumique $E_{CV}$ à la température cinétique $T_C$ des m espèces:
 \begin{equation} \label{eq:ECTC}
  \boxed{E_{CV} = \sum\limits_m  \frac{3 n_i k_b T_C}{2}}
@@ -567,6 +566,21 @@ Ainsi, grâce aux termes des listes précédantes, le nécessaire est là pour c
 \begin{equation} \label{eq:VTC}
  \boxed{\frac{dT_C }{dt} = \frac{d}{dt}\left(\frac{E_{CV}}{\sum\limits_m  \frac{3 n_i k_b}{2}}\right)}
 \end{equation}
+\subsection{Réchauffement/Refroidissement}
+Dérivons le refroidissement et le réchauffement pour une seule molécule en présence de p collisionneurs dans le cas stationnaire, pour un champ de rayonnement isotrope en négligeant les termes 4 et 5 de la  section 0.4.1.
+
+On a que : $0=\sum\limits_{j>i} n_jA_{ji}-n_i\sum\limits_{j<i} A_{ij}+\sum\limits_{j<i} n_jB_{ji}J_{ij}+\sum\limits_{j>i} n_jB_{ji}J_{ji}-n_i\sum\limits_{j<i}B_{ij}J_{ij}+\\
+\sum\limits_p\left(\sum\limits_{j<i}n_p n_j C_{ji}-n_pn_i\sum\limits_j C_{ij}+n_p\sum\limits_{j>i}n_j C_{ji}\right)$
+
+Les populations ne changent pas, cela permet de considérer que tous les états nouvellements excités se désexcitent avec une probabilité égale à 1. On décompose cette probabilité certaine en sous probabilités de désexcitation radiative et collisionnelle :
+$j>i, 1=P_{ji}^r+P_{ji}^c$ avec $P_{ji}^r= \frac{A_{ji}+B_{ji} J_{ji}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$ et $P_{ji}^c= \frac{\sum\limits_p C_{jip}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$
+
+On considère que le refroidissement d'intérêt est uniquement l'énergie de la partie qui a été excitée collisionnellement puis suivie d'une désexcitation radiative,
+ $\Lambda = \sum\limits_p\sum\limits_{j>i}\sum\limits_i n_p n_i C_{ijp} P_{ji}^r E_{ij}$
+
+et que le réchauffement d'intérêt est uniquement l'énergie de la partie qui a été excitée radiativement puis désexcitée collisionnellement.
+ $\Gamma = \sum\limits_{j>i}\sum\limits_i n_i B_{ji} J_{ji} P_{ji}^c E_{ji}$
+
 
 
 \subsection{Le programme RADEX}

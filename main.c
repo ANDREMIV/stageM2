@@ -43,8 +43,8 @@ int main(void)
     fclose(RAD);*/
 
     ROPT("h2-h.dat");
-    ROPT("hd-h-rot.dat");
-    ROPT("h2-h-H+-rot.dat");
+    //ROPT("hd-h-rot.dat");
+    //ROPT("h2-h-H+-rot.dat");
 
     return 0;
 }
