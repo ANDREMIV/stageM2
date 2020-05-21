@@ -1,12 +1,13 @@
 # depslib dependency file v1.0
-1589473470 source:c:\devel\c\expansion_calc\main.c
+1590005643 source:c:\devel\c\expansion_calc\main.c
 	<stdio.h>
 	<stdlib.h>
 	"mathutils.h"
 	"simplecosmomodels.h"
 	"parsing.h"
+	<string.h>
 
-1589482682 source:c:\devel\c\expansion_calc\parsing.c
+1590005561 source:c:\devel\c\expansion_calc\parsing.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -30,6 +31,6 @@
 	"mathutils.h"
 	<math.h>
 
-1587745175 c:\devel\c\expansion_calc\parsing.h
+1589999837 c:\devel\c\expansion_calc\parsing.h
 	"simplecosmomodels.h"
 

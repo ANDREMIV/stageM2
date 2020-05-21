@@ -5,57 +5,19 @@
 #include "parsing.h"
 #include "mathutils.h"
 
-
-struct col_coefs
+void DummyRadexOut(int nb_col)
 {
-    int nb_temps;
-    int nb_col_trans;
-    float* coefs;
-    float* temps;
-    int (*ij)[2];
-};
-
-void ROPT(char* DAT_file_name)
-{
-    int Col_nb=0;
-    char * mol;
-    char *Cols[COL_NB_MAX];
-    double densities[COL_NB_MAX];
-///find nb of collisionners and chars of collisionners
-    char DAT_file_name2[64]= {0}; //carefull do not use this array after, it holds name of COLs
-    strcpy(DAT_file_name2,DAT_file_name);
-    mol = strtok (DAT_file_name2,"-.");
-    for (Col_nb=0; 1; Col_nb++)
-        if((Cols[Col_nb] = strtok (NULL, "-.")) ==NULL)
-            break;
-    Col_nb--;//remove .dat col
-    int g=1;
-    int z;//g hold condition to say rot was here
-    int i;
-    for (i=0; i<Col_nb; i++)
-        if(!strcmp(Cols[i],"hp"))
-            strcpy(Cols[i],"H+");
-    if(!strncmp(Cols[Col_nb-1],"rot",3))
-        Col_nb--;
-    else
-        g--; //rot not a collisionner
-
-    ///Opens conserrponding level/rop files
-    char com[200]= {0};
-    char mm[64]= {0};
-    sprintf(com, "cp %dcol.out radex.out",Col_nb); //put dummy radex output file in case radex do not produce output
+    char com[128]= {0};
+    sprintf(com, "cp %dcol.out radex.out",nb_col); //put dummy radex output file in case radex do not produce output
     system(com);
-    memset(com, 0, sizeof(com));
-    strcpy(mm,DAT_file_name);
-    char* unptr=strtok(mm,".");
-    sprintf(com, "levels%s.txt",unptr);
-    FILE* LEVELS=fopen(com,"w");
-    memset(com, 0, sizeof(com));
-    sprintf(com, "ROP%s.txt",unptr);
-    FILE* ROP=fopen(com,"w"); //ratio ORTHO PARA
+}
 
-
-    ///copy DAT file here for examination
+///Retrieves useful infos from DAT file
+void DATinit(char* DAT_file_name, struct datfile* d)
+{
+    strcpy(d->DAT_file_name,DAT_file_name);
+        char com[200]= {0};
+        //copy DAT file here for examination
     memset(com, 0, sizeof(com));
     strcat(com,"cp C:\\Radex\\data\\");
     strcat(com,DAT_file_name);
@@ -63,16 +25,22 @@ void ROPT(char* DAT_file_name)
     strcat(com,DAT_file_name);
     system(com);
     FILE* FDAT=fopen(DAT_file_name,"r");
-    skip_n_lines(FDAT, 5);
-    int npop;
-    fscanf(FDAT,"%d",&npop);
+    goto_next_line(FDAT);
+    fscanf(FDAT,"%s",d->mol_name);
+    skip_n_lines(FDAT, 4);
+
+    fscanf(FDAT,"%d",&d->npop);
+    int npop=d->npop;
     skip_n_lines(FDAT, 2);
     int (*QNs)[2];//Quantum numbers, supports 2 quantum numbers
     float *Wg;
     float *Ener;
-    Wg=(float*)calloc(npop,sizeof(float));
-    Ener=(float*)calloc(npop,sizeof(float));
-    QNs=(int(*)[2])calloc(npop,sizeof(int[2]));
+    d->Wg=(float*)calloc(npop,sizeof(float));
+    d->Ener=(float*)calloc(npop,sizeof(float));
+    d->QNs=(int(*)[2])calloc(npop,sizeof(int[2]));
+    Wg=d->Wg;
+    Ener=d->Ener;
+    QNs=d->QNs;
     {
         int i;
         for(i=0; i<npop; i++)
@@ -81,20 +49,27 @@ void ROPT(char* DAT_file_name)
         }
     }
 
-    goto_next_line(FDAT);
-    goto_next_line(FDAT);
+    skip_n_lines(FDAT, 2);
+
     int nlines=0;
-    fscanf(FDAT,"%d",&nlines);
+    fscanf(FDAT,"%d",&d->nlines);
+    nlines=d->nlines;
     skip_n_lines(FDAT, nlines+3);
-    fscanf(FDAT,"%d",&Col_nb);
-    goto_next_line(FDAT);
+    int Col_nb;
+    fscanf(FDAT,"%d",&d->Col_nb);
+    Col_nb=d->Col_nb;
     struct col_coefs *Col_coefs= (struct col_coefs *) calloc(Col_nb,sizeof(struct col_coefs));
+
+    skip_n_lines(FDAT, 1);
+
     {
         int i;
         for(i=0; i<Col_nb; i++)
         {
             int ctrans, ctemps;
-            skip_n_lines(FDAT, 3);
+            skip_n_lines(FDAT, 1);
+            fscanf(FDAT,"%*d%*s%*s%s",Col_coefs[i].Col_name);
+            skip_n_lines(FDAT, 2);
             fscanf(FDAT,"%d",&ctrans);
             (Col_coefs[i].nb_col_trans)=ctrans;
             skip_n_lines(FDAT, 2);
@@ -104,6 +79,7 @@ void ROPT(char* DAT_file_name)
             Col_coefs[i].temps=(float*)calloc(ctemps,sizeof(float));
             Col_coefs[i].ij=(int(*)[2])calloc(ctrans,sizeof(int[2]));
             skip_n_lines(FDAT, 2);
+            d->C=Col_coefs;
             {
                 int j;
                 for(j=0; j<ctemps; j++)
@@ -132,53 +108,46 @@ void ROPT(char* DAT_file_name)
         }
     }
 
+//delete copied file
 
     fclose(FDAT);
     memset(com, 0, sizeof(com));
     strcat(com,"del ");
     strcat(com,DAT_file_name);
     system(com);
+}
 
-    ///write levels info
-    for (i = 0; i < npop; i++)
-        fprintf(LEVELS,"v=%d___j=%d\t",QNs[i][0],QNs[i][1]);
-    fprintf(LEVELS,"\n");
-    fprintf(LEVELS,"z\tTrad [K]\tTbar [K]\tHeating-Cooling [J/s/cm^3]\tdot Tbar Heating-Cooling [K/s]\t");
-    for (i = 0; i < Col_nb; i++)
-        fprintf(LEVELS,"%s\t",Cols[i]);
-    fprintf(LEVELS,"\n");
+void DATfree(struct datfile* d)
+{
+    free(d->Wg);
+    free(d->Ener);
+    free(d->QNs);
 
-
-    for(z=10; z<1000; z+=5)
     {
-        char outinp[64]= {0};
-        for(i=0; 1/D(GD.a,i)-1>z; i++);
-        int ic=i;
-
-        double H= 0.05*(1+z)*(1+z)*(1+z)*H0*H0*3/8/M_PI/G/MH*1e-6;//*1e-6; in cm^3
-        double nH2=6.3e-7*H;
-
+        int i;
+        for(i=0; i<d->Col_nb; i++)
         {
-            int i;
-            for(i=0; i<Col_nb; i++)
-                densities[i]= i<1 ? H : H*4e-4;
+            free(d->C[i].temps);
+            free(d->C[i].coefs);
+            free(d->C[i].ij);
         }
-        double customTbar=D(GD.Tb,ic);
-        radexinp(Col_nb,outinp,D(GD.Tr,ic),customTbar,mol,Cols,densities,g);
-        memset(com, 0, sizeof(com));
-        strcat(com, "C:\\Radex\\bin\\radex.exe < ");
-        strcat(com,outinp);
-        system(com);
+        free(d->C);
+    }
+}
 
-        double* levels;
-        levels=radexout(Col_nb,npop,nlines,QNs);
-
-        ///Cooling
+void Cooling_heating(double *cooling, double *heating, struct datfile* d, double* levels, double n, double* densities, double Tb)
+//n is density of the one being collisionned
+//densities are the densities of the collisionners
+//levels are the populations of the collisionned in the context of datfile d
+//J/cm^3/s
+{
+    ///Cooling
         double LC =0;
         double GH=0;
+        struct col_coefs* Col_coefs=d->C;
         {
             int i,j,k;
-            for(k=0; k<Col_nb; k++)
+            for(k=0; k<d->Col_nb; k++)
             {
 
                 int ctrans, ctemps;
@@ -189,10 +158,10 @@ void ROPT(char* DAT_file_name)
                     //for(j=1;j<npop;j++)
                     int l=Col_coefs[k].ij[i][1]-1;
                     int u=Col_coefs[k].ij[i][0]-1;
-                    double Eul=100*C*hPl*(Ener[u]-Ener[l]);
+                    double Eul=100*C*hPl*(d->Ener[u]-d->Ener[l]);
                     double Cul;
                     for(j=0; j<ctemps; j++)
-                        if(D(GD.Tb,ic)<=Col_coefs[k].temps[j])
+                        if(Tb<=Col_coefs[k].temps[j])
                             break;
                     if(j==ctemps)
                     {
@@ -202,90 +171,43 @@ void ROPT(char* DAT_file_name)
                     }
                     ///linear fit
                     if(j!=0)
-                    Cul=Col_coefs[k].coefs[i*ctemps+j]+(D(GD.Tb,ic)-Col_coefs[k].temps[j])*(Col_coefs[k].coefs[i*ctemps+j-1]\
+                    Cul=Col_coefs[k].coefs[i*ctemps+j]+(Tb-Col_coefs[k].temps[j])*(Col_coefs[k].coefs[i*ctemps+j-1]\
                             -Col_coefs[k].coefs[i*ctemps+j])/(Col_coefs[k].temps[j-1]-Col_coefs[k].temps[j]);
-                    else Cul=D(GD.Tb,ic)/Col_coefs[k].temps[j]*Col_coefs[k].coefs[i*ctemps+j];
-                    GH+=nH2*densities[k]*levels[u]*Cul*Eul;
-                    LC+=nH2*densities[k]*levels[l]*reciprocal_coef(customTbar,Eul,Wg[l],Wg[u],Cul)*Eul;
+                    else Cul=Tb/Col_coefs[k].temps[j]*Col_coefs[k].coefs[i*ctemps+j];
+                    GH+=n*densities[k]*levels[u]*Cul*Eul;
+                    LC+=n*densities[k]*levels[l]*reciprocal_coef(Tb,Eul,d->Wg[l],d->Wg[u],Cul)*Eul;
                 }
             }
         }
-
-        ///printing
-
-        fprintf(LEVELS,"%d\t%le\t%le\t%le\t%le\t",z,D(GD.Tr,ic), D(GD.Tb,ic),GH-LC,(GH-LC)*1e6*2/KB/3/H);
-        for (i = 0; i < Col_nb; i++)
-            fprintf(LEVELS,"%le\t",densities[i]);
-        fprintf(LEVELS,"\n");
-
-        for (i = 0; i < npop; i++)
-            fprintf(LEVELS,"%le\t",levels[i]);
-        fprintf(LEVELS,"\n");
-
-
-
-        /* double rortho=0,rpara=0;
-         for (i = 0; i < npop; i++)
-             if(i%2)rortho+=levels[i]; else rpara+=levels[i];
-         fprintf(ROP,"%d\t%le\t\n",z,rortho/rpara);*/
-
-        free(levels);
-    }
-    fclose(LEVELS);
-    fclose(ROP);
-    free(Wg);
-    free(Ener);
-    free(QNs);
-
-    {
-        int i;
-        for(i=0; i<Col_nb; i++)
-        {
-            free(Col_coefs[i].temps);
-            free(Col_coefs[i].coefs);
-            free(Col_coefs[i].ij);
-        }
-        free(Col_coefs);
-    }
-
+    *cooling=LC;
+    *heating=GH;
 }
 
-///Creates a input file for radex
-void radexinp(int Col_nb, char* outinp, double Trad, double Tbar, char* mol, char** Cols_name,double* densities, int rot)
+///Creates a input file for radex in the context of an .dat file
+void radexinp(double Trad, double Tbar,struct datfile* d,double* densities)
 {
     char com[64]= {0};
-    strcat(com,mol);
-    int i;
-    for(i=0; i<Col_nb; i++)
-    {
-        strcat(com,"-");
-        strcat(com,Cols_name[i]);
-    }
-    if(rot)
-        strcat(com,"-rot");
+    char mm[64]= {0};
+    memset(com, 0, sizeof(com));
+    strcpy(mm,d->DAT_file_name);
+    strtok(mm,".");
+    strcpy(com,mm);
     strcat(com,".inp");
     FILE* radexOIN=fopen(com,"w");//new input file
-    strcpy(outinp,com);
-    memset(com, 0, sizeof(com));
 
-    strtok(outinp,".");
-    strcat(outinp,".dat");
 
-    fprintf(radexOIN,"%s\nradex.out\n100 400000\n%le\n",outinp,Tbar);
-    strtok(outinp,".");
-    strcat(outinp,".inp");
-    if(!strcmp(Cols_name[Col_nb-1],"rot"))
-        Col_nb--;
-    fprintf(radexOIN,"%d\n",Col_nb);
+
+    fprintf(radexOIN,"%s\nradex.out\n100 400000\n%le\n",d->DAT_file_name,Tbar);
+    fprintf(radexOIN,"%d\n",d->Col_nb);
     int j;
-    for(j=0; j<Col_nb; j++)
-        fprintf(radexOIN,"%s\n%le\n",Cols_name[j],densities[j]);
+    for(j=0; j<d->Col_nb; j++)
+        fprintf(radexOIN,"%s\n%le\n",d->C[j].Col_name,densities[j]);
     fprintf(radexOIN,"%le\n1e15\n1.0\n0\n",Trad);
 
     fclose(radexOIN);
 }
 
-specific_search_int(int (*p)[2],int n,int a, int b)
+int specific_search_int(int (*p)[2],int n,int a, int b)
 {
     int j;
     for(j=0; j<n; j++)
@@ -294,10 +216,10 @@ specific_search_int(int (*p)[2],int n,int a, int b)
     return j;
 }
 
-///Open radex output file in order to retrieve population levels
-double* radexout(int Col_nb,int npop,int nlines,int (*QNs)[2])
+///Open radex output file in order to retrieve population levels in the context of a dat file
+double* radexout(struct datfile* d)
 {
-
+    int Col_nb=d->Col_nb;int npop=d->npop;int nlines=d->nlines; int (*QNs)[2]=d->QNs;
     FILE* Fradexout=fopen("radex.out","r");
 
     int i;
@@ -323,4 +245,76 @@ double* radexout(int Col_nb,int npop,int nlines,int (*QNs)[2])
 
     fclose(Fradexout);
     return levels;
+}
+
+///print levels in the context of a dat file
+void LVL(struct datfile* d)
+{
+    DummyRadexOut(d->Col_nb);
+    double densities[8]={0};
+    int i,z;
+    ///Opens conserrponding level/rop files
+    char com[200]= {0};
+    char mm[64]= {0};
+    memset(com, 0, sizeof(com));
+    strcpy(mm,d->DAT_file_name);
+    char* unptr=strtok(mm,".");
+    sprintf(com, "levels%s.txt",unptr);
+    FILE* LEVELS=fopen(com,"w");
+    ///write levels info
+    for (i = 0; i < d->npop; i++)
+        fprintf(LEVELS,"v=%d___j=%d\t",d->QNs[i][0],d->QNs[i][1]);
+    fprintf(LEVELS,"\n");
+    fprintf(LEVELS,"z\tTrad [K]\tTbar [K]\tHeating-Cooling [J/s/cm^3]\tdot Tbar Heating-Cooling [K/s]\t");
+    for (i = 0; i < d->Col_nb; i++)
+        fprintf(LEVELS,"%s\t",d->C[i].Col_name);
+    fprintf(LEVELS,"\n");
+
+
+    for(z=10; z<200; z+=5)
+    {
+        double LC =0;
+        double GH=0;
+        for(i=0; 1/D(GD.a,i)-1>z; i++);
+        int ic=i;
+
+        double H= 0.05*(1+z)*(1+z)*(1+z)*H0*H0*3/8/M_PI/G/MH*1e-6;//*1e-6; in cm^3
+        double nH2=6.3e-7*H;
+
+        {
+            int i;
+            for(i=0; i<d->Col_nb; i++)
+                densities[i]= i<1 ? H : H*4e-4;
+        }
+        double customTbar=D(GD.Tb,ic);
+        radexinp(D(GD.Tr,ic),customTbar,d,densities);
+        strcpy(mm,d->DAT_file_name);
+        unptr=strtok(mm,".");
+        strcat(mm,".inp");
+        memset(com, 0, sizeof(com));
+        strcat(com, "C:\\Radex\\bin\\radex.exe < ");
+        strcat(com,mm);
+        system(com);
+
+        double* levels;
+        levels=radexout(d);
+
+        Cooling_heating(&LC, &GH,d,levels,nH2,densities,D(GD.Tb,ic));
+
+        ///printing
+
+        fprintf(LEVELS,"%d\t%le\t%le\t%le\t%le\t",z,D(GD.Tr,ic), D(GD.Tb,ic),GH-LC,(GH-LC)*1e6*2/KB/3/H);
+        for (i = 0; i < d->Col_nb; i++)
+            fprintf(LEVELS,"%le\t",densities[i]);
+        fprintf(LEVELS,"\n");
+
+        for (i = 0; i < d->npop; i++)
+            fprintf(LEVELS,"%le\t",levels[i]);
+        fprintf(LEVELS,"\n");
+
+        free(levels);
+    }
+    fclose(LEVELS);
+
+
 }
