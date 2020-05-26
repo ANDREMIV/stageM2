@@ -582,6 +582,17 @@ et que le réchauffement d'intérêt est uniquement l'énergie de la partie qui 
  $\Gamma = \sum\limits_{j>i}\sum\limits_i n_i B_{ji} J_{ji} P_{ji}^c E_{ji}$
 
 
+Soit Prji et Pcji les probabilités qu'une désexcitation fut une désexcitation radiative ou collisionnelle du niveau j vers le niveau i. Dit autrement, Pr est la probabilité d'une désexcitation radiative du niveau j vers le niveau i sachant qu'il y a eu une désexcitation du niveau j vers le niveau i et Pc est la probabilité d'une désexcitation collisionnelle du niveau j vers le niveau i sachant qu'il y a eu une désexcitation du niveau j vers le niveau i :
+$j>i, 1=P_{ji}^r+P_{ji}^c$ avec $P_{ji}^r= \frac{A_{ji}+B_{ji} J_{ji}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$ et $P_{ji}^c= \frac{\sum\limits_p C_{jip}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$
+Pr et Pc sont donc des probabilités conditionnelles à cause du "sachant qu'il y a eu désexcitation du niveau j vers le niveau i".
+
+Soit des processus de désexcitation ou d'excitation amenant au niveau j, modélisé par des termes sources S>0.
+Soit des processus de désexcitation ou d'excitation sortant du niveau j, modélisé par des termes dissipatifs D>0.
+ $\frac{dn_i}{dt}= S1+S2+S3+...-D1-D2-D3-...$
+Ces termes sources désignent les nouveaux états excités, par exemple S1 pourrait être les excitations collisionnelles vers le niveau i.
+La part des nouveaux états excité 
+
+
 
 \subsection{Le programme RADEX}
 RADEX\textsuperscript{\cite{RADEX}} est un programme livré avec le code source qui résout l'équilibre statique du réseau, i.e. avec les dérivées temporelles des densités particulaires nulles. Il modélise la partie transfert de rayonnement avec une probabilité d'échappement du photon. Le logiciel est capable de fonctionner sans équilibre thermodynamique local et peut prendre ainsi en compte une température radiative différente de la température baryonique. Il a déja fait ses preuves dans la communauté astrophysique et est utilisé dans ce stage.

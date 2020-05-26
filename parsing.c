@@ -265,18 +265,20 @@ void LVL(struct datfile* d)
     for (i = 0; i < d->npop; i++)
         fprintf(LEVELS,"v=%d___j=%d\t",d->QNs[i][0],d->QNs[i][1]);
     fprintf(LEVELS,"\n");
-    fprintf(LEVELS,"z\tTrad [K]\tTbar [K]\tHeating-Cooling [J/s/cm^3]\tdot Tbar Heating-Cooling [K/s]\t");
+    fprintf(LEVELS,"z\tTrad [K]\tTbar [K]\tHeating-Cooling [J/s/cm^3]\tdot Tbar Heating-Cooling [K/s]\tintegrated Heating cooling over zdiff [K]\t");
     for (i = 0; i < d->Col_nb; i++)
         fprintf(LEVELS,"%s\t",d->C[i].Col_name);
     fprintf(LEVELS,"\n");
 
-
-    for(z=10; z<200; z+=5)
+    int zdif=5;
+    for(z=10; z<200; z+=zdif)
     {
         double LC =0;
         double GH=0;
         for(i=0; 1/D(GD.a,i)-1>z; i++);
         int ic=i;
+        for(i=0; 1/D(GD.a,i)-1>z+zdif; i++);
+        double dtd= D(GD.t,ic)-D(GD.t,i);
 
         double H= 0.05*(1+z)*(1+z)*(1+z)*H0*H0*3/8/M_PI/G/MH*1e-6;//*1e-6; in cm^3
         double nH2=6.3e-7*H;
@@ -302,8 +304,10 @@ void LVL(struct datfile* d)
         Cooling_heating(&LC, &GH,d,levels,nH2,densities,D(GD.Tb,ic));
 
         ///printing
+        double KL=(GH-LC)*2/KB/3/H; //Kelvin loss K/s
+        double IKL= dtd*KL/H0;
 
-        fprintf(LEVELS,"%d\t%le\t%le\t%le\t%le\t",z,D(GD.Tr,ic), D(GD.Tb,ic),GH-LC,(GH-LC)*1e6*2/KB/3/H);
+        fprintf(LEVELS,"%d\t%le\t%le\t%le\t%le\t%le\t",z,D(GD.Tr,ic), D(GD.Tb,ic),GH-LC,KL,IKL);
         for (i = 0; i < d->Col_nb; i++)
             fprintf(LEVELS,"%le\t",densities[i]);
         fprintf(LEVELS,"\n");

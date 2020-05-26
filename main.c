@@ -48,11 +48,11 @@ int main(void)
     DATinit("hd-h-rot.dat",&hd_h_rot);
     DATinit("h2-h-H+-rot.dat",&h2_h_p_rot);
 
-    DummyRadexOut(2);
+    /*DummyRadexOut(2);
     double densities[8]={0};
     densities[0]=1e-4;
     densities[1]=1e-8;
-    double TB=1000; double LC,GH;
+    double TB=100; double LC,GH;
         radexinp(0.1,TB,&h2_h_p_rot,densities);
     char com[200]= {0};
     char mm[64]= {0};
@@ -65,8 +65,10 @@ int main(void)
         system(com);
         double *levels=radexout(&h2_h_p_rot);
         Cooling_heating(&LC,&GH,&h2_h_p_rot,levels,6.3e-7*densities[0],densities,TB);
-        printf("\n%le\t%le\t%le",LC*1e13,GH,(LC-GH)*1e13);
-        free(levels);
+        printf("\n%le\t%le\t%le",LC,GH,(LC-GH)/(6.3e-7*densities[0])*1e7);
+        free(levels);*/
+
+    LVL(&h2_h_p_rot);
 
     DATfree(&h2_h);
     DATfree(&hd_h_rot);

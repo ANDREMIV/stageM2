@@ -20,6 +20,7 @@ for i in range(0,L,1):
     B=A[i].split('\t')
 S=int((L-1)/2)
 X=randn(S)
+V=randn(S)
 YP=randn(S)
 YN=randn(S)
 Z=randn(S)
@@ -33,7 +34,7 @@ for i in range(2,L,1):
     I=int((i-2)/2)
     if i%2==0:
         X[I]=float(B[0])
-        YP[I]=float(B[3])*1e6*1e7 #erg/s/cm^3
+        YP[I]=float(B[3])*1e6*1e7 #convert from J/s/cm^3 to erg/s/m^3
         if YP[I]<0:
             YN[I]=-1*YP[I]
             YP[I]=0
@@ -41,6 +42,7 @@ for i in range(2,L,1):
             YN[I]=0
         Z[I]=float(B[2])
         WP[I]=float(B[4])
+        V[I]=float(B[5])
         if WP[I]<0:
             WN[I]=-1*WP[I]
             WP[I]=0
@@ -49,11 +51,11 @@ for i in range(2,L,1):
    
 
 ax = plt.subplot(111)
-plt.ylim(1e-42,1e-19)
-plt.xlim(10,1000)
+plt.ylim(1e-42,1e-24)
+plt.xlim(10,200)
 plt.xscale("log")
 plt.yscale("log")
-plt.ylabel('Collisionnal heating-cooling [erg/s]')
+plt.ylabel('Collisionnal heating-cooling of 1 cubic meter of gas [erg/s]')
 plt.xlabel('cosmological doppler shift Z')
 plt.grid(b=True, which='major', color='#666666', linestyle='-')
 plt.minorticks_on()
@@ -68,11 +70,11 @@ plt.show()
 
 
 ax = plt.subplot(111)
-plt.ylim(1e-42,1e-19)
-plt.xlim(2,3000)
+plt.ylim(1e-42,1e-25)
+plt.xlim(2,500)
 plt.xscale("log")
 plt.yscale("log")
-plt.ylabel('Collisionnal heating-cooling [erg/s]')
+plt.ylabel('Collisionnal heating-cooling of 1 cubic meter of gas [erg/s]')
 plt.xlabel('Kinetic Temperature (z) in K')
 plt.grid(b=True, which='major', color='#666666', linestyle='-')
 plt.minorticks_on()
@@ -89,8 +91,8 @@ plt.show()
 
 
 ax = plt.subplot(111)
-plt.ylim(1e-24,1e-5)
-plt.xlim(10,1000)
+plt.ylim(1e-24,1e-15)
+plt.xlim(10,200)
 plt.xscale("log")
 plt.yscale("log")
 plt.ylabel('Temperature derivative [K/s]')
@@ -108,4 +110,8 @@ plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
 plt.savefig("coolingdT"+FFile+".png")
 plt.show()
 
+
+
+
 f.close()
+
