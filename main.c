@@ -68,7 +68,12 @@ int main(void)
         printf("\n%le\t%le\t%le",LC,GH,(LC-GH)/(6.3e-7*densities[0])*1e7);
         free(levels);*/
 
-    LVL(&h2_h_p_rot);
+    //LVL(&h2_h_p_rot);
+    //square_cooling_power(&h2_h,0,3e3,15,"squareH2HCP.txt");
+
+    square_cooling_power(&h2_h_p_rot,1,100, 1000,10,"squareH2H+CP.txt");
+    square_cooling_power(&h2_h_p_rot,0,100, 1000,10,"squareH2H'CP.txt");
+    square_cooling_power(&h2_h,0,100,1e4,50,"squareH2HCP.txt");
 
     DATfree(&h2_h);
     DATfree(&hd_h_rot);

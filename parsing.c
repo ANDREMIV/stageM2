@@ -135,6 +135,123 @@ void DATfree(struct datfile* d)
     }
 }
 
+void square_cooling_power(struct datfile* d, int which, int Tmin, int Tmax, int STEP, char* outname)
+{
+
+    FILE* OUT=fopen(outname,"w");
+    double TB;
+    fprintf(OUT,"TB");
+    for(TB=Tmin;TB<=Tmax;TB+=STEP)
+    {
+    fprintf(OUT,"\n%d|\t",(int)(TB));
+
+        DummyRadexOut(d->Col_nb);
+     double LC,GH;double ds[8]={1,1e-4,1,1,1,1,1,1};
+        radexinp(0.1,TB,d,ds);
+    char com[200]= {0};
+    char mm[64]= {0};
+        strcpy(mm,d->DAT_file_name);
+        strtok(mm,".");
+        strcat(mm,".inp");
+        memset(com, 0, sizeof(com));
+        strcat(com, "C:\\Radex\\bin\\radex.exe < ");
+        strcat(com,mm);
+        system(com);
+        double *levels=radexout(d);
+        Cooling_heating_power_per_collisionner(&LC,&GH,which,d,levels,TB);
+        fprintf(OUT,"%.1le\t",(LC-GH));
+        free(levels);
+
+    }
+    fclose(OUT);
+}
+
+void cube_cooling_power(struct datfile* d, int which,int Tmin, int Tmax, int STEP, char* outname)
+{
+    FILE* OUT=fopen(outname,"w");
+    double TB,TR;
+    fprintf(OUT,"TB\\TR\t");
+    for(TR=Tmin;TR<=Tmax;TR+=STEP)
+    fprintf(OUT,"%d\t\t",(int)(TR));
+    for(TB=Tmin;TB<=Tmax;TB+=STEP)
+    {
+    fprintf(OUT,"\n%d|\t",(int)(TB));
+    for(TR=Tmin;TR<=Tmax;TR+=STEP)
+    {
+
+        DummyRadexOut(d->Col_nb);
+     double LC,GH;double ds[8]={1,1,1,1,1,1,1,1};
+        radexinp(TR,TB,d,ds);
+    char com[200]= {0};
+    char mm[64]= {0};
+        strcpy(mm,d->DAT_file_name);
+        strtok(mm,".");
+        strcat(mm,".inp");
+        memset(com, 0, sizeof(com));
+        strcat(com, "C:\\Radex\\bin\\radex.exe < ");
+        strcat(com,mm);
+        system(com);
+        double *levels=radexout(d);
+        Cooling_heating_power_per_collisionner(&LC,&GH,which,d,levels,TB);
+        fprintf(OUT,"%.1le\t",(LC-GH));
+        free(levels);
+
+
+
+    }
+
+    }
+    fclose(OUT);
+}
+
+void Cooling_heating_power_per_collisionner(double *cooling, double *heating, int which, struct datfile* d, double* levels, double Tb)
+//levels are the populations of the collisionned in the context of datfile d
+//J.cm^3/s
+{
+    ///Cooling
+        double LC =0;
+        double GH=0;
+        struct col_coefs* Col_coefs=d->C;
+        {
+            int i,j,k;
+            k=which;
+            {
+
+                int ctrans, ctemps;
+                ctrans=(Col_coefs[k].nb_col_trans);
+                ctemps=(Col_coefs[k].nb_temps);
+                for(i=0; i<ctrans; i++)
+                {
+                    //for(j=1;j<npop;j++)
+                    int l=Col_coefs[k].ij[i][1]-1;
+                    int u=Col_coefs[k].ij[i][0]-1;
+                    double Eul=100*C*hPl*(d->Ener[u]-d->Ener[l]);
+                    double Cul;
+                    for(j=0; j<ctemps; j++)
+                        if(Tb<=Col_coefs[k].temps[j])
+                            break;
+                    if(j==ctemps)
+                    {
+                        /*printf("\nerror Clu(Tb) outside of interpolation range");
+                        system("pause");
+                        exit(1);*/
+                        Cul=Col_coefs[k].coefs[i*ctemps+j-1];
+                    }
+                    else{
+                    ///linear fit
+                    if(j!=0)
+                    Cul=Col_coefs[k].coefs[i*ctemps+j]+(Tb-Col_coefs[k].temps[j])*(Col_coefs[k].coefs[i*ctemps+j-1]\
+                            -Col_coefs[k].coefs[i*ctemps+j])/(Col_coefs[k].temps[j-1]-Col_coefs[k].temps[j]);
+                    else Cul=Tb/Col_coefs[k].temps[j]*Col_coefs[k].coefs[i*ctemps+j];}
+                    GH+=levels[u]*Cul*Eul;
+                    LC+=levels[l]*reciprocal_coef(Tb,Eul,d->Wg[l],d->Wg[u],Cul)*Eul;
+                }
+            }
+        }
+    *cooling=LC;
+    *heating=GH;
+}
+
 void Cooling_heating(double *cooling, double *heating, struct datfile* d, double* levels, double n, double* densities, double Tb)
 //n is density of the one being collisionned
 //densities are the densities of the collisionners
@@ -165,15 +282,16 @@ void Cooling_heating(double *cooling, double *heating, struct datfile* d, double
                             break;
                     if(j==ctemps)
                     {
-                        printf("\nerror Clu(Tb) outside of interpolation range");
+                        /*printf("\nerror Clu(Tb) outside of interpolation range");
                         system("pause");
-                        exit(1);
-                    }
+                        exit(1);*/
+                        Cul=Col_coefs[k].coefs[i*ctemps+j-1];
+                    }else{
                     ///linear fit
                     if(j!=0)
                     Cul=Col_coefs[k].coefs[i*ctemps+j]+(Tb-Col_coefs[k].temps[j])*(Col_coefs[k].coefs[i*ctemps+j-1]\
                             -Col_coefs[k].coefs[i*ctemps+j])/(Col_coefs[k].temps[j-1]-Col_coefs[k].temps[j]);
-                    else Cul=Tb/Col_coefs[k].temps[j]*Col_coefs[k].coefs[i*ctemps+j];
+                    else Cul=Tb/Col_coefs[k].temps[j]*Col_coefs[k].coefs[i*ctemps+j];}
                     GH+=n*densities[k]*levels[u]*Cul*Eul;
                     LC+=n*densities[k]*levels[l]*reciprocal_coef(Tb,Eul,d->Wg[l],d->Wg[u],Cul)*Eul;
                 }

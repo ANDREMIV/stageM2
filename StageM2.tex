@@ -41,7 +41,7 @@
 \fi
 
 
-%\title{Stage M2 : Calcul du refroidissement moléculaire pour la formation des étoiles de population III}
+%\title{Stage M2 : Calcul du refroidissement du gaz primordial pour la formation des étoiles de population III}
 %\author{Miville André}
 %\date{Mars 2020}
 
@@ -87,7 +87,7 @@
 
 % Title
 \rule{\linewidth}{0.3mm} \\[0.4cm]
-{ \huge \bfseries\color{blue!70!black} Calcul du refroidissement moléculaire pour la formation des étoiles de population III \\[0.4cm] }
+{ \huge \bfseries\color{blue!70!black} Calcul du refroidissement du gaz primordial pour la formation des étoiles de population III \\[0.4cm] }
 \rule{\linewidth}{0.3mm} \\[1cm]
 {\large \bfseries Organisme d'accueil : OSUG IPAG}\\[1cm]
 % \includegraphics[width=0.3\textwidth]{logo-isae-supaero}\\[1cm]
@@ -107,14 +107,14 @@
   \end{flushright}
 \end{minipage}\\[1cm]
 
-\color{blue!80!black}{\large \textit{Soutenu le 17 juin 2020, Devant le jury : }}\\[0.5cm]
+\color{blue!80!black}{\large \textit{Soutenu le 15 juin 2020, Devant le jury : }}\\[0.5cm]
 
 \color{black}
 \centering
 \begin{tabular}{lll}
-\large Hervé \textsc{Beust} : & \large UGA & \large - Président \\[0.1cm]
-\large rapporteur 1 \textsc{} : & \large UGA & \large - Rapporteur \\[0.1cm]
-\large rapporteur 2\textsc{} : & \large UGA & \large - Rapporteur
+\large Hervé \textsc{Beust} : & \large UGA IPAG & \large - Président \\[0.1cm]
+\large Sébastien  \textsc{Maret} : & \large UGA IPAG & \large - Rapporteur \\[0.1cm]
+\large Thierry \textsc{Forveille} : & \large UGA IPAG & \large - Rapporteur
 \end{tabular}
 
 \vfill
@@ -188,7 +188,7 @@ La formation des premières étoiles, dites de population III, a lieu avant l'é
 
 Une question fondamentale pour la formation des premières étoiles est celle du refroidissement du gaz baryonique piégé dans les halos de matière noire. De l'efficacité de ce refroidissement dépendra la masse des premières étoiles, et ainsi la rétroaction sur l'évolution de la matière baryonique au cours de la naissance des premières structures. \begin{comment}D'après le modèle $\Lambda $CDM, la nucléosynthèse primordiale crée principalement des atomes d'hydrogène et d'Hélium. Avant les premières étoiles, les molécules régissant le refroidissement moléculaires sont alors simples. Dans mon stage nous nous sommes concentré sur H2. Les détails de la formation de H2, et notamment de ses formes ortho et para, sont donc essentiels.\end{comment}
 
-Le stage se déroule en deux étapes. Il s'agit d'abord de simuler un univers homogène et isotrope en expansion avec un modèle $\Lambda$CDM de la période de recombinaison jusqu'à l'époque de formation des premières étoiles. Ceci nous permet d'avoir des conditions initiales propres pour un second modèle avec effondrement gravitationnel qui calcule le refroidissement moléculaire pour la formation des étoiles POP III.
+Il s'agit d'abord de simuler un univers homogène et isotrope en expansion avec un modèle $\Lambda$CDM de la période de recombinaison jusqu'à l'époque de formation des premières étoiles. Ceci nous permet d'avoir des conditions initiales propres pour le calcul du refroidissemenet moléculaire des premières étoiles.
 
 La simulation d'univers homogène et isotrope pour les conditions initiales sur la chimie n'est pas un travail inédit en soi, d'autres chercheurs ont déjà effectué des recherches similaires\textsuperscript{\cite{Coppola} \cite{Flower}}. Le rapport de la mission Planck 2018\textsuperscript{\cite{Planck2018}} et de nouvelles données de calcul quantique dernier cri de taux de collisions moléculaires ont donné l'opportunité d'améliorer et de compléter les résultats existants. 
 
@@ -201,7 +201,7 @@ Dans ce rapport l'auteur entremêle des généralités -- pour fournir un minimu
 
 \subsection*{Missions effectuées}
 
-Durant ce mois et demi de stage, j'ai été amené à réviser la relativité générale, le transfert de rayonnement, la mécanique quantique, la chimie moléculaire à me documenter sur le modèle $\Lambda$CDM, à redémontrer et fournir les formules utilisées dans les publications de références et de notre modèle, à programmer en C, Fortran, python, bash, à réaliser un intégrateur Runge Kutta, à interfacer des programmes entre eux, à produire des courbes/graphiques de résultats, à faire des présentations, à écrire un rapport de stage.
+J'ai été amené à réviser la relativité générale, le transfert de rayonnement, la mécanique quantique, la chimie moléculaire à me documenter sur le modèle $\Lambda$CDM, à redémontrer et fournir les formules utilisées dans les publications de références et de notre modèle, à programmer en C, Fortran, python, bash, à réaliser un intégrateur Runge Kutta, à interfacer des programmes entre eux, à produire des courbes/graphiques de résultats, à faire des présentations, à écrire un rapport de stage.
 
 %\section*{Quelques rappels de Relativité Générale}
 
@@ -471,7 +471,7 @@ Si l'électron n'est pas au repos, on peut toujours faire un changement de réf�
 
 \subsection{Chauffage des électrons par les photons}
 
-Pour calculer les échanges d'énergies à l'ordre zéro entre les températures baryoniques et de rayonnement, une approche simple mais controversée est utilisée. Un électron qui se meut à une vitesse non nulle par rapport à un champ de rayonnement de corps noir isotrope va percevoir une température de rayonnement plus forte pour les rayons venant à contresens et plus faible pour les rayons dans le même sens -- une manifestation de l'effet Doppler. Cette anisotropie a pour conséquence finale que l'électron est freiné et donc refroidi. On peut calculer ce refroidissement qui a le mérite de faire apparaître une expression homogène et les grandeurs appropriées. À partir de là, on "transforme ce refroidissement en réchauffement" afin d'obtenir un terme simple d'échange d'énergie entre photons et électrons : 
+Pour calculer les échanges d'énergies entre les températures baryoniques et de rayonnement on montre que \textsuperscript{\cite{PEEBLESBOOK}} : 
 \begin{equation} \label{eq:ITBTR}
 \boxed{\frac{dT_b}{dt} = \frac{8\sigma_Ta_rT_r^4(T_r-T_m)}{3m_ec}\frac{x_e}{1+x_e}}
 \end{equation}
@@ -499,7 +499,7 @@ Où $\chi_i$ est le potentiel d'ionisation pour ioniser de nouveau un atome déj
 \subsection{Paramètre $z_{eq}$}
 Par définition, il correspond au décalage vers le rouge cosmologique où la densité énergétique de rayonnement est égale à celle de la matière. Par conséquent, on obtient une autre estimation du paramètre $\Omega_{ro} = \frac{\Omega_{m}}{1+z_{eq}}$. $z_{eq} = 3402$ voir \ref{tab:PI}. La température baryonique est environ égale à la température de rayonnement car le terme compensateur Compton est très important : $T_b \approx T_r$ de sorte que l'on utilise cette condition intiale dans notre programme.
 
-\subsection{Intégrateur et évolution des températrures}
+\subsection{Intégrateur et évolution des températrures}\label{IEEDT}
 On néglige pour l'instant l'interaction des photons avec les molécules et atomes. Au vu de ce qui a été dit, la température baryonique évolue comme :
 
 \begin{equation} \label{eq:EERT}
@@ -521,7 +521,7 @@ La figure \ref{fig:T} résume les résultats de notre intégrateur pour différe
 \label{fig:T}
 \end{figure}
 
-\section{Refroidissement moléculaire}
+\section{Réseau $\&$ molécule H2}
 \subsection{Population $\&$ réseau}
 Les atomes et molécules considérés pour un modèle possèdent des états d'énergie interne outre leur énergie cinétique qui sont décrits par un certain jeu de nombres quantiques. Le but est de trouver la densité particulaire de chaque espèce dans chaque configuration quantique donnée. Cette dernière densité est aussi égale à la densité totale de l'espèce, fois sa proportion dans l'état quantique. Les densités sont décrites par des équations différentielles qui forment un réseau.\bigskip
 \large
@@ -531,66 +531,25 @@ Listons les termes sources et dispersifs susceptibles de faire varier les densit
 \begin{enumerate}
 	\item Les désexcitations radiatives spontanées : $\sum\limits_{j>i} n_jA_{ji}-n_i\sum\limits_{j<i} A_{ij}$
 	\item Les absorptions et les émissions stimulées : $\sum\limits_{j<i} n_jB_{ji}J_{ij}+\sum\limits_{j>i} n_jB_{ji}J_{ji}-n_i\sum\limits_{j<i}B_{ij}J_{ij}$
-	\item Les excitations et désexcitations collisionnelles avec chaque collisionneur p : \\ $\sum\limits_p\left(\sum\limits_{j<i}n_p n_j C_{ji}-n_pn_i\sum\limits_j C_{ij}+n_p\sum\limits_{j>i}n_j C_{ji}\right)$
+	\item Les excitations et désexcitations collisionnelles avec chaque collisionneur p : \\ $\sum\limits_p\left(n_p\sum\limits_{j<i} n_j C_{ji}-n_pn_i\sum\limits_j C_{ij}+n_p\sum\limits_{j>i}n_j C_{ji}\right)$
 	\item Une dilution dû à l'expansion du volume : $-3Hn_i$\\
 	\item Les termes de réactions chimiques formant ou détruisant l'espèce dans un état quantique donné.
 \end{enumerate}
 \medskip
 \normalsize
 La température radiative intervient dans l'expression des moyennes de l'intensité $J_{ij}$, tandis que la température baryonique intervient implicitement dans les taux de collisions $C_{ij}$. Les moyennes de l'intensité et le refroidissement dépendent de l'épaisseur optique de sorte qu'un code qui modélise le transfert de rayonnement est nécessaire. 
+
+\subsubsection{\uppercase{é}quilibre statistique, état stationnaire et ETL}
+Si l'on fixe une température radiative et cinétique et qu'on laisse le système évoluer de lui-même, les conditions initiales des populations disparaîtrons et le système se stabilisera vers les densités de l'équilibre statistique et n'évoluera plus. Par conséquent l'équilibre statistique est aussi un état stationnaire. À l'équilibre thermodynamique local (ETL), la température radiative est égale à la température baryonique. 
+
+\subsection{Relation entre coeficients collisionnels}
+Lorsque les rapports de population sont dominés par les collisions, on doit retrouver des rapports donnés par la loi de Boltzmann. Comme les coeficients décrivent des propiétés intrinsèques à un couple de collisionneurs, les relations suivantes sont invariablement vraies, $w_u$ désignant la dégénérescence de l'état:
+\begin{equation} \label{eq:DB}
+ \boxed{C_{lu} = C_{ul}\frac{w_u}{w_l}\exp{\frac{-E_{ul}}{k_b T_{kin}}}}
+\end{equation}
+
+
 %\subsection{\uppercase{é}léments de transfert de rayonnement}
-\subsection{\uppercase{é}volution de l'énergie cinétique et température baryonique}
-Nous ne pouvons définir une température thermodynamique de notre système global prenant en compte l'énergie potentielle des états internes et gravitationnels, l'énergie cinétique et l'énergie radiative. Par contre dans notre bulle d'effondrement, nous pouvons définir une température cinétique locale, celle de la distribution des vitesses de Maxwell relié à l'énergie cinétique volumique locale. On suppose que toutes les espèces possèdent la même température cinétique, l'hypothèse se justifie à l'aide de l'argument de la thermalisation de la matière, induite par collisions avec les électrons. 
-\bigskip
-\large
-
-Listons les termes sources et dissipatifs susceptibles de faire varier l'énergie cinétique volumique locale $\frac{dE_{CV} }{dt}$ :\\
-
-\begin{enumerate}
-	\item La diffusion Compton, de manière générale, la diffusion des photons avec la matière baryonique (voir sections précédantes).
-	\item Réchauffement par désexcitations collisionnelles avec chaque collisionneur p :\\ $\sum\limits_p\sum\limits_{j>i}\sum\limits_i n_p n_j C_{ji}E_{ji}$
-	\item Refroidissement par excitations collisionnelles avec chaque collisionneur p :\\ $-\sum\limits_p\sum\limits_{j>i}\sum\limits_i n_p n_j C_{ij}E_{ij}$
-	\item Perte d'énergie cinétique dû à l'expansion de la longueur d'onde (hypothèse de De Broglie): $-2H E_{CV}$
-	\item Pertes volumiques dû à l'expansion du volume : $-3H E_{CV}$
-	\item Les termes de réactions chimiques exo/endothermique provenant des créations/destructions de molécules.
-\end{enumerate}
-\medskip
-\normalsize
-Les désexcitations radiatives interviennent indirectement en modifiant les populations et l'intensité radiative.
-
-Un calcul classique de théorie cinétique des gaz permet de relier l'énergie cinétique volumique $E_{CV}$ à la température cinétique $T_C$ des m espèces:
-\begin{equation} \label{eq:ECTC}
- \boxed{E_{CV} = \sum\limits_m  \frac{3 n_i k_b T_C}{2}}
-\end{equation}
-Ainsi, grâce aux termes des listes précédantes, le nécessaire est là pour calculer la variation de la température cinétique des $m$ atomes/molécules :
-\begin{equation} \label{eq:VTC}
- \boxed{\frac{dT_C }{dt} = \frac{d}{dt}\left(\frac{E_{CV}}{\sum\limits_m  \frac{3 n_i k_b}{2}}\right)}
-\end{equation}
-\subsection{Réchauffement/Refroidissement}
-Dérivons le refroidissement et le réchauffement pour une seule molécule en présence de p collisionneurs dans le cas stationnaire, pour un champ de rayonnement isotrope en négligeant les termes 4 et 5 de la  section 0.4.1.
-
-On a que : $0=\sum\limits_{j>i} n_jA_{ji}-n_i\sum\limits_{j<i} A_{ij}+\sum\limits_{j<i} n_jB_{ji}J_{ij}+\sum\limits_{j>i} n_jB_{ji}J_{ji}-n_i\sum\limits_{j<i}B_{ij}J_{ij}+\\
-\sum\limits_p\left(\sum\limits_{j<i}n_p n_j C_{ji}-n_pn_i\sum\limits_j C_{ij}+n_p\sum\limits_{j>i}n_j C_{ji}\right)$
-
-Les populations ne changent pas, cela permet de considérer que tous les états nouvellements excités se désexcitent avec une probabilité égale à 1. On décompose cette probabilité certaine en sous probabilités de désexcitation radiative et collisionnelle :
-$j>i, 1=P_{ji}^r+P_{ji}^c$ avec $P_{ji}^r= \frac{A_{ji}+B_{ji} J_{ji}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$ et $P_{ji}^c= \frac{\sum\limits_p C_{jip}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$
-
-On considère que le refroidissement d'intérêt est uniquement l'énergie de la partie qui a été excitée collisionnellement puis suivie d'une désexcitation radiative,
- $\Lambda = \sum\limits_p\sum\limits_{j>i}\sum\limits_i n_p n_i C_{ijp} P_{ji}^r E_{ij}$
-
-et que le réchauffement d'intérêt est uniquement l'énergie de la partie qui a été excitée radiativement puis désexcitée collisionnellement.
- $\Gamma = \sum\limits_{j>i}\sum\limits_i n_i B_{ji} J_{ji} P_{ji}^c E_{ji}$
-
-
-Soit Prji et Pcji les probabilités qu'une désexcitation fut une désexcitation radiative ou collisionnelle du niveau j vers le niveau i. Dit autrement, Pr est la probabilité d'une désexcitation radiative du niveau j vers le niveau i sachant qu'il y a eu une désexcitation du niveau j vers le niveau i et Pc est la probabilité d'une désexcitation collisionnelle du niveau j vers le niveau i sachant qu'il y a eu une désexcitation du niveau j vers le niveau i :
-$j>i, 1=P_{ji}^r+P_{ji}^c$ avec $P_{ji}^r= \frac{A_{ji}+B_{ji} J_{ji}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$ et $P_{ji}^c= \frac{\sum\limits_p C_{jip}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$
-Pr et Pc sont donc des probabilités conditionnelles à cause du "sachant qu'il y a eu désexcitation du niveau j vers le niveau i".
-
-Soit des processus de désexcitation ou d'excitation amenant au niveau j, modélisé par des termes sources S>0.
-Soit des processus de désexcitation ou d'excitation sortant du niveau j, modélisé par des termes dissipatifs D>0.
- $\frac{dn_i}{dt}= S1+S2+S3+...-D1-D2-D3-...$
-Ces termes sources désignent les nouveaux états excités, par exemple S1 pourrait être les excitations collisionnelles vers le niveau i.
-La part des nouveaux états excité 
 
 
 
@@ -637,30 +596,163 @@ La série de tirets oranges Boltzmann $T_b$ correspond au rapport théorique qu'
 Enfin les points rouges correspondent à la courbe obtenue par Flower et Pineau des forêts dans leur modèle. 
 Leur rapport ne descend pas vers zéro. L’explication découle du fait qu’ils ne résolvent pas les équations de l’équilibre statique, i.e. ils ne supposent pas un état stationnaire à chaque z et résolvent l’équilibre statistique dépendant du temps. Aux faibles $z$, quand la densité devient faible, elle peut descendre en dessous de la densité critique de transfert de rayonnement -- les désexcitations collisionnelles devenant plus rares que les désexcitations spontanées. Ainsi les populations de l'équilibre statique que l'on calcule avec RADEX n'ont jamais le temps de s'établir, c'est pourquoi le rappport ortho para semble geler vers une valeur non nulle (de l’ordre de 0.3) avec leur modèle. Les différences aux $z \approx 50 - 100$ sont par contre la conséquence d'un modèle physique différent : pas de $\Lambda CDM$, paramètres non égaux, etc...
 
+\section{Refroidissement/réchauffement moléculaire}
+\subsection{\uppercase{é}volution de l'énergie cinétique et température baryonique}
+Nous ne pouvons définir une température thermodynamique de notre système global prenant en compte l'énergie potentielle des états internes et gravitationnels, l'énergie cinétique et l'énergie radiative. Par contre nous pouvons définir une température cinétique locale, celle de la distribution des vitesses de Maxwell relié à l'énergie cinétique volumique locale. On suppose que toutes les espèces possèdent la même température cinétique, l'hypothèse se justifie à l'aide de l'argument de la thermalisation de la matière, induite par collisions avec les électrons. 
+\bigskip
+\large
+
+Listons les termes sources et dissipatifs susceptibles de faire varier l'énergie cinétique volumique locale $\frac{dE_{CV} }{dt}$ :\\
+
+\begin{enumerate}
+	\item La diffusion Compton, de manière générale, la diffusion des photons avec la matière baryonique (voir sections précédantes).
+	\item Réchauffement par désexcitations collisionnelles avec chaque collisionneur p\textsuperscript{\cite{RADEX} \cite{KWO}} :\\ $\sum\limits_p\sum\limits_{j>i}\sum\limits_i n_p n_j C_{ji}E_{ji}$
+	\item Refroidissement par excitations collisionnelles avec chaque collisionneur p\textsuperscript{\cite{RADEX} \cite{KWO}} :\\ $-\sum\limits_p\sum\limits_{j>i}\sum\limits_i n_p n_j C_{ij}E_{ij}$
+	\item Perte d'énergie cinétique dû à l'expansion de la longueur d'onde (hypothèse de De Broglie): $-2H E_{CV}$
+	\item Pertes volumiques dû à l'expansion du volume : $-3H E_{CV}$
+	\item Les termes de réactions chimiques exo/endothermique provenant des créations/destructions de molécules.
+\end{enumerate}
+\medskip
+\normalsize
+Les désexcitations radiatives interviennent indirectement en modifiant les populations et l'intensité radiative.
+
+Un calcul classique de théorie cinétique des gaz permet de relier l'énergie cinétique volumique $E_{CV}$ à la température cinétique $T_C$ des m espèces:
+\begin{equation} \label{eq:ECTC}
+ \boxed{E_{CV} = \sum\limits_m  \frac{3 n_i k_b T_C}{2}}
+\end{equation}
+Ainsi, grâce aux termes des listes précédantes, le nécessaire est là pour calculer la variation de la température cinétique des $m$ atomes/molécules :
+\begin{equation} \label{eq:VTC}
+ \boxed{\frac{dT_C }{dt} = \frac{d}{dt}\left(\frac{E_{CV}}{\sum\limits_m  \frac{3 n_i k_b}{2}}\right)}
+\end{equation}
+
+Les formules 2 et 3 avec les $C_{ij}$ de la liste précédante ne font pas appraître explicitement les coefficients d'Einstein. Elles s'interprètent comme suit. Une excitation collisionnelle pompe de l'énergie cinétique et la transforme en énergie liée aux états quantiques. Par conséquent il s'agit d'un refroidissement. À l'inverse, une désexcitation collisionnelle transfert de l'énergie liée aux états quantiques en énergie cinétique, constituant ainsi un chauffage. En fesant le bilan de ces deux termes, on obtient le refroidissement/réchauffement net. Cette formule désigne un refroidissement local qui peut se convertir directement en un accroissement ou une diminution de la température cinétique.
+
+\begin{comment}
+ Dans le cadre du refroidissement d'un nuage, l'exercice est différent, on cherche l'énergie qui sort du nuage. L'énergie sortante est sous forme radiative et provient de désexcitations spontanées ou induites des états quantiques. Cette énergie n'est pas convertissable directement en accroissement ou diminution de la température cinétique locale, car l'énergie sortante ne provient pas du réservoir d'énergie cinétique mais du réservoir d'énergie liée aux états quantiques. Intuitivement, à l'équilibre statistique, lorsque l'on a laissé les populations se stabiliser au temps$ t=\infinity$ formant un état stationnaire (les populations sont alors indépendantes de la population au temps $t=0$), nous avons une dépendance mathématique entre les populations et les températures radiatives et baryonique, de sorte qu'il y a un lien entre le réservoir d'énergie liée aux états quantiques et le réservoir d'énergie cinétique. 
+\end{comment}
+
+\subsection{Pouvoir de réchauffement/refroidissement}
+Si l'on divise le refroidissement net par la densité de collisionneur et par la densité du collisionné, on obtient une quantité s'assimilant au pouvoir de refroidissement en [$erg.s^{-1}.cm^{3}$]. La figure \ref{fig:CPfinal} montre le refroidissement que l'on calcule grâce à RADEX pour un gaz à la température cinétique T et à température du champ radiatif externe nul. Les résultats obtenus ont été comparés à la figure 1 du papier de Glover et Abel \textsuperscript{\cite{Glover}}. Le graphe labellisé H est obtenu avec un fichier de collision de H2 avec H contenant les 54 états quantiques de la molécule H2. Le graphe labellisé H' est obtenu avec un fichier de collisions H2 avec H et H+ contenant les 9 états vibrationnels nuls de la molécule H2. La densité de H+ a été prise à 1e-4 fois la densité H. Les rapports de densités sont importants pour établir les populations même si ultimement on divise par les densités. 
+
+\begin{figure}[]
+\centering
+\includegraphics[width=14.0cm,height=9cm]{CPfinal.png}
+\caption{Pouvoir de refroidissement de H2 en fonction des différents collisionneurs}
+\label{fig:CPfinal}
+\end{figure}
+
+\subsection{Réchauffement du gaz en expansion par H2}
+Les figures \ref{fig:ZCOOL1} et  \ref{fig:dTCOOL1} montrent le réchauffement collisionnel du gaz par H2 avec H et H+ et son impact sur la température calculé à différents $z$ grâce aux données déduites du modèle par l'intégrateur et au programme RADEX. La densité de H2 a été prise à un rapport constant pour simplifier de 6.3e-7 fois la densité de H\textsuperscript{\cite{Galli} \cite{Flower}}.   
+\begin{figure}[]
+\centering
+\includegraphics[width=14.0cm,height=9cm]{Zcoolfinal.png}
+\caption{Réchauffement net par collision de H2 avec H et H+}
+\label{fig:ZCOOL1}
+\end{figure}
+
+\begin{figure}[]
+\centering
+\includegraphics[width=14.0cm,height=9cm]{dTcoolfinal.png}
+\caption{Impact du réchauffement sur la température}
+\label{fig:dTCOOL1}
+\end{figure}
+Le temps de Hubble est d'environ 4e17 secondes. Lorsqu'on intègre entre $z=200$ et $z=10$ le réchauffement induit une augmentation d'environ 0.01 K. C'est pourquoi il est tout à fait justifié de négliger la contribution du réchauffement moléculaire dans la partie \ref{IEEDT}
+
+
+%\subsection{Réchauffement du gaz par HD}
+%La figure \ref{fig:ZCOOL} montre le réchauffement collisionnel du gaz par H2 avec H et H+ calculé à différents $z$ grâce aux données déduites du modèle par l'intégrateur et au programme RADEX. La densité de H2 a été prise à un rapport constant pour simplifier de 6.3e-7 fois la densité de H\textsuperscript{\cite{Galli} \cite{Flower}} .  
+
+
+
+
+
+
+
+\begin{comment}
+\subsection{Réchauffement/Refroidissement}
+Dérivons le refroidissement et le réchauffement pour une seule molécule en présence de p collisionneurs dans le cas stationnaire, pour un champ de rayonnement isotrope en négligeant les termes 4 et 5 de la  section 0.4.1.
+
+On a que : $0=\sum\limits_{j>i} n_jA_{ji}-n_i\sum\limits_{j<i} A_{ij}+\sum\limits_{j<i} n_jB_{ji}J_{ij}+\sum\limits_{j>i} n_jB_{ji}J_{ji}-n_i\sum\limits_{j<i}B_{ij}J_{ij}+\\
+\sum\limits_p\left(\sum\limits_{j<i}n_p n_j C_{ji}-n_pn_i\sum\limits_j C_{ij}+n_p\sum\limits_{j>i}n_j C_{ji}\right)$
+
+Les populations ne changent pas, cela permet de considérer que tous les états nouvellements excités se désexcitent avec une probabilité égale à 1. On décompose cette probabilité certaine en sous probabilités de désexcitation radiative et collisionnelle :
+$j>i, 1=P_{ji}^r+P_{ji}^c$ avec $P_{ji}^r= \frac{A_{ji}+B_{ji} J_{ji}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$ et $P_{ji}^c= \frac{\sum\limits_p C_{jip}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$
+
+On considère que le refroidissement d'intérêt est uniquement l'énergie de la partie qui a été excitée collisionnellement puis suivie d'une désexcitation radiative,
+ $\Lambda = \sum\limits_p\sum\limits_{j>i}\sum\limits_i n_p n_i C_{ijp} P_{ji}^r E_{ij}$
+
+et que le réchauffement d'intérêt est uniquement l'énergie de la partie qui a été excitée radiativement puis désexcitée collisionnellement.
+ $\Gamma = \sum\limits_{j>i}\sum\limits_i n_i B_{ji} J_{ji} P_{ji}^c E_{ji}$
+
+
+Soit Prji et Pcji les probabilités qu'une désexcitation fut une désexcitation radiative ou collisionnelle du niveau j vers le niveau i. Dit autrement, Pr est la probabilité d'une désexcitation radiative du niveau j vers le niveau i sachant qu'il y a eu une désexcitation du niveau j vers le niveau i et Pc est la probabilité d'une désexcitation collisionnelle du niveau j vers le niveau i sachant qu'il y a eu une désexcitation du niveau j vers le niveau i :
+$j>i, 1=P_{ji}^r+P_{ji}^c$ avec $P_{ji}^r= \frac{A_{ji}+B_{ji} J_{ji}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$ et $P_{ji}^c= \frac{\sum\limits_p C_{jip}}{A_{ji}+B_{ji} J_{ji}+\sum\limits_p n_p C_{jip}}$
+Pr et Pc sont donc des probabilités conditionnelles à cause du "sachant qu'il y a eu désexcitation du niveau j vers le niveau i".
+
+Soit des processus de désexcitation ou d'excitation amenant au niveau j, modélisé par des termes sources S>0.
+Soit des processus de désexcitation ou d'excitation sortant du niveau j, modélisé par des termes dissipatifs D>0.
+ $\frac{dn_i}{dt}= S1+S2+S3+...-D1-D2-D3-...$
+Ces termes sources désignent les nouveaux états excités, par exemple S1 pourrait être les excitations collisionnelles vers le niveau i.
+La part des nouveaux états excité 
+\end{comment}
+
 \addcontentsline{toc}{chapter}{Conclusion} 
 \section*{Conclusion}
-Notre équipe s'est formée et a compris dans l'ensemble le modèle $\Lambda CDM$. Bien connaître son sujet était un objectif préalable avant toute modélisation. Un intégrateur avec un modèle $\Lambda CDM$ simplifié a ensuite été développé. Il fourni le facteur d'échelle en fonction du temps ainsi que les températures radiatives et baryoniques. Ces dernières, avec les densités particulaires sont les variables d'importance pour étudier la chimie. Le programme RADEX a ensuite été utilisé pour résoudre les populations de l'équilibre statique de la molécule $H_2$. Dans la suite du stage il est prévu :
+Notre équipe s'est formée et a compris dans l'ensemble le modèle $\Lambda CDM$. Bien connaître son sujet était un objectif préalable avant toute modélisation. Un intégrateur avec un modèle $\Lambda CDM$ simplifié a ensuite été développé. Il fourni le facteur d'échelle en fonction du temps ainsi que les températures radiatives et baryoniques. Ces dernières, avec les densités particulaires sont les variables d'importance pour étudier la chimie. Le programme RADEX a ensuite été utilisé pour résoudre les populations à l'état stationnaire de la molécule $H_2$. Un code qui calcule le refroidissement/réchauffement moléculaire collisionnel a dans la suite été développé. Ce dernier a été appliqué au calcul du réchauffement moléculaire par H2 du gaz primordial justifiant l'hypothèse simplificatrice qui consistait à le négliger.
 
+Un futur stagiaire pourrait :
 \begin{itemize}
 	\item [$\bullet$] Mettre à jour les résultats préliminaires avec la fraction d'ionisation résultant de la loi de Saha
-	\item [$\bullet$] Augmenter la taille du réseau avec l'ajout de la molécule HD par exemple
-	\item [$\bullet$] Mettre à jour les fichiers de collisions
+	\item [$\bullet$] Mettre à jour les fichiers de collisions avec des plages de températures plus grandes couvrant d'avantage l'espace des décalages vers le rouge.
 	\item [$\bullet$] Préciser les termes de création et de destruction de molécules, i.e. avoir un modèle de chimie réaliste
-	\item [$\bullet$] Avoir une formule moins controversée et plus réaliste pour le terme d'interaction Thompson photons-électrons. 
 	\item [$\bullet$] Faire un code similaire à RADEX dans la modélisation du transfert de rayonnement et de son caractère non LTE mais donnant les populations hors équilibre statique
-	\item [$\bullet$] Prendre en compte les interactions avec les molécules dans l'équation d'évolution de la température baryonique 
+	\item [$\bullet$] Commencer à réfléchir sur le refroidissement moléculaire des premières étoiles et faire un modèle d'effondrement
 \end{itemize}
-
-Ceci nous permettra de calculer les densités particulaires et non seulement les rapport ou les proportions de populations afin de pouvoir calculer précisément le refroidissement.
-
-S'il reste du temps, il est enfin prévu de réaliser l'objectif initial, c'est à dire la modélisation de l'effondrement menant aux étoiles POP III. C'est une modélisation pleine de défis. Afin de rester réaliste dans ses ambitions, un modèle 2D non turbulent d'une bulle de gaz dépendant d'un rayon et du temps sera probablement implémenté. L'amélioration continuelle de la puissance de calcul des processeurs joue en notre faveur. 
-
+\newpage
 \appendix
 
 \chapter{Intégrateur et Programmes}
 L'ensemble des codes (C, python) et ressources (pdf, code latex, images...) sont disponibles sur la page \url{https://github.com/ANDREMIV/stageM2}
 
-L'intégrateur est une implémentation de la méthode Runge-Kutta d'ordre 6 en C. Les résultats sont ensuite mis en forme par des scripts python via la bibliothèque matplotlib. 
+L'intégrateur est une implémentation de la méthode Runge-Kutta d'ordre 6 en C. Les résultats sont ensuite mis en forme par des scripts python via la bibliothèque matplotlib.
+
+En bonus les populations des 54 niveaux de H2 calculé par Radex avec les résultats de notre intégrateur, cela afin de mettre en lumière le travail d'automatisation réalisé, permettant d'analyser le fichier de collisions d'une molécule et d'afficher ses populations en des groupements amoindris.
+\begin{figure}[]
+\centering
+\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.0.png}
+%\caption{Impact du réchauffement sur la température}
+%\label{fig:dTCOOL}
+\end{figure}
+\begin{figure}[]
+\centering
+\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.1.png}
+%\caption{Impact du réchauffement sur la température}
+%\label{fig:dTCOOL}
+\end{figure}
+\begin{figure}[]
+\centering
+\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.2.png}
+%\caption{Impact du réchauffement sur la température}
+%\label{fig:dTCOOL}
+\end{figure}
+\begin{figure}[]
+\centering
+\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.3.png}
+%\caption{Impact du réchauffement sur la température}
+%\label{fig:dTCOOL}
+\end{figure}
+\begin{figure}[]
+\centering
+\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.4.png}
+%\caption{Impact du réchauffement sur la température}
+%\label{fig:dTCOOL}
+\end{figure}
+\begin{figure}[]
+\centering
+\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.5.png}
+%\caption{Impact du réchauffement sur la température}
+%\label{fig:dTCOOL}
+\end{figure}
 
 %\section{Formules utiles de Transfert de Rayonnement}
 %\section{Le programme Radex}
@@ -682,6 +774,9 @@ The chemistry of the early Universe, Carla Marla Coppola and Daniele Galli
 \bibitem{Flower} 
 The ortho:para $H_2$ ratio in the primordial gas, D. R. Flower and G. Pineau des Forêts
 \\Mon. Not. R. Astron. Soc. 316, 901-905 (2000)
+
+\bibitem{PEEBLESBOOK} 
+Principles of Physical Cosmology by Phillip James Edwin Peebles 1993
 
 \bibitem{Galli} 
 The Dawn of Chemistry, Daniele Galli and Francesco Palla
@@ -709,6 +804,13 @@ INTRODUCTION A LA RELATIVITE GENERALE, Luc Blanchet
 \bibitem{RADEX} 
 RADEX
 \\\url{https://arxiv.org/pdf/0704.0155.pdf}
+
+\bibitem{KWO} 
+Physics and Chemistry of the Interstellar Medium Sun Kwo
+
+\bibitem{Glover}
+Uncertainties in H2 and HD chemistry and cooling and their role in early structure formation, Glover and Abel
+\\doi:10.1111/j.1365-2966.2008.13224.x
 
 
 
