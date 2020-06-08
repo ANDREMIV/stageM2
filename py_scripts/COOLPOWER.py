@@ -126,7 +126,7 @@ for i in range(1,L,1):
     X[i-1]=float(B[0])
     Y[i-1]=1e7*float(B[1]) #J/s.cm^3 to erg/s.cm^3
 
-plt.plot(X,Y,'-.',label="H'")
+#plt.plot(X,Y,'-.',label="H'")
 f.close()
 
 

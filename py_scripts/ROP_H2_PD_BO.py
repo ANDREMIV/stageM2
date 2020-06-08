@@ -41,7 +41,7 @@ ax.invert_xaxis()
 plt.ylabel('Ortho Para ratio')
 plt.xlabel('cosmological doppler shift Z')
 plt.plot(X,Y,label="Radex H + p")
-plt.plot(X,W,'g.',label="Boltzman's Trad")
+plt.plot(X,W,'g-.',label="Boltzman's Trad")
 plt.plot(X,Z,'r--',label="Boltzman's Tbar")
 f.close()
 
