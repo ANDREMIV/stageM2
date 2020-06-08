@@ -257,7 +257,7 @@ for i in range(0,L,1):
     Y[i]=float(B[2])
     Z[i]=float(B[3])
 
-plt.plot(X,Z,label="Tbar Bxe(Tbar)")
+#plt.plot(X,Z,label="Tbar Bxe(Tbar)")
 
 f.close()
 

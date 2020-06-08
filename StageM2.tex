@@ -87,7 +87,7 @@
 
 % Title
 \rule{\linewidth}{0.3mm} \\[0.4cm]
-{ \huge \bfseries\color{blue!70!black} Calcul du refroidissement du gaz primordial pour la formation des étoiles de population III \\[0.4cm] }
+{ \huge \bfseries\color{blue!70!black} Calcul du refroidissement moléculaire du gaz primordial pour la formation des étoiles de population III \\[0.4cm] }
 \rule{\linewidth}{0.3mm} \\[1cm]
 {\large \bfseries Organisme d'accueil : OSUG IPAG}\\[1cm]
 % \includegraphics[width=0.3\textwidth]{logo-isae-supaero}\\[1cm]
@@ -103,7 +103,7 @@
   \begin{flushright} \large
     \emph{\color{orange!80!black}Sous la direction de :} \\
     M.~\textsc{Faure} Alexandre (CNRS)\\
-    M.~\textsc{Hilly-Blant} Pierre (UGA)\\
+    M.~\textsc{Hily-Blant} Pierre (UGA)\\
   \end{flushright}
 \end{minipage}\\[1cm]
 
@@ -129,38 +129,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 %\maketitle
 \renewcommand{\contentsname}{Sommaire}
 \renewcommand{\bibname}{Références}
@@ -173,7 +141,7 @@
 
 \section*{Remerciements}
 \addcontentsline{toc}{chapter}{Remerciements} 
-Je remercie expréssement mes deux maîtres de stage M. \textsc{Faure} Alexandre et M. \textsc{Hilly-Blant} Pierre pour l'encadrement du stage, leurs encouragements, leurs conseils ainsi que leur aide apportée à la réalisation de ce rapport.
+Je remercie expréssement mes deux maîtres de stage M. \textsc{Faure} Alexandre et M. \textsc{Hily-Blant} Pierre pour l'encadrement du stage, leurs encouragements, leurs conseils ainsi que leur aide apportée à la réalisation de ce rapport.
 
 Je remercie aussi M. \textsc{Henri} Gilles pour sa disponibilité sans faille à répondre à mes nombreuses interrogations.
 
@@ -184,13 +152,13 @@ Finalement j'exprime ma gratitude envers mes parents qui m'ont légué des valeu
 \addcontentsline{toc}{chapter}{Introduction} 
 \addcontentsline{toc}{section}{Missions effectuées}
 \addcontentsline{toc}{section}{Conventions utilisées}
-La formation des premières étoiles, dites de population III, a lieu avant l'époque de réionisation, à un décalage vers le rouge cosmologique $\approx$20. Bien que les contraintes observationnelles directes sur la formation de ces premières étoiles soient inexistantes, des contraintes indirectes seront obtenues dans les 10 prochaines années. D'ailleurs, plusieurs interféromètres radio observant la raie de l'hydrogène atomique à 21 cm, décalée vers le rouge, ont d'ores et déjà commencé a accumulé des données, et de futurs instruments tels que SKA, l'E-ELT, ou le JWST, produiront des images du milieu intergalactique neutre et des galaxies à des redshifts $>$10.
+La formation des premières étoiles, dites de population III, a lieu avant l'époque de réionisation, à un décalage vers le rouge cosmologique $\approx$20. Bien que les contraintes observationnelles directes sur la formation de ces premières étoiles soient inexistantes, des contraintes indirectes seront obtenues dans les 10 prochaines années. D'ailleurs, plusieurs interféromètres radio observant la raie de l'hydrogène atomique à 21 cm, décalée vers le rouge, ont d'ores et déjà commencé à accumuler des données, et de futurs instruments tels que SKA, l'E-ELT, ou le JWST, produiront des images du milieu intergalactique neutre et des galaxies à des redshifts $>$10.
 
-Une question fondamentale pour la formation des premières étoiles est celle du refroidissement du gaz baryonique piégé dans les halos de matière noire. De l'efficacité de ce refroidissement dépendra la masse des premières étoiles, et ainsi la rétroaction sur l'évolution de la matière baryonique au cours de la naissance des premières structures. \begin{comment}D'après le modèle $\Lambda $CDM, la nucléosynthèse primordiale crée principalement des atomes d'hydrogène et d'Hélium. Avant les premières étoiles, les molécules régissant le refroidissement moléculaires sont alors simples. Dans mon stage nous nous sommes concentré sur H2. Les détails de la formation de H2, et notamment de ses formes ortho et para, sont donc essentiels.\end{comment}
+Une question fondamentale pour la formation des premières étoiles est celle du refroidissement du gaz baryonique piégé dans les halos de matière noire. De l'efficacité de ce refroidissement dépendra la masse des premières étoiles, et ainsi la rétroaction sur l'évolution de la matière baryonique au cours de la naissance des premières structures. \begin{comment}D'après le modèle $\Lambda $CDM, la nucléosynthèse primordiale crée principalement des atomes d'hydrogène et d'Hélium. Avant les premières étoiles, les molécules régissant le refroidissement moléculaire sont alors simples. Dans mon stage nous nous sommes concentré sur H2. Les détails de la formation de H2, et notamment de ses formes ortho et para, sont donc essentiels.\end{comment}
 
-Il s'agit d'abord de simuler un univers homogène et isotrope en expansion avec un modèle $\Lambda$CDM de la période de recombinaison jusqu'à l'époque de formation des premières étoiles. Ceci nous permet d'avoir des conditions initiales propres pour le calcul du refroidissemenet moléculaire des premières étoiles.
+Il s'agit d'abord de simuler un univers homogène et isotrope en expansion avec un modèle $\Lambda$CDM de la période de recombinaison jusqu'à l'époque de formation des premières étoiles. Ceci nous permet d'avoir des conditions initiales pour le calcul du refroidissement moléculaire où se forment les premières étoiles.
 
-La simulation d'univers homogène et isotrope pour les conditions initiales sur la chimie n'est pas un travail inédit en soi, d'autres chercheurs ont déjà effectué des recherches similaires\textsuperscript{\cite{Coppola} \cite{Flower}}. Le rapport de la mission Planck 2018\textsuperscript{\cite{Planck2018}} et de nouvelles données de calcul quantique dernier cri de taux de collisions moléculaires ont donné l'opportunité d'améliorer et de compléter les résultats existants. 
+La simulation d'univers homogène et isotrope pour les conditions initiales sur la chimie n'est pas un travail inédit en soi, d'autres chercheurs ont déjà effectué des recherches similaires\textsuperscript{\cite{Coppola} \cite{Flower}}. Mais le rapport de la mission Planck 2018\textsuperscript{\cite{Planck2018}} et de nouvelles données collisionnelles de grande précision offrent l'opportunité d'améliorer et de compléter les résultats existants. 
 
 La problématique de notre sujet demande d'avoir une vue d'ensemble sur différentes spécialités en physique, d'être pluridisciplinaire. La petite équipe n'est pas experte dans tous les domaines. Notamment le modèle $\Lambda CDM$ où il a fallu se mettre à jour. Par conséquent le début du stage a concerné la compréhension dans les grandes lignes de ce modèle, afin de pouvoir l'utiliser en version simplifié et l'appliquer à notre objectif de calcul du refroidissement moléculaire.
 
@@ -201,7 +169,7 @@ Dans ce rapport l'auteur entremêle des généralités -- pour fournir un minimu
 
 \subsection*{Missions effectuées}
 
-J'ai été amené à réviser la relativité générale, le transfert de rayonnement, la mécanique quantique, la chimie moléculaire à me documenter sur le modèle $\Lambda$CDM, à redémontrer et fournir les formules utilisées dans les publications de références et de notre modèle, à programmer en C, Fortran, python, bash, à réaliser un intégrateur Runge Kutta, à interfacer des programmes entre eux, à produire des courbes/graphiques de résultats, à faire des présentations, à écrire un rapport de stage.
+J'ai été amené à revoir les bases de la relativité générale, du transfert de rayonnement, de la mécanique quantique, de la chimie moléculaire, à me documenter sur le modèle $\Lambda$CDM, à redémontrer et fournir les formules utilisées dans les publications de références et de notre modèle, à utiliser le programme RADEX, à programmer en C, Fortran, python, bash, à réaliser un intégrateur Runge Kutta, à interfacer des programmes entre eux, à produire des courbes/graphiques de résultats, à faire des présentations, à écrire un rapport de stage.
 
 %\section*{Quelques rappels de Relativité Générale}
 
@@ -210,7 +178,7 @@ J'ai été amené à réviser la relativité générale, le transfert de rayonne
 
 Dans ce rapport a été utilisé :
 \begin{itemize}
-	\item[$-$] La convention de signe $(-++)$ en rapport à la classification des signes établi par Misner, Thorne, et Wheeler\textsuperscript{\cite{Signes}}.
+	\item[$-$] La convention de signe $(-++)$ en rapport à la classification des signes établi par Misner, Thorne, et Wheeler\textsuperscript{\cite{Signes}}, correspondant respectivement à la définition au signe près du tenseur métrique, du tenseur de courbure et du tenseur d'Einstein. La signature de la métrique utilisée est donc $(+---)$.
 	\item[$-$] Les unités SI, pas d'unités naturelles.
 	\item[$-$] La définition de la quadrivitesse suivante : $u^\mu = \frac{{\rm d}x^\mu}{{\rm d}\tau}$ avec $\tau$ le temps propre
 	\item[$-$] $\rho$ peut être une densité massique ou énergétique (dépend du contexte).
@@ -221,21 +189,21 @@ Dans ce rapport a été utilisé :
 \section{Préliminaire : l'Univers en expansion}
 
 \subsection{Le principe cosmologique et la métrique FLRW}
-En Relativité Générale, l'équation d'Einstein permet de faire évoluer la forme de l'espace temps -- associé à la métrique et au champ d'accélération gravifique -- en fonction de la distribution d'énergie ou de masse sur cette espace temps. Problème, pour qu'une distribution d'énergie dans l'univers ait un sens, il faut d'abord définir une forme d'univers sur lequel on place les masses. La condition initiale de la forme de l'univers pose alors un certain problème qu'on résoud grâce au principe cosmologique.
+En Relativité Générale, l'équation d'Einstein permet de faire évoluer la forme de l'espace temps -- associé à la métrique et au champ d'accélération gravifique -- en fonction de la distribution d'énergie ou de masse sur cet espace temps. Problème, pour qu'une distribution d'énergie dans l'univers ait un sens, il faut d'abord définir une forme d'univers sur lequel on place les masses. La condition initiale de la forme de l'univers pose alors un certain problème qu'on résoud grâce au principe cosmologique.
 
-En termes simples, le principe cosmologique d'homogénéité et d'isotropie spatial est l'hypothèse selon laquelle il n'y a pas d'endroit ni de direction privilégié dans l'espace spatial. On place un observateur cosmique en chacun des points de l'espace spatial et la métrique associée ne dépend pas du point spatial où l'on se situe car ils sont tous équivalents. Points spatiaux car l'univers n'est pas identique à lui même par translation dans le temps. Le temps relié à ces observateurs s'appelle le temps cosmique. Un espace spatial à courbure constante est un espace spatial homogène et isotrope.  La constatation expérimentale de l'expansion de l'univers permet de justifier l'apparition d'un facteur d'échelle dépendant du temps cosmique. La métrique de Friedmann–Lemaître–Robertson–Walker rend compte de ces hypothèses.
+En termes simples, le principe cosmologique d'homogénéité et d'isotropie spatiale est l'hypothèse selon laquelle il n'y a pas d'endroit ni de direction privilégiés dans l'espace spatial. On place un observateur cosmique en chacun des points de l'espace spatial 3D et la métrique associée ne dépend pas du point spatial où l'on se situe car ils sont tous équivalents. Points spatiaux car l'univers n'est pas identique à lui même par translation dans le temps. Le temps relié à ces observateurs s'appelle le temps cosmique. Un espace spatial à courbure constante est un espace spatial homogène et isotrope.  La constatation expérimentale de l'expansion de l'univers permet de justifier l'apparition d'un facteur d'échelle dépendant du temps cosmique. La métrique de Friedmann–Lemaître–Robertson–Walker (FLRW) rend compte de ces hypothèses.
 
-En coordonnées sphériques $(r, \theta, \phi)$ la métrique FLRW, se note :
+En coordonnées généralisées $x= (t,r, \theta, \phi)$ la métrique FLRW avec la signature $(+---)$, se note :
 
 \begin{equation}
-\boxed{ c^2 {\rm d}\tau^2 = c^2 {\rm d}t^2 - a(t)^2 \left (\frac{{\rm d}r^2}{1 - k r^2} + r^2 ({\rm d}\theta^2 + \sin^2 \theta \; {\rm d} \phi^2) \right )}
+\boxed{ c^2 {\rm d}\tau^2 \simeq g_{\mu \nu}dx^{\mu}dx^{\nu} = c^2 {\rm d}t^2 - a(t)^2 \left (\frac{{\rm d}r^2}{1 - k r^2} + r^2 ({\rm d}\theta^2 + \sin^2 \theta \; {\rm d} \phi^2) \right )}
 \end{equation}
 
-où $a(t)$ est le facteur d'échelle, $k$ est le facteur de courbure : $k = \{-1,0,1\}$ pour un espace respectivement à courbure ouverte (correspondant à une géométrie hyperbolique), à courbure nulle (correspondant à l'espace euclidien) et à courbure fermée (correspondant à la surface d'une sphère de dimension 4), $t$ est le temps cosmique.
+où $g_{\mu \nu}$ est le tenseur métrique, $t$ est le temps cosmique, $\tau$ le temps propre, $a(t)$ est le facteur d'échelle, $k$ est le facteur de courbure : $k = \{-1,0,1\}$ pour un espace respectivement à courbure ouverte (correspondant à une géométrie hyperbolique), à courbure nulle (correspondant à l'espace euclidien) et à courbure fermée (correspondant à la surface d'une sphère de dimension 4), $t$ est le temps cosmique. Si le facteur de courbure est nul, $\theta$, $\phi$ et $r$ correspondent aux coordonnées sphériques usuelles.
 
-Les observations ne permettent pas encore de se prononcer sur la valeur du facteur de courbure $k$ de l'Univers mais elles suggèrent que la courbure actuelle de l'espace est plus ou moins nulle $ \kappa \approx 0 \pm [\num{1e-4}]$. Dans ces conditions prendre $k=0$ n'est pas déconseillé\textsuperscript{\cite{Weinberg}} et permet de simplifier les raisonnements et formules. Dans la suite de ce rapport nous nous restreindrons à $k=0$. 
+Les observations ne permettent pas encore de se prononcer sur la valeur du facteur de courbure $k$ de l'Univers mais elles suggèrent que la courbure spatiale actuelle de l'espace est plus ou moins nulle $ \kappa \approx 0 \pm [\num{1e-4}]$. $\kappa$ est différent de la courbure scalaire $R$ de l'équation d'Einstein et est relié au facteur de courbure par $\kappa = \frac{k}{a(t)^2}$. Dans ces conditions prendre $k=0$ n'est pas déconseillé\textsuperscript{\cite{Weinberg}} et permet de simplifier les raisonnements et formules. Dans la suite de ce rapport nous nous restreindrons à $k=0$. 
 \subsubsection{Distances physiques}
-Soient des coordonnées cartésiennes avec un espace plat. Soient deux points au même instant $t_0$ séparés par une distance comobile $\Delta X$. Pour évaluer la distance physique $L$ séparant ces deux points, on peut faire propager un photon les reliant et multiplier le temps de parcours par la vitesse de la lumière pour avoir la-dite distance physique. On a donc un intervalle de genre lumière et on montre sans difficultés que :
+Soient des coordonnées cartésiennes avec un espace plat. Soient deux points au même instant $t_0$ séparés par une distance comobile $\Delta X$. Pour évaluer la distance physique $L$ séparant ces deux points, on peut faire propager un photon les reliant et multiplier le temps de parcours par la vitesse de la lumière pour avoir la-dite distance physique. On a donc un intervalle de genre lumière et on montre sans difficulté que :
 \begin{equation}
 \boxed{ L=\int\limits_0^{\Delta X} a(t)dx}
 \end{equation}
@@ -245,12 +213,12 @@ avec \begin{equation}
 et ainsi de suite pour $t'$.
 De sorte qu'au premier ordre il tient que :
 \begin{equation} \label{eq:foL}
-\boxed{ L \approx a(t_0) * \Delta X}
+\boxed{ L \approx a(t_0) \times \Delta X}
 \end{equation}
 \subsubsection{Décalage vers le rouge cosmologique}
 Le décalage vers le rouge $z$ est par définition : 
 \begin{equation}
-\boxed{1+z = \frac{\lambda_{\mathrm{obsv}}}{\lambda_{\mathrm{emit}}}}
+\boxed{1+z = \frac{\lambda_{\mathrm{obs}}}{\lambda_{\mathrm{emit}}}}
 \end{equation}
 
 Le décalage vers le rouge cosmologique est le décalage dû à l'expansion de l'univers. En considérant que le nombre de noeuds d'un photon dans une cavité du vide de longeur $L$ à l'instant $t_0$ est conservé au cours du temps, il est montré en utilisant la formule approchée \ref{eq:foL}, l'expression exacte que :
@@ -261,11 +229,12 @@ Le décalage vers le rouge cosmologique est le décalage dû à l'expansion de l
 \subsection{\uppercase{é}quation d'Einstein avec la métrique FLRW}
 Il est rappelé l'équation d'Einstein :
 \begin{equation} \label{eq:EFE}
-\boxed{R_{\mu \nu} \ - \ \frac{1}{2} \, g_{\mu \nu} \, R  \  =  \kappa T_{\mu \nu}}
+\boxed{R_{\mu \nu} \ - \ \frac{1}{2} \, g_{\mu \nu} \, R  \  =  \frac{8 \pi G}{c^4} T_{\mu \nu}}
 \end{equation}
+Où $g_{\mu \nu}$ est le tenseur métrique, $R_{\mu \nu}$ le tenseur de Ricci, $R$ la courbure scalaire de l'espace-temps égale à la contraction du tenseur de Ricci,  $G$ la constante gravitationnelle de Newton, $c$ la célérité de la lumière dans le vide et $T_{\mu \nu}$ le tenseur énergie impulsion.
 Que prendre alors pour le tenseur énergie-impulsion ?
 \subsubsection{Le fluide parfait}
-Les formes d'énergies sont modélisées dans l'univers comme fesant partie d'un fluide parfait de densité énergétique $\rho$ au repos par rapport à un observateur cosmique exerçant une pression $P$. Son équation qui se déduit de sa formulation en physique classique est : 
+Les formes d'énergies sont modélisées dans l'univers comme faisant partie d'un fluide parfait exerçant une pression $P$ de densité énergétique $\rho$ au repos par rapport à un observateur cosmique. Son équation qui se déduit de sa formulation en physique classique est : 
 
 \begin{equation} \label{eq:FP}
 \boxed{T_{\mu\nu} = (P + \rho) u_\mu u_\nu - P g_{\mu\nu}}
@@ -275,11 +244,12 @@ Les formes d'énergies sont modélisées dans l'univers comme fesant partie d'un
 En égalisant des deux cotés de l'équation d'Einstein, il se déduit après un long calcul\textsuperscript{\cite{cours_RG1}} les équations de Friedmann :
 
 \begin{equation} \label{eq:F1}
-\boxed{3 \left(\frac{H^2}{c^2} + \frac{K}{a^2 c^2} \right) = \frac{8 \pi G}{c^4} \rho}
+\boxed{H^2 = \frac{8 \pi G}{3}\rho - \frac{kc^2}{a^2}}
 \end{equation}
 \begin{equation} \label{eq:F2}
-\boxed{- 2 \frac{\dot H}{c^2} - 3 \frac{H^2}{c^2} - \frac{K}{a^2 c^2} =  \frac{8 \pi G}{c^4} P }
+\boxed{\dot{H} + H^2 = \frac{\ddot{a}}{a} = - \frac{4\pi G}{3c^2}\left(\rho + 3P\right) }
 \end{equation}
+Où $H$ est la constante de Hubble dépendante du temps $H=\frac{\dot{a}}{a}$, $\dot{H} = \frac{dH}{dt}$ et $K$
 On peut réexprimer la seconde équation grâce à la première en une forme plus pratique qui donne la dérivée de la densité énergétique :
 \begin{equation} \label{eq:F3}
 \boxed{\frac{{\rm d}\rho}{{\rm d}t} = - 3 H (P + \rho) }
@@ -296,17 +266,17 @@ Si la densité est composé de deux espèces différentes comme par exemple la d
 La densité critique énergétique est la densité telle que l'expansion est nulle pour une courbure nulle ou négligeable. Son expression formelle se comprend de sa définition à partir de l'équation de Friedmann 1 : (voir eq: \ref{eq:F1})
 
 \begin{equation} \label{eq:DEC}
-\boxed{\rho_{\rm c} \equiv \frac{3 c^2 H^2 }{8 \pi G} }
+\boxed{\rho_{\rm c}(t) \equiv \frac{3 c^2 H(t)^2 }{8 \pi G} }
 \end{equation}
 
 La densité d'énergie d'un certain type est souvent exprimé par son rapport sans dimension avec la densité critique appelé paramètre de densité :
 
 \begin{equation} \label{eq:OD}
-\boxed{\Omega \equiv \frac{\rho}{\rho_{\rm c}} }
+\boxed{\Omega(t) \equiv \frac{\rho(t)}{\rho_{\rm c}(t)} }
 \end{equation}
 
 \subsubsection{Intégrateur et solutions classiques}
-Un intégrateur qui résout l'expansion en fonction du temps a dû être développé. Les résultats de notre intégrateur sur des cas d'écoles simples tel que l'Univers de De Sitter et l'Univers d'Einstein-De Sitter sont résumés dans la figure ~\ref{fig:UISC}. Le temps cosmique normalisé est le temps sans dimension : $t' = H_0 \times t$. Pour distinguer les deux courbes, des points discrêts ont été tracés au lieu d'une ligne continue. L'intégrateur reproduit parfaitement les courbes attendues. Le temps nul correspond à actuellement et le facteur d'échelle y est pris à 1. L'intégrateur remonte dans le temps. On retrouve dans l'univers de poussière d'Einstein-De Sitter que l'univers survit deux tiers du temps de Hubble : $\frac{2}{3H_0}$ 
+Un intégrateur qui résout l'expansion en fonction du temps a dû être développé.  L'intégrateur est une implémentation de la méthode Runge-Kutta d'ordre 6 en C. Les résultats de notre intégrateur dans des cas d'école simples tels que l'Univers de De Sitter\textsuperscript{\cite{cours_RG1}} et l'Univers d'Einstein-De Sitter\textsuperscript{\cite{cours_RG1}} sont résumés dans la figure ~\ref{fig:UISC}. Ces modèles d'univers sont simples et possèdent une solution analytique. Il s'agit simplement ici de vérifier que l'intégrateur fonctionne. Il n'y a aucun autre intérêt. L'intégrateur reproduit parfaitement les courbes attendues. Le temps cosmique normalisé est le temps sans dimension : $t' = H_0 \times t$. $H_0$ est la constante de hubble actuelle. Pour distinguer les deux courbes, des points discrets ont été tracés au lieu d'une ligne continue.  Le temps nul correspond à actuellement et le facteur d'échelle y est pris à 1($t_0=0, a(t_0)=1$). L'intégrateur remonte dans le temps. On retrouve dans l'univers de poussière d'Einstein-De Sitter que l'univers survit deux tiers du temps de Hubble : $\frac{2}{3H_0}$ 
 
 \begin{figure}[]
 
@@ -338,23 +308,22 @@ Un intégrateur qui résout l'expansion en fonction du temps a dû être dévelo
 $\Lambda$ est la constante cosmologique et CDM est l'acronyme de Cold Dark Matter. \begin{comment}C'est une théorie à paramètres. La fameuse matière noire n'est toujours pas identifiée. La valeur de la constante cosmologique est le résultat d'un ajustement. Néanmoins cette théorie permet d'expliquer avec une grande validité diverses constatations astrophysiques. Nous n'avons pas besoin d'en comprendre tous les détails pour poursuivre l'objectif de ce stage.\end{comment}
 
 \subsection{Valeurs des paramètres par la mission Planck 2018}
-Le tableau \ref{tab:PI} liste les valeurs utilisées dans notre modèle. Elles sont calculées ou prises dans le tableau 2 colonne "TT,TE,EE+lowE+lensing" du papier "Planck 2018 results. VI. Cosmological parameters"\textsuperscript{\cite{Planck2018}}.
+Le tableau \ref{tab:PI} liste les valeurs utilisées dans notre modèle. Elles sont calculées, fixées ou prises dans le tableau 2 page 15 colonne "TT,TE,EE+lowE+lensing" du papier "Planck 2018 results. VI. Cosmological parameters"\textsuperscript{\cite{Planck2018}}. Les paramètres sont ceux au temps présent actuel $t_0$. 
 \begin{table}
 \begin{center}
-\begin{tabular}{ m{5cm} m{5cm} } 
+\begin{tabular}{ m{5cm} m{5cm} m{5cm}} 
  \hline
- Paramètre & Valeur numérique\\ 
+ Description & Paramètre & Valeur numérique\\ 
  \hline
-$\Omega_\Lambda$ & 6.847e-1\\ 
-$\Omega_m$ & 3.153e-1\\ 
-$\Omega_{dm}$ & 2.660e-1\\ 
-$\Omega_b$ & 4.93e-2\\ 
-$\Omega_r$ & 9.28e-5\\
-$\Omega_K$ & 0.000\\
-$\Omega_\Lambda$ & 6.847e-1\\ 
-$z_{eq}$ & 3.402e3\\
-$T_0 [K]$ & 2.7255e0\\ 
-$H_0 [km s^{-1} Mpc^{-1}]$ & 6.736e1\\ 
+Densité d'énergie noire & $\Omega_\Lambda$ & 6.847e-1±0.0073\\ 
+Densité de matière noire et baryonique & $\Omega_m$ & 3.153e-1±0.0073\\ 
+Densité de matière noire & $\Omega_{dm}$ & 2.660e-1\\ 
+Densité de matière baryonique & $\Omega_b$ & 4.93e-2\\ 
+Densité de rayonnement (EM+neutrinos) & $\Omega_r$ & 9.28e-5\\
+Densité liée à la courbure spatiale & $\Omega_K$ & 0.000±0.002\\
+z équivalent & $z_{eq}$ & 3.402e3±26\\
+Température du corps noir & $T_0 [K]$ & 2.7255e0\\ 
+Constante de Hubble & $H_0 [km.s^{-1}.Mpc^{-1}]$ & 6.736e1±0.54\\ 
  \hline
 
 \end{tabular}
@@ -364,9 +333,9 @@ $H_0 [km s^{-1} Mpc^{-1}]$ & 6.736e1\\
 \end{table}
 
 \subsection{La constante cosmologique et l'énergie noire}
-L'équation d'einstein avec constante cosmologique s'écrit:
+L'équation d'Einstein avec constante cosmologique s'écrit:
 \begin{equation} \label{eq:EFEL}
-\boxed{R_{\mu \nu} \ - \ \frac{1}{2} \, g_{\mu \nu} \, R  \ + \ \Lambda \ g_{\mu \nu} \ =  \kappa T_{\mu \nu}}
+\boxed{R_{\mu \nu} \ - \ \frac{1}{2} \, g_{\mu \nu} \, R  \ - \ \Lambda \ g_{\mu \nu} \ =  \frac{8 \pi G}{c^4}  T_{\mu \nu}}
 \end{equation}
 On peut cependant interpréter la constante cosmologique comme un fluide parfait de densité d'énergie positive constante qu'on appelle énergie noire et de pression négative avec pour équation d'état :
 \begin{equation} \label{eq:EEL}
@@ -379,7 +348,7 @@ La méthode est de poser un nouveau tenseur énergie-impulsion qui inclut en son
 
 \subsection{La matière noire et baryonique froide}
 La matière noire est supposée interagir uniquement par gravité. On suppute aussi qu'elle est froide de sorte que seule son énergie de masse compte pour le calcul de la densité d'énergie. 
-Dans ce stage, la période d'intérêt fait que la température cinétique de la matière baryonique est constamment inférieure à 10 000K. Cette température est considérée comme froide en comparaison à l'énergie de masse. Pareillement à la température de la matière noire, la température baryonique n'intervient donc pas dans le calcul de la densité d'énergie, seule son énergie de masse compte. Cela revient à considérer que la matière est immobile et exerce une pression nulle.
+Dans ce stage, la période d'intérêt fait que la température cinétique de la matière baryonique est constamment inférieure à 10 000K. Cette température est considérée comme froide en comparaison à l'énergie de masse. Pareillement à la température de la matière noire, la température baryonique n'intervient donc pas dans le calcul de la densité d'énergie, seule son énergie de masse compte. Cela revient à considérer que la matière exerce une pression nulle.
 En conséquence son équation d'état est :
 \begin{equation} \label{eq:EEM}
 \boxed{P_m=0 \times \rho_m c^2}
@@ -391,7 +360,7 @@ D'après \ref{eq:F3S}, on obtient que :
 \boxed{\rho_{\rm m}(t) = \rho_{\rm m}(t_0) \left(\frac{a(t_0)}{a(t)}\right)^3}
 \end{equation}
 
-Cette dernière équation peut aussi se retrouver par un raisonnement sur la densité particulaire qui varie tel que 
+Cette dernière équation peut aussi se retrouver par un raisonnement sur la densité particulaire qui varie comme :
 \begin{equation} \label{eq:NP}
 \boxed{n(t) = n(t_0) \left(\frac{a(t_0)}{a(t)}\right)^3}
 \end{equation}
@@ -410,7 +379,7 @@ Par le même raisonnement on montre que la densité d'énergie radiative évolue
 \boxed{\rho_r(t) = \rho_r(t_0)  \left({\frac{a(t_0)}{a(t)}}\right)^4}
 \end{equation}
 
-Avec la distribution de planck on trouve le tenseur énergie impulsion du champ radiatif et le résultat bien connnu que la pression radiative vaut le tiers de l'énergie radiative (pour un corps noir) :
+Avec la distribution de Planck on trouve le tenseur énergie impulsion du champ radiatif et le résultat bien connnu que la pression radiative vaut le tiers de l'énergie radiative (pour un corps noir) :
 \begin{equation} \label{eq:EER}
 \boxed{P_r = \frac{1}{3} \times \rho_r}
 \end{equation}
@@ -423,13 +392,13 @@ Les neutrinos ont des masses nulles ou quasi-nulles et une vitesse égale ou pro
 \boxed{\rho_n \approx 0.68 \times \rho_r}
 \end{equation}
 La prise en compte de la densité énergétique des neutrinos en sus des photons permet de trouver une bonne estimation de $\Omega_{ro}$.
-\subsection{Intégrateur et solution simplifiée de l'expansion}
+\subsection{Intégrateur et solution de l'expansion}
 Au vu de ce qui a été dit depuis le début, l'équation de Friedmann 1 (\ref{eq:F1}) s'écrit pour nos conditions :
 
 \begin{equation} \label{eq:ELCDM}
 \boxed{a' = \sqrt{\Omega_{\Lambda}*a^2+\Omega_{m0}/a+\Omega_{ro}/a^2}}
 \end{equation}
-avec $a'$ la dérivée par rapport au temps cosmique normalisé. Le temps cosmique normalisé est le temps sans dimension : $t' = H_0 \times t$.  Le temps nul correspond à actuellement et le facteur d'échelle y est pris à 1. L'intégrateur remonte dans le temps. L'Univers survit une portion d'environ 0.95 du temps de Hubble. La figure \ref{fig:ULCDM} donne les résultats de notre intégrateur.
+avec $a'$ la dérivée par rapport au temps cosmique normalisé. Le temps cosmique normalisé est le temps sans dimension : $t' = H_0 \times t$.  Le temps nul correspond à actuellement et le facteur d'échelle y est pris à 1 ($t_0=0, a(t_0)=1$).  On obtient la figure \ref{fig:ULCDM} après avoir intégré \ref{eq:ELCDM}. L'intégrateur remonte dans le temps. L'Univers survit une portion d'environ 0.95 du temps de Hubble.
 
 \begin{figure}[]
 \centering
@@ -442,7 +411,7 @@ avec $a'$ la dérivée par rapport au temps cosmique normalisé. Le temps cosmiq
 %\section{L'époque de recombinaison}
 \section{\uppercase{é}changes d'énergie entre photons et électrons}
 \subsection{La température baryonique}
-On suppose que la matière interagit suffisament par collision pour justifier une hypothèse simplificatrice, celle d'une température baryonique $T_b$. Pleinement justifiée aux grands $z$, cette hypothèse n'est plus valable aux petits $z < 10$ où la densité et la température devient faible.
+On suppose que la matière interagit suffisament par collision pour justifier une hypothèse simplificatrice, celle d'une température baryonique $T_b$. Pleinement justifiée aux grands $z$, cette hypothèse est discutable aux petits $z$ où la densité devient faible.
 \subsubsection{Refroidissement adiabatique dû à l'expansion}
 L'hypothèse de De Broglie est employée afin d'appliquer le même raisonnement que celui de la conservation des noeuds d'une longeur d'onde dans une cavité. Il vient que $T_b$ évolue en $T_{b0} (1+z)^2$:
 
@@ -451,7 +420,7 @@ L'hypothèse de De Broglie est employée afin d'appliquer le même raisonnement 
 \end{equation}
 
 \subsection{Processus Compton}
-C'est le processus de diffusion d'un photon sur un électron libre, il a une importance capitale en cosmologie à cause de sa grande section efficace. La diffusion d’un photon sur un proton a quant à elle une section efficace environ mille fois plus faible et peut donc être négligée. On rappelle les résultats principaux. Dans le référentiel de l'électron au repos, le photon de longeur d'onde $\lambda$ arrivant sur l'électron définit une direction privilégiée. Dans cette configuration, l'électron ne peut que gagner de l'énergie. On note $\theta$ l'angle de déviation du photon par rapport à sa propre direction.
+C'est le processus de diffusion d'un photon sur un électron libre, il a une importance capitale en cosmologie à cause de sa grande section efficace. Cette dernière est inversement proportionnelle au carré de la masse, la diffusion d'un photon avec un proton peut donc être négligée. On rappelle les résultats principaux. Dans le référentiel de l'électron au repos, le photon de longeur d'onde $\lambda$ arrivant sur l'électron définit une direction privilégiée. Dans cette configuration, l'électron ne peut que gagner de l'énergie. On note $\theta$ l'angle de déviation du photon par rapport à sa propre direction.
 La variation de longeur d'onde vaut :
 \begin{equation} \label{eq:VLO}
 \boxed{\Delta\lambda=\frac{h}{m_e c}(1 - \cos \theta)}
@@ -462,23 +431,10 @@ La variation de longeur d'onde vaut :
 \boxed{\frac{d\sigma}{d\Omega} = \frac{1}{2} r_e^2 \left(\frac{\lambda}{\lambda'}\right)^{2} \left[\frac{\lambda}{\lambda'} + \frac{\lambda'}{\lambda} - \sin^2(\theta)\right]}
 \end{equation}
 
+
+Si l'électron n'est pas au repos, on peut toujours faire un changement de référentiel pour avoir l'électron au repos et appliquer la théorie du processus Compton, puis faire un changement de référentiel inverse pour revenir au référentiel initial où l'électron se meut. L'électron ou le photon peut alors avoir gagné ou perdu de l'énergie. On désigne par Processus Compton Inverse le cas où l'électron transfert de son énergie aux photons.
+
 La diffusion Thompson est la limite basse énergie de la diffusion Compton. Dans cette approximation, le photon accélère une particule chargée qui rayonne. Ce rayonnement est alors interprété comme étant la diffusion du photon sur la particule chargée. 
-
-\subsubsection{Processus Compton Inverse}
-Si l'électron n'est pas au repos, on peut toujours faire un changement de référentiel pour avoir l'électron au repos et appliquer la théorie du processus Compton, puis faire un changement de référentiel inverse pour revenir au référentiel initial où l'électron se meut. L'électron ou le photon peut alors avoir gagné ou perdu de l'énergie.
-%\subsubsection{Diffusion Thompson}
-
-
-\subsection{Chauffage des électrons par les photons}
-
-Pour calculer les échanges d'énergies entre les températures baryoniques et de rayonnement on montre que \textsuperscript{\cite{PEEBLESBOOK}} : 
-\begin{equation} \label{eq:ITBTR}
-\boxed{\frac{dT_b}{dt} = \frac{8\sigma_Ta_rT_r^4(T_r-T_m)}{3m_ec}\frac{x_e}{1+x_e}}
-\end{equation}
-
- où $\sigma_T$ est la section efficace de Thompson, $m_e$ la masse de l'électron, $a_r$ la constante de rayonnement et $x_e$ la fraction d'ionisation.
-
-Du fait de cette interaction, la distribution en fréquence des photons n'est plus exactement celle d'un corps noir.   
  
 \subsection{Fraction d'ionisation $x_e$}
 Par définition :
@@ -491,59 +447,70 @@ On peut utiliser dans un premier temps la loi de Saha-Langmuir valable pour une 
 \end{equation}
 Son utilisation ici est abusive car la fraction d'ionisation est proche de l'unité à 10000K pour l'hydrogène. Pour les résultats préliminaires il a été choisi de prendre une fraction d'ionisation constante égale à 4e-4\textsuperscript{\cite{Flower}}.
 
-Où $\chi_i$ est le potentiel d'ionisation pour ioniser de nouveau un atome déjà ionisé $i$ fois, $Z_i$ est sa fonction de partition. Cette loi permet d'obtenir la fraction d'ionisation d'un gaz d'hydrogène à la température $T$ :
+Où $\chi_i$ est le potentiel d'ionisation pour ioniser de nouveau un atome déjà ionisé $i$ fois, $Z_i$ est sa fonction de partition. Cette loi permet d'obtenir la fraction d'ionisation d'un gaz d'hydrogène à la température $T$ avec $\chi_H=13.6 eV$ :
 \begin{equation} \label{eq:XE}
-\boxed{\frac{x^2}{1-x} = \frac{1}{n_p+n_H} \left( \frac{2\pi m_ek_bT}{h^2}\right)^{\frac{3}{2}} \exp(\frac{-13.6}{k_bT})}
+\boxed{\frac{x_e^2}{1-x_e} = \frac{1}{n_p+n_H} \left( \frac{2\pi m_ek_bT}{h^2}\right)^{\frac{3}{2}} \exp(\frac{-\chi_H}{k_bT})}
 \end{equation}
 
-\subsection{Paramètre $z_{eq}$}
-Par définition, il correspond au décalage vers le rouge cosmologique où la densité énergétique de rayonnement est égale à celle de la matière. Par conséquent, on obtient une autre estimation du paramètre $\Omega_{ro} = \frac{\Omega_{m}}{1+z_{eq}}$. $z_{eq} = 3402$ voir \ref{tab:PI}. La température baryonique est environ égale à la température de rayonnement car le terme compensateur Compton est très important : $T_b \approx T_r$ de sorte que l'on utilise cette condition intiale dans notre programme.
+\subsection{Chauffage des électrons par les photons}
 
-\subsection{Intégrateur et évolution des températrures}\label{IEEDT}
-On néglige pour l'instant l'interaction des photons avec les molécules et atomes. Au vu de ce qui a été dit, la température baryonique évolue comme :
+Pour calculer les échanges d'énergies entre les températures baryoniques et de rayonnement on montre que \textsuperscript{\cite{PEEBLESBOOK}} : 
+\begin{equation} \label{eq:ITBTR}
+\boxed{\frac{dT_b}{dt} = \frac{8\sigma_Ta_rT_r^4(T_r-T_m)}{3m_ec}\frac{x_e}{1+x_e}}
+\end{equation}
+
+ où $\sigma_T = \frac{8\pi} 3 \left(\frac{q^2}{4\pi\varepsilon_0mc^2}\right)^2$ est la section efficace de Thompson = 6.652...e-29 $[m^2]$ pour l'électron, $m_e$ la masse de l'électron, $a_r = \frac{8 \pi^5 k^4}{15 h^3 c^3}$ = 7.565...e-16 $[J.m^{-3}.K^{-4}]$ la constante de rayonnement qui relie la densité d'énergie radiative d'un corps noir à sa température radiative et $x_e$ la fraction d'ionisation.
+
+Du fait de cette interaction, la distribution en fréquence des photons n'est plus exactement celle d'un corps noir.   
+
+\subsection{Paramètre $z_{eq}$}
+Par définition, il correspond au décalage vers le rouge cosmologique où la densité énergétique de rayonnement est égale à celle de la matière. Par conséquent, on obtient une autre estimation du paramètre $\Omega_{ro} = \frac{\Omega_{m}}{1+z_{eq}}$. $z_{eq} = 3402$ voir tableau \ref{tab:PI}. La température baryonique est environ égale à la température de rayonnement car le terme compensateur Compton est très important : $T_b \approx T_r$ de sorte que l'on utilise cette condition intiale dans notre programme.
+
+\subsection{Intégrateur et évolution des températures}\label{IEEDT}
+On néglige pour l'instant l'interaction des photons avec les molécules et atomes. Au vu de ce qui a été dit, la température baryonique évolue comme (à partir de \ref{eq:RTB} et \ref{eq:ITBTR}):
 
 \begin{equation} \label{eq:EERT}
 \boxed{\frac{dT_b}{dt} = -2H(t)T_b+\frac{8\sigma_Ta_rT_r^4(T_r-T_m)}{3m_ec}\frac{x_e}{1+x_e}}
 \end{equation}
 
-et la température radiative comme :
+et la température radiative comme (à partir de \ref{eq:TRRA}) :
 
 \begin{equation} \label{eq:EERR}
 \boxed{\frac{dT_r}{dt} = -H(t)T_r}
 \end{equation}
 
-La figure \ref{fig:T} résume les résultats de notre intégrateur pour différentes fractions d’ionisation supposées constantes en fonction de z.
+Après avoir intégré \ref{eq:EERT} et \ref{eq:EERR}, on obtient la figure \ref{fig:T}. Elle résume les résultats de notre intégrateur pour différentes fractions d’ionisation supposées constantes en fonction de z.
 
 \begin{figure}[]
 \centering
 \includegraphics[width=12.0cm,height=9cm]{Temperatures.png}
-\caption{\uppercase{é}volution des températures baryonique et de radiation pour différentes fraction d'ionisation}
+\caption{\uppercase{é}volution des températures baryonique et de radiation pour différentes fractions d'ionisation}
 \label{fig:T}
 \end{figure}
 
 \section{Réseau $\&$ molécule H2}
 \subsection{Population $\&$ réseau}
-Les atomes et molécules considérés pour un modèle possèdent des états d'énergie interne outre leur énergie cinétique qui sont décrits par un certain jeu de nombres quantiques. Le but est de trouver la densité particulaire de chaque espèce dans chaque configuration quantique donnée. Cette dernière densité est aussi égale à la densité totale de l'espèce, fois sa proportion dans l'état quantique. Les densités sont décrites par des équations différentielles qui forment un réseau.\bigskip
+Les atomes et molécules considérés pour un modèle possèdent des états d'énergie interne outre leur énergie cinétique qui sont décrits par un certain jeu de nombres quantiques. Le but est de trouver la densité particulaire de chaque espèce dans chaque configuration quantique donnée. Cette dernière densité est aussi égale à la densité totale de l'espèce, fois sa proportion ou population dans l'état quantique. Les densités sont décrites par des équations différentielles qui forment un réseau.\bigskip
 \large
 
-Listons les termes sources et dispersifs susceptibles de faire varier les densités $\frac{dn_i}{dt}$ :\\
+Listons les termes sources et puits susceptibles de faire varier les densités particulaires de la molécule/atome dans l'état quantique décrit par le jeu de nombres $i$, $\frac{dn_i}{dt}$ en $[s^{-1}.cm^{-3}]$ :\\
 
 \begin{enumerate}
 	\item Les désexcitations radiatives spontanées : $\sum\limits_{j>i} n_jA_{ji}-n_i\sum\limits_{j<i} A_{ij}$
 	\item Les absorptions et les émissions stimulées : $\sum\limits_{j<i} n_jB_{ji}J_{ij}+\sum\limits_{j>i} n_jB_{ji}J_{ji}-n_i\sum\limits_{j<i}B_{ij}J_{ij}$
 	\item Les excitations et désexcitations collisionnelles avec chaque collisionneur p : \\ $\sum\limits_p\left(n_p\sum\limits_{j<i} n_j C_{ji}-n_pn_i\sum\limits_j C_{ij}+n_p\sum\limits_{j>i}n_j C_{ji}\right)$
-	\item Une dilution dû à l'expansion du volume : $-3Hn_i$\\
+	\item Une dilution due à l'expansion du volume : $-3Hn_i$\\
 	\item Les termes de réactions chimiques formant ou détruisant l'espèce dans un état quantique donné.
 \end{enumerate}
 \medskip
 \normalsize
-La température radiative intervient dans l'expression des moyennes de l'intensité $J_{ij}$, tandis que la température baryonique intervient implicitement dans les taux de collisions $C_{ij}$. Les moyennes de l'intensité et le refroidissement dépendent de l'épaisseur optique de sorte qu'un code qui modélise le transfert de rayonnement est nécessaire. 
+La température radiative intervient dans l'expression des moyennes de l'intensité $J_{ij}$, tandis que la température baryonique intervient implicitement dans les taux de collisions $C_{ij}$. 
 
 \subsubsection{\uppercase{é}quilibre statistique, état stationnaire et ETL}
-Si l'on fixe une température radiative et cinétique et qu'on laisse le système évoluer de lui-même, les conditions initiales des populations disparaîtrons et le système se stabilisera vers les densités de l'équilibre statistique et n'évoluera plus. Par conséquent l'équilibre statistique est aussi un état stationnaire. À l'équilibre thermodynamique local (ETL), la température radiative est égale à la température baryonique. 
+Si l'on fixe une température radiative et cinétique et qu'on laisse le système évoluer de lui-même, les conditions initiales des populations disparaitront et le système se stabilisera vers les densités de l'équilibre statistique et n'évoluera plus. Par conséquent l'équilibre statistique est aussi un état stationnaire. À l'équilibre thermodynamique local (ETL), la température radiative est égale à la température baryonique.
 
-\subsection{Relation entre coeficients collisionnels}
-Lorsque les rapports de population sont dominés par les collisions, on doit retrouver des rapports donnés par la loi de Boltzmann. Comme les coeficients décrivent des propiétés intrinsèques à un couple de collisionneurs, les relations suivantes sont invariablement vraies, $w_u$ désignant la dégénérescence de l'état:
+\subsection{Relation entre coefficients collisionnels}
+Lorsque les rapports de population sont dominés par les collisions, on doit retrouver des rapports donnés par la loi de Boltzmann. Comme les coefficients décrivent des propriétés intrinsèques à un couple de collisionneurs, les relations suivantes sont invariablement vraies, $w_u$ désignant la dégénérescence de l'état:
 \begin{equation} \label{eq:DB}
  \boxed{C_{lu} = C_{ul}\frac{w_u}{w_l}\exp{\frac{-E_{ul}}{k_b T_{kin}}}}
 \end{equation}
@@ -554,11 +521,11 @@ Lorsque les rapports de population sont dominés par les collisions, on doit ret
 
 
 \subsection{Le programme RADEX}
-RADEX\textsuperscript{\cite{RADEX}} est un programme livré avec le code source qui résout l'équilibre statique du réseau, i.e. avec les dérivées temporelles des densités particulaires nulles. Il modélise la partie transfert de rayonnement avec une probabilité d'échappement du photon. Le logiciel est capable de fonctionner sans équilibre thermodynamique local et peut prendre ainsi en compte une température radiative différente de la température baryonique. Il a déja fait ses preuves dans la communauté astrophysique et est utilisé dans ce stage.
+RADEX\textsuperscript{\cite{RADEX}} est un programme livré avec le code source qui résout l'équilibre statistique du réseau (les points 1-3 des termes impactant les populations du tableau précédent), i.e. avec les dérivées temporelles des densités particulaires nulles. Il modélise la partie transfert de rayonnement avec une probabilité d'échappement du photon. Le logiciel est capable de fonctionner sans équilibre thermodynamique local et peut prendre ainsi en compte une température radiative différente de la température baryonique. C'est un code très utilisé dans la communauté astrophysique et est utilisé dans ce stage. La capacité de RADEX à modéliser une probabilité d'échappement du photon n'est pas utilisé. Premièrement parce que nous n'avons pas affaire à un nuage mais à du gaz en expansion qui occupe tout l'univers. Deuxièmement la problématique n'est pas la même. Le logiciel est utilisé pour calculer l'intensité des raies issues d'un nuage éventuellement optiquement épais. Dans notre cas, nous nous intéressons uniquement aux populations que retourne RADEX dans un petit volume local d'épaisseur optique infinitésimale. On morcèle un nuage aux petits volumes locaux par exemple. Comme le gaz est en expansion dans un univers homogène et isotrope, la question du lieu de ce petit volume ne se pose pas.     
 \subsection{La molécule $H_2$}
-La molécule est modélisée à l'ordre zéro comme un rotateur rigide -- deux protons fixés par une tige rigide -- et comme un oscillateur harmonique -- la tige est le ressort. Deux nombres quantiques décrivent les états d'énergie rotovibrationnel du système.  
+La molécule est modélisée en première approximation comme un rotateur rigide -- deux protons fixés par une tige rigide -- et comme un oscillateur harmonique -- la tige est le ressort. Deux nombres quantiques (j et v) décrivent les états rotovibrationnels du système.  
 \subsubsection{Forme ortho et para}
-La molécule de dihydrogène possède deux isomères de spin nucléaire. Une configuration où les moments cinétiques intrinsèques des protons sont parallèles, la forme ortho, et une autre où ils sont anti-parralèlles, la forme para. En réalité cette description est trop simpliste, il faut avoir une approche de mécanique quantique avec le spin nucléaire total. Il y a deux cas possibles : le spin nucléaire total I vaut 1 dégénéré 3 fois avec une projection de la base de spins dans une direction quelquonque valant {-1,0,1} -- la forme ortho -- ou le spin nucléaire total I est nul et dégénéré une seule fois -- la forme para. Les transitions spontanées entre les deux formes sont fortement interdites -- les temps caractéristiques des ces transitions sont plus élevés que l'âge de l'univers. En revanche les dés/excitations collisionnelles réactives permettent de passer entre les deux formes. 
+La molécule de dihydrogène possède deux isomères de spin nucléaire. Une configuration où les moments cinétiques intrinsèques des protons sont parallèles, la forme ortho, et une autre où ils sont anti-parralèlles, la forme para. En réalité cette description est trop simpliste, il faut avoir une approche de mécanique quantique avec le spin nucléaire total. Il y a deux cas possibles : le spin nucléaire total I vaut 1 dégénéré 3 fois avec une projection de la base de spins dans une direction quelquonque valant {-1,0,1} -- la forme ortho -- ou le spin nucléaire total I est nul et dégénéré une seule fois -- la forme para. Les transitions radiatives spontanées entre les deux formes sont fortement interdites -- les temps caractéristiques des ces transitions sont plus élevés que l'âge de l'univers. En revanche les dés/excitations collisionnelles réactives permettent de passer entre les deux formes (par exemple la collision de H2 avec H). 
 \subsubsection{Rapport ortho para}
 Il est possible de calculer le rapport théorique ortho para pour du dihydrogène à l'équilibre thermodynamique à la température $T$ grâce à la loi de Boltzmann :
 \begin{equation} \label{eq:EROP}
@@ -569,20 +536,21 @@ avec $Z$ la fonction de partition définie par :
  \boxed{Z = \sum\limits_i g(E_i) \ \exp\left(\frac{-E_i}{k_bT}\right)}
 \end{equation}
  
-$Z_o$ désignant alors la ponction de partition avec seulement les états d'énergie dans la forme ortho et $Z_p$ défini similairement avec la forme para.
+$Z_o$ désignant alors la fonction de partition avec seulement les états d'énergie dans la forme ortho et $Z_p$ défini similairement avec la forme para.
 
 
 \subsection{Intégrateur et rapport ortho para}
 
-La figure \ref{fig:ROP} montre le rapport ortho-para calculé à différents $z$ grâce aux données déduites du modèle par l'intégrateur et au programme RADEX. RADEX prend en arguments d'entrée les températures calculées par l'intégrateur ainsi que les densités de collisionneurs. Il s'agit ici des protons et des atomes d'hydrogène. RADEX a aussi besoin d'un fichier d'information sur la molécule $H_2$ et les collisionneurs lui indiquant les niveaux d'énergies et les taux de collisions calculés à différentes températures. La densité des atomes d'hydrogène a été prise en considérant que l'ensemble de la matière baryonique est sous forme d'atomes d'hydrogène, ainsi :
+La figure \ref{fig:ROP} montre le rapport ortho-para calculé à différents $z$ par l'intégrateur et au programme RADEX. RADEX prend en arguments d'entrée les températures calculées par l'intégrateur ainsi que les densités de collisionneurs. Il s'agit ici des protons et des atomes d'hydrogène. RADEX a aussi besoin d'un fichier d'information sur la molécule $H_2$ et pour ses multiples collisionneurs lui indiquant les niveaux d'énergie et les taux de collisions calculés sur une plage de températures. La densité des atomes d'hydrogène a été prise en considérant que l'ensemble de la matière baryonique est sous forme d'atomes d'hydrogène, ainsi :
 \begin{equation} \label{eq:NHT0}
- \boxed{n_H(t_0) = \frac{\Omega_{b} \rho_c}{m_H c^2} }  
+ \boxed{n_H(t_0) = \frac{\Omega_{b} \rho_c}{m_H c^2}= \frac{\Omega_{b}}{m_H c^2}\frac{3 c^2 H_0^2 }{8 \pi G} }  
 \end{equation}
 et
 \begin{equation} \label{eq:NH}
-\boxed{n_H(t) = n_H(t_0) \left(\frac{a(t_0)}{a(t)}\right)^3 } 
+\boxed{n_H(t) = n_H(t_0) \left(\frac{a(t_0)}{a(t)}\right)^3 = n_H(t_0) (1+z)^3} 
 \end{equation}
 
+ Dans ce stage nous nous sommes placés à l'équilibre statistique car nous utilisons RADEX pour calculer les populations. Cette approche est justifié lorsque le temps dynamique $\frac{1}{H(t)}$ est supérieur au temps pour atteindre l'équilibre statistique. 
 
 \begin{figure}[]
 \centering
@@ -593,46 +561,48 @@ et
 
 La série de points verts Boltzmann $T_r$ correspond au rapport théorique qu'on obtiendrait avec Boltzmann en prenant la température radiative $T=T_r(z)$.
 La série de tirets oranges Boltzmann $T_b$ correspond au rapport théorique qu'on obtiendrait avec Boltzmann en prenant la température baryonique $T=T_b(z)$.
-Enfin les points rouges correspondent à la courbe obtenue par Flower et Pineau des forêts dans leur modèle. 
-Leur rapport ne descend pas vers zéro. L’explication découle du fait qu’ils ne résolvent pas les équations de l’équilibre statique, i.e. ils ne supposent pas un état stationnaire à chaque z et résolvent l’équilibre statistique dépendant du temps. Aux faibles $z$, quand la densité devient faible, elle peut descendre en dessous de la densité critique de transfert de rayonnement -- les désexcitations collisionnelles devenant plus rares que les désexcitations spontanées. Ainsi les populations de l'équilibre statique que l'on calcule avec RADEX n'ont jamais le temps de s'établir, c'est pourquoi le rappport ortho para semble geler vers une valeur non nulle (de l’ordre de 0.3) avec leur modèle. Les différences aux $z \approx 50 - 100$ sont par contre la conséquence d'un modèle physique différent : pas de $\Lambda CDM$, paramètres non égaux, etc...
+Enfin les points rouges correspondent à la courbe obtenue par Flower et Pineau des Forêts (2000) dans leur modèle. 
+Leur rapport ne descend pas vers zéro. Cela vient du fait qu’ils ne résolvent pas les équations de l’équilibre statistique. Aux faibles $z$, quand la densité et la température baryonique deviennent faibles, le temps de désexcitation devient plus grand que le temps dynamique. Ainsi les populations de l'équilibre statistique que l'on calcule avec RADEX n'ont jamais le temps de s'établir, c'est pourquoi le rappport ortho para semble geler vers une valeur non nulle (de l’ordre de 0.3) avec leur modèle. Les différences aux $z \approx 50 - 100$ sont par contre la conséquence d'un modèle physique différent : pas de $\Lambda CDM$, paramètres non égaux, etc...
 
 \section{Refroidissement/réchauffement moléculaire}
 \subsection{\uppercase{é}volution de l'énergie cinétique et température baryonique}
-Nous ne pouvons définir une température thermodynamique de notre système global prenant en compte l'énergie potentielle des états internes et gravitationnels, l'énergie cinétique et l'énergie radiative. Par contre nous pouvons définir une température cinétique locale, celle de la distribution des vitesses de Maxwell relié à l'énergie cinétique volumique locale. On suppose que toutes les espèces possèdent la même température cinétique, l'hypothèse se justifie à l'aide de l'argument de la thermalisation de la matière, induite par collisions avec les électrons. 
+Nous ne pouvons définir une température thermodynamique de notre système global prenant en compte l'Hamiltonien total, comme l'énergie potentielle des états internes et gravitationnels, l'énergie cinétique et l'énergie radiative. Par contre nous pouvons définir une température cinétique locale, celle de la distribution des vitesses de Maxwell relié à l'énergie cinétique volumique locale. On suppose que toutes les espèces possèdent la même température cinétique, l'hypothèse se justifie à l'aide de l'argument de la thermalisation de la matière, induite par collisions avec les électrons. 
 \bigskip
 \large
 
-Listons les termes sources et dissipatifs susceptibles de faire varier l'énergie cinétique volumique locale $\frac{dE_{CV} }{dt}$ :\\
+Listons les termes sources et dissipatifs susceptibles de faire varier l'énergie cinétique volumique locale à l’état stationnaire $\frac{dE_{CV} }{dt}$ en $[J.s^{-1}.cm^{-3}]$ :\\
 
 \begin{enumerate}
-	\item La diffusion Compton, de manière générale, la diffusion des photons avec la matière baryonique (voir sections précédantes).
+	\item La diffusion Compton, de manière générale, la diffusion des photons avec la matière baryonique (voir sections précédentes).
 	\item Réchauffement par désexcitations collisionnelles avec chaque collisionneur p\textsuperscript{\cite{RADEX} \cite{KWO}} :\\ $\sum\limits_p\sum\limits_{j>i}\sum\limits_i n_p n_j C_{ji}E_{ji}$
 	\item Refroidissement par excitations collisionnelles avec chaque collisionneur p\textsuperscript{\cite{RADEX} \cite{KWO}} :\\ $-\sum\limits_p\sum\limits_{j>i}\sum\limits_i n_p n_j C_{ij}E_{ij}$
-	\item Perte d'énergie cinétique dû à l'expansion de la longueur d'onde (hypothèse de De Broglie): $-2H E_{CV}$
-	\item Pertes volumiques dû à l'expansion du volume : $-3H E_{CV}$
+	\item Perte d'énergie cinétique due à l'expansion de la longueur d'onde (hypothèse de De Broglie): $-2H E_{CV}$
+	\item Pertes volumiques dues à l'expansion du volume : $-3H E_{CV}$
 	\item Les termes de réactions chimiques exo/endothermique provenant des créations/destructions de molécules.
 \end{enumerate}
 \medskip
 \normalsize
 Les désexcitations radiatives interviennent indirectement en modifiant les populations et l'intensité radiative.
 
-Un calcul classique de théorie cinétique des gaz permet de relier l'énergie cinétique volumique $E_{CV}$ à la température cinétique $T_C$ des m espèces:
+Un calcul classique de théorie cinétique des gaz permet de relier l'énergie cinétique volumique $E_{CV}$ à la température cinétique $T_C$ et les densités particulaires des m espèces (par exemple nH et nH2) :
 \begin{equation} \label{eq:ECTC}
- \boxed{E_{CV} = \sum\limits_m  \frac{3 n_i k_b T_C}{2}}
+ \boxed{E_{CV} = \sum\limits_m  \frac{3 n_m k_b T_C}{2}}
 \end{equation}
-Ainsi, grâce aux termes des listes précédantes, le nécessaire est là pour calculer la variation de la température cinétique des $m$ atomes/molécules :
+Ainsi, grâce aux termes des listes précédentes, le nécessaire est là pour calculer la variation de la température cinétique des $m$ atomes/molécules :
 \begin{equation} \label{eq:VTC}
  \boxed{\frac{dT_C }{dt} = \frac{d}{dt}\left(\frac{E_{CV}}{\sum\limits_m  \frac{3 n_i k_b}{2}}\right)}
 \end{equation}
 
-Les formules 2 et 3 avec les $C_{ij}$ de la liste précédante ne font pas appraître explicitement les coefficients d'Einstein. Elles s'interprètent comme suit. Une excitation collisionnelle pompe de l'énergie cinétique et la transforme en énergie liée aux états quantiques. Par conséquent il s'agit d'un refroidissement. À l'inverse, une désexcitation collisionnelle transfert de l'énergie liée aux états quantiques en énergie cinétique, constituant ainsi un chauffage. En fesant le bilan de ces deux termes, on obtient le refroidissement/réchauffement net. Cette formule désigne un refroidissement local qui peut se convertir directement en un accroissement ou une diminution de la température cinétique.
+Les formules 2 et 3 avec les $C_{ij}$ de la liste précédente ne font pas apparaître explicitement les coefficients d'Einstein. Elles s'interprètent comme suit. Une excitation collisionnelle pompe de l'énergie cinétique et la transforme en énergie liée aux états quantiques. Par conséquent il s'agit d'un refroidissement. À l'inverse, une désexcitation collisionnelle transfert de l'énergie liée aux états quantiques en énergie cinétique, constituant ainsi un chauffage. En fesant le bilan de ces deux termes, on obtient le refroidissement/réchauffement net. Cette formule désigne un refroidissement local qui peut se convertir directement en un accroissement ou une diminution de la température cinétique.
 
 \begin{comment}
  Dans le cadre du refroidissement d'un nuage, l'exercice est différent, on cherche l'énergie qui sort du nuage. L'énergie sortante est sous forme radiative et provient de désexcitations spontanées ou induites des états quantiques. Cette énergie n'est pas convertissable directement en accroissement ou diminution de la température cinétique locale, car l'énergie sortante ne provient pas du réservoir d'énergie cinétique mais du réservoir d'énergie liée aux états quantiques. Intuitivement, à l'équilibre statistique, lorsque l'on a laissé les populations se stabiliser au temps$ t=\infinity$ formant un état stationnaire (les populations sont alors indépendantes de la population au temps $t=0$), nous avons une dépendance mathématique entre les populations et les températures radiatives et baryonique, de sorte qu'il y a un lien entre le réservoir d'énergie liée aux états quantiques et le réservoir d'énergie cinétique. 
 \end{comment}
 
 \subsection{Pouvoir de réchauffement/refroidissement}
-Si l'on divise le refroidissement net par la densité de collisionneur et par la densité du collisionné, on obtient une quantité s'assimilant au pouvoir de refroidissement en [$erg.s^{-1}.cm^{3}$]. La figure \ref{fig:CPfinal} montre le refroidissement que l'on calcule grâce à RADEX pour un gaz à la température cinétique T et à température du champ radiatif externe nul. Les résultats obtenus ont été comparés à la figure 1 du papier de Glover et Abel \textsuperscript{\cite{Glover}}. Le graphe labellisé H est obtenu avec un fichier de collision de H2 avec H contenant les 54 états quantiques de la molécule H2. Le graphe labellisé H' est obtenu avec un fichier de collisions H2 avec H et H+ contenant les 9 états vibrationnels nuls de la molécule H2. La densité de H+ a été prise à 1e-4 fois la densité H. Les rapports de densités sont importants pour établir les populations même si ultimement on divise par les densités. 
+Si l'on divise le refroidissement net par la densité de collisionneur et par la densité du collisionné, on obtient une quantité s'assimilant au pouvoir de refroidissement en [$erg.s^{-1}.cm^{3}$]. La figure \ref{fig:CPfinal} montre le refroidissement que l'on calcule grâce à RADEX pour un gaz à la température cinétique T et à température du champ radiatif externe nul. Les résultats obtenus ont été comparés à la figure 1 du papier de Glover et Abel \textsuperscript{\cite{Glover}}. Le graphe labellisé H est obtenu avec un fichier de collision de H2 avec H (Lique et al. MNRAS (2015)) contenant les 54 états rotovibrationnels (v=0-3, j=0-17) de la molécule H2. Le graphe labellisé H' est obtenu avec un fichier de collisions H2 avec H et H+ (Gerllich J Chem Phys 1990) contenant les 9 états rotationnels (j=0-8) de la molécule H2. La densité de H+ a été prise à 1e-4 fois la densité H. Les rapports de densités sont importants pour établir les populations même si ultimement on divise par les densités.\\
+On ne remarque pas de différences entre les courbes calculant le refroidissement de H2 avec H+. C'est parce les deux équipes ont utilisé le même fichier de collision (Gerllich J Chem Phys 1990). Nous devions avoir de nouvelles données pour cette collision (Tomas Gonzales-Lezana et al. en préparation) mais malheureusement elles sont toujours en cours de calcul.
+Concernant les courbes calculant le refroidissement de H2 avec H, on remarque que notre courbe avec les nouvelles données de collisions (Lique et al. MNRAS (2015)) montre un refroidissement de 10\% à 40\% supérieur par rapport à la courbe GAHWF07 de Glover \& Abel qui utilise des données de Wrathmall \&Flower (2007). Ceci est dû au fait que les nouvelles données de collisions (Lique et al. MNRAS (2015)) incluent les conversions ortho/para qui étaient interdites dans les anciens calculs.
 
 \begin{figure}[]
 \centering
@@ -698,17 +668,17 @@ La part des nouveaux états excité
 
 \addcontentsline{toc}{chapter}{Conclusion} 
 \section*{Conclusion}
-Notre équipe s'est formée et a compris dans l'ensemble le modèle $\Lambda CDM$. Bien connaître son sujet était un objectif préalable avant toute modélisation. Un intégrateur avec un modèle $\Lambda CDM$ simplifié a ensuite été développé. Il fourni le facteur d'échelle en fonction du temps ainsi que les températures radiatives et baryoniques. Ces dernières, avec les densités particulaires sont les variables d'importance pour étudier la chimie. Le programme RADEX a ensuite été utilisé pour résoudre les populations à l'état stationnaire de la molécule $H_2$. Un code qui calcule le refroidissement/réchauffement moléculaire collisionnel a dans la suite été développé. Ce dernier a été appliqué au calcul du réchauffement moléculaire par H2 du gaz primordial justifiant l'hypothèse simplificatrice qui consistait à le négliger.
+Notre équipe s'est placée dans le cadre théorique du modèle $\Lambda CDM$ permettant de faire un modèle simple reproduisant les conditions de densités et températures à l'époque de recombinaison. Un intégrateur a été développé et testé. Il fournit le facteur d'échelle $a(t)$ en fonction du temps ainsi que les températures radiatives $Tr(t)$ et baryoniques $Tb(t)$. Ces dernières, avec les densités particulaires, sont les variables d'importance pour étudier la chimie. Le programme RADEX a ensuite été utilisé pour résoudre les populations à l'équilibre statistique de la molécule $H_2$. Un code qui calcule le refroidissement/réchauffement moléculaire collisionnel a dans la suite été développé et testé. Ce dernier a été appliqué au calcul du réchauffement moléculaire par H2 du gaz primordial, justifiant l'hypothèse simplificatrice qui consistait à le négliger.
 
-Un futur stagiaire pourrait :
+Un futur stagiaire pourrait en perspective :
 \begin{itemize}
+	\item [$\bullet$]\uppercase{é}valuer la fonction de refroidissement pour H2-H+, H2-He et H2-H2 avec des nouvelles données collisionnelles
 	\item [$\bullet$] Mettre à jour les résultats préliminaires avec la fraction d'ionisation résultant de la loi de Saha
 	\item [$\bullet$] Mettre à jour les fichiers de collisions avec des plages de températures plus grandes couvrant d'avantage l'espace des décalages vers le rouge.
 	\item [$\bullet$] Préciser les termes de création et de destruction de molécules, i.e. avoir un modèle de chimie réaliste
-	\item [$\bullet$] Faire un code similaire à RADEX dans la modélisation du transfert de rayonnement et de son caractère non LTE mais donnant les populations hors équilibre statique
+	\item [$\bullet$] Faire un code similaire à RADEX dans la modélisation du transfert de rayonnement et de son caractère non LTE mais donnant les populations hors équilibre statistique
 	\item [$\bullet$] Commencer à réfléchir sur le refroidissement moléculaire des premières étoiles et faire un modèle d'effondrement
 \end{itemize}
-\newpage
 \appendix
 
 \chapter{Intégrateur et Programmes}
@@ -716,43 +686,53 @@ L'ensemble des codes (C, python) et ressources (pdf, code latex, images...) sont
 
 L'intégrateur est une implémentation de la méthode Runge-Kutta d'ordre 6 en C. Les résultats sont ensuite mis en forme par des scripts python via la bibliothèque matplotlib.
 
-En bonus les populations des 54 niveaux de H2 calculé par Radex avec les résultats de notre intégrateur, cela afin de mettre en lumière le travail d'automatisation réalisé, permettant d'analyser le fichier de collisions d'une molécule et d'afficher ses populations en des groupements amoindris.
+En bonus, la figure \ref{fig:POPH2} montre les populations des 54 états rotovibrationnels de H2 calculé par Radex avec les résultats de notre intégrateur, cela afin de mettre en lumière le travail d'automatisation réalisé, permettant d'analyser le fichier de collisions d'une molécule et d'afficher ses populations en des groupements amoindris.
+
 \begin{figure}[]
+
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.0.png}
+\includegraphics[width=9cm,height=7cm]{levelsh2-h.0.png}
 %\caption{Impact du réchauffement sur la température}
 %\label{fig:dTCOOL}
-\end{figure}
-\begin{figure}[]
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.1.png}
+\includegraphics[width=9cm,height=7cm]{levelsh2-h.1.png}
 %\caption{Impact du réchauffement sur la température}
 %\label{fig:dTCOOL}
-\end{figure}
-\begin{figure}[]
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.2.png}
+\includegraphics[width=9cm,height=7cm]{levelsh2-h.2.png}
 %\caption{Impact du réchauffement sur la température}
 %\label{fig:dTCOOL}
-\end{figure}
-\begin{figure}[]
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.3.png}
+\includegraphics[width=9cm,height=7cm]{levelsh2-h.3.png}
 %\caption{Impact du réchauffement sur la température}
 %\label{fig:dTCOOL}
-\end{figure}
-\begin{figure}[]
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.4.png}
+\includegraphics[width=9cm,height=7cm]{levelsh2-h.4.png}
 %\caption{Impact du réchauffement sur la température}
 %\label{fig:dTCOOL}
-\end{figure}
-\begin{figure}[]
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=14.0cm,height=9cm]{levelsh2-h.5.png}
+\includegraphics[width=9cm,height=7cm]{levelsh2-h.5.png}
 %\caption{Impact du réchauffement sur la température}
 %\label{fig:dTCOOL}
+\end{subfigure}
+
+\caption{Population des 54 états rovibrationnels de H2 en fonction du décalage vers le rouge cosmologique}
+\label{fig:POPH2}
 \end{figure}
+
+
+
 
 %\section{Formules utiles de Transfert de Rayonnement}
 %\section{Le programme Radex}
@@ -777,13 +757,15 @@ The ortho:para $H_2$ ratio in the primordial gas, D. R. Flower and G. Pineau des
 
 \bibitem{PEEBLESBOOK} 
 Principles of Physical Cosmology by Phillip James Edwin Peebles 1993
+\\Compton-Thompson Scattering page 581, Kompaneets Equation page 603
 
 \bibitem{Galli} 
 The Dawn of Chemistry, Daniele Galli and Francesco Palla
 \\doi:10.1146/annurev-astro-082812-141029
+\\Predicted abundances tableau 2 page 169
 
 \bibitem{Planck2018} 
-Planck 2018 results. VI. Cosmological parameters
+Planck 2018 results. VI. Cosmological parameters tableau 2 page 15 colonne "TT,TE,EE+lowE+lensing"
 \\\url{https://arxiv.org/pdf/1807.06209.pdf}
 
 \bibitem{Weinberg} 
@@ -796,6 +778,7 @@ Conventions de Signes RG
 \bibitem{cours_RG1} 
 Relativité Générale, cours de M2, Éric Gourgoulhon
 \\\url{https://luth.obspm.fr/~luthier/gourgoulhon/fr/master/relatM2.pdf}
+\\Équations de Friedmann page 196, Espace-temps de de Sitter page 200, Espace-temps d’Einstein-de Sitter page 201
 
 \bibitem{cours_RG2} 
 INTRODUCTION A LA RELATIVITE GENERALE, Luc Blanchet
@@ -804,13 +787,16 @@ INTRODUCTION A LA RELATIVITE GENERALE, Luc Blanchet
 \bibitem{RADEX} 
 RADEX
 \\\url{https://arxiv.org/pdf/0704.0155.pdf}
+\\Molecular Cooling page 3 équation 16
 
 \bibitem{KWO} 
-Physics and Chemistry of the Interstellar Medium Sun Kwo
+Physics and Chemistry of the Interstellar Medium, 2007, Sun Kwo
+\\Heating and Cooling of Photoionized Regions page 183 équation 6.42
 
 \bibitem{Glover}
 Uncertainties in H2 and HD chemistry and cooling and their role in early structure formation, Glover and Abel
 \\doi:10.1111/j.1365-2966.2008.13224.x
+\\figure 1 page 1634
 
 
 

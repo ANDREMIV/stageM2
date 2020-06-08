@@ -69,7 +69,7 @@ for i in range(0,L,1):
     X[i]=float(B[0])
     Y[i]=float(B[1])
 
-plt.plot(X,Y,label="GAHGP98")
+#plt.plot(X,Y,label="GAHGP98")
 f.close()
 
 file = "SQUAREH2HCP.txt"

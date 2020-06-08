@@ -68,7 +68,7 @@ for i in range(0,L,1):
     X[i]=float(B[0])
     Y[i]=float(B[1])
 
-plt.plot(X,Y,"r.",label="Pineau De Flower")
+plt.plot(X,Y,"r.",label="Flower et Pineau des Forêt (2000)")
 leg = plt.legend(loc='best', shadow=True, fancybox=True)
 leg.get_frame().set_alpha(0.5)
 plt.grid(b=True, which='major', color='#666666', linestyle='-')

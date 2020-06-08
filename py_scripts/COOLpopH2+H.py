@@ -42,7 +42,7 @@ leg.get_frame().set_alpha(0.5)
 plt.grid(b=True, which='major', color='#666666', linestyle='-')
 plt.minorticks_on()
 plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
-plt.plot(X,Y,"r",label="Pineau De Flower")
+plt.plot(X,Y,"r",label="Flower et Pineau des Forêt (2000)")
 f.close()
 
 FFile= "levelsh2-h"
@@ -89,7 +89,7 @@ for i in range(2,L,1):
 
 
 plt.plot(X,YP,label='>0')
-plt.plot(X,YN,label='<0')
+#plt.plot(X,YN,label='<0')
 
 plt.savefig("coolingZ"+FFile+".png")
 plt.show()
@@ -108,7 +108,7 @@ plt.grid(b=True, which='major', color='#666666', linestyle='-')
 plt.minorticks_on()
 plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
 plt.plot(Z,YP,label='>0')
-plt.plot(Z,YN,label='<0')
+#plt.plot(Z,YN,label='<0')
 leg = plt.legend(loc='best', shadow=True, fancybox=True)
 leg.get_frame().set_alpha(0.5)
 
@@ -127,7 +127,7 @@ plt.ylabel('Temperature derivative [K/s]')
 plt.xlabel('cosmological doppler shift Z')
 
 plt.plot(X,WP,label='>0')
-plt.plot(X,WN,label='<0')
+#plt.plot(X,WN,label='<0')
 
 leg = plt.legend(loc='best', shadow=True, fancybox=True)
 leg.get_frame().set_alpha(0.5)

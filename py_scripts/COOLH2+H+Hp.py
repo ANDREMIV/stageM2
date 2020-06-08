@@ -40,7 +40,7 @@ ax.invert_xaxis()
 plt.yscale("log")
 plt.ylabel('Collisionnal heating-cooling [ $erg.s^{-1}.cm^{-3}$ ]')
 plt.xlabel('cosmological doppler shift Z')
-plt.plot(X,Y,"r",label="Pineau De Flower")
+plt.plot(X,Y,"r",label="Flower and Pineau des Forêt (2000)")
 f.close()
 
 
@@ -90,8 +90,8 @@ for i in range(2,L,1):
 
 
 
-plt.plot(X,YP,label='>0')
-plt.plot(X,YN,label='<0')
+plt.plot(X,YP,label='our model')
+#plt.plot(X,YN,label='<0')
 leg = plt.legend(loc='best', shadow=True, fancybox=True)
 leg.get_frame().set_alpha(0.5)
 plt.grid(b=True, which='major', color='#666666', linestyle='-')
@@ -112,8 +112,8 @@ plt.xlabel('Kinetic Temperature (z) in K')
 plt.grid(b=True, which='major', color='#666666', linestyle='-')
 plt.minorticks_on()
 plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
-plt.plot(Z,YP,label='>0')
-plt.plot(Z,YN,label='<0')
+plt.plot(Z,YP,label='our model')
+#plt.plot(Z,YN,label='<0')
 leg = plt.legend(loc='best', shadow=True, fancybox=True)
 leg.get_frame().set_alpha(0.5)
 
@@ -131,11 +131,11 @@ plt.yscale("log")
 plt.ylabel('Temperature derivative [K/s]')
 plt.xlabel('cosmological doppler shift Z')
 
-plt.plot(X,WP,label='>0')
-plt.plot(X,WN,label='<0')
+plt.plot(X,WP)#,label='>0')
+#plt.plot(X,WN,label='<0')
 
-leg = plt.legend(loc='best', shadow=True, fancybox=True)
-leg.get_frame().set_alpha(0.5)
+#leg = plt.legend(loc='best', shadow=True, fancybox=True)
+#leg.get_frame().set_alpha(0.5)
 plt.grid(b=True, which='major', color='#666666', linestyle='-')
 plt.minorticks_on()
 plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.40)
