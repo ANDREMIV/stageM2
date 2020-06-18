@@ -34,9 +34,9 @@ void DATinit(char* DAT_file_name, struct datfile* d)
     skip_n_lines(FDAT, 2);
     int (*QNs)[2];//Quantum numbers, supports 2 quantum numbers
     float *Wg;
-    float *Ener;
+    double *Ener;
     d->Wg=(float*)calloc(npop,sizeof(float));
-    d->Ener=(float*)calloc(npop,sizeof(float));
+    d->Ener=(double*)calloc(npop,sizeof(double));
     d->QNs=(int(*)[2])calloc(npop,sizeof(int[2]));
     Wg=d->Wg;
     Ener=d->Ener;
@@ -45,7 +45,8 @@ void DATinit(char* DAT_file_name, struct datfile* d)
         int i;
         for(i=0; i<npop; i++)
         {
-            fscanf(FDAT,"%*s%f%f%d%*[_]%d",&Ener[i],&Wg[i],&(QNs[i][0]),&(QNs[i][1]));
+            fscanf(FDAT,"%*s%lf%f%d%*[_]%d",&Ener[i],&Wg[i],&(QNs[i][0]),&(QNs[i][1]));
+            Ener[i]*=100*C*hPl;
         }
     }
 
@@ -54,7 +55,30 @@ void DATinit(char* DAT_file_name, struct datfile* d)
     int nlines=0;
     fscanf(FDAT,"%d",&d->nlines);
     nlines=d->nlines;
-    skip_n_lines(FDAT, nlines+3);
+    skip_n_lines(FDAT, 2);
+    d->A.nbtrans=nlines;
+    d->A.A=(double*)calloc(nlines,sizeof(double));
+    d->A.Babs=(double*)calloc(nlines,sizeof(double));
+    d->A.Bse=(double*)calloc(nlines,sizeof(double));
+    d->A.ij=(int(*)[2])calloc(nlines,sizeof(int[2]));
+    {
+        int i;
+        for(i=0; i<nlines; i++)
+        {
+            double nu; //freq in GHz
+            fscanf(FDAT,"%*s%d%d%le%lf",&(d->A.ij[i][0]),&(d->A.ij[i][1]), &(d->A.A[i]), &nu);///
+            d->A.Bse[i]=d->A.A[i]*C*C/2.0/hPl/nu/nu/nu*1e-27; //freq in GHz
+            int l=d->A.ij[i][1]-1;
+            int u=d->A.ij[i][0]-1;
+            d->A.Babs[i]=d->A.Bse[i]*d->Wg[u]/d->Wg[l];
+            goto_next_line(FDAT);
+
+        }
+    }
+    goto_next_line(FDAT);
+
+
+
     int Col_nb;
     fscanf(FDAT,"%d",&d->Col_nb);
     Col_nb=d->Col_nb;
@@ -75,15 +99,15 @@ void DATinit(char* DAT_file_name, struct datfile* d)
             skip_n_lines(FDAT, 2);
             fscanf(FDAT,"%d",&ctemps);
             (Col_coefs[i].nb_temps)=ctemps;
-            Col_coefs[i].coefs=(float*)calloc(ctrans*ctemps,sizeof(float));
-            Col_coefs[i].temps=(float*)calloc(ctemps,sizeof(float));
+            Col_coefs[i].coefs=(double*)calloc(ctrans*ctemps,sizeof(double));
+            Col_coefs[i].temps=(double*)calloc(ctemps,sizeof(double));
             Col_coefs[i].ij=(int(*)[2])calloc(ctrans,sizeof(int[2]));
             skip_n_lines(FDAT, 2);
             d->C=Col_coefs;
             {
                 int j;
                 for(j=0; j<ctemps; j++)
-                    fscanf(FDAT,"%f",&(Col_coefs[i].temps[j]));
+                    fscanf(FDAT,"%lf",&(Col_coefs[i].temps[j]));
 
             }
 
@@ -98,7 +122,7 @@ void DATinit(char* DAT_file_name, struct datfile* d)
                     {
                         int k;
                         for(k=0; k<ctemps; k++)
-                            fscanf(FDAT,"%e",&(Col_coefs[i].coefs[j*ctemps+k]));
+                            fscanf(FDAT,"%le",&(Col_coefs[i].coefs[j*ctemps+k]));
                         //printf("%e", Col_coefs[i].coefs[j*ctemps+k]);
                     }
                     goto_next_line(FDAT);
@@ -122,7 +146,10 @@ void DATfree(struct datfile* d)
     free(d->Wg);
     free(d->Ener);
     free(d->QNs);
-
+    free(d->A.A);
+    free(d->A.Babs);
+    free(d->A.Bse);
+    free(d->A.ij);
     {
         int i;
         for(i=0; i<d->Col_nb; i++)
@@ -146,7 +173,7 @@ void square_cooling_power(struct datfile* d, int which, int Tmin, int Tmax, int 
     fprintf(OUT,"\n%d|\t",(int)(TB));
 
         DummyRadexOut(d->Col_nb);
-     double LC,GH;double ds[8]={1,1e-4,1,1,1,1,1,1};
+     double LC,GH;double ds[8]={1e-0,1e-4,1,1,1,1,1,1};
         radexinp(0.1,TB,d,ds);
     char com[200]= {0};
     char mm[64]= {0};
@@ -204,6 +231,30 @@ void cube_cooling_power(struct datfile* d, int which,int Tmin, int Tmax, int STE
     fclose(OUT);
 }
 
+double Cul_interpol(struct col_coefs* Col_coefs, int k, int i, double Tb)
+{//i is transition index, k is collisionner index
+    double Cul;
+    int j; int ctemps=(Col_coefs[k].nb_temps);
+    for(j=0; j<ctemps; j++)
+                        if(Tb<=Col_coefs[k].temps[j])
+                            break;
+                    if(j==ctemps)
+                    {
+                        /*printf("\nerror Clu(Tb) outside of interpolation range");
+                        system("pause");
+                        exit(1);*/
+                        Cul=Col_coefs[k].coefs[i*ctemps+j-1];//maxout approximation
+                    }else{
+                    ///linear fit
+                    if(j!=0)
+                    Cul=Col_coefs[k].coefs[i*ctemps+j]+(Tb-Col_coefs[k].temps[j])*(Col_coefs[k].coefs[i*ctemps+j-1]\
+                            -Col_coefs[k].coefs[i*ctemps+j])/(Col_coefs[k].temps[j-1]-Col_coefs[k].temps[j]);
+                    else Cul=Tb/Col_coefs[k].temps[j]*Col_coefs[k].coefs[i*ctemps+j];} //minout approximation
+    return Cul;
+
+}
+
+
 void Cooling_heating_power_per_collisionner(double *cooling, double *heating, int which, struct datfile* d, double* levels, double Tb)
 //levels are the populations of the collisionned in the context of datfile d
 //J.cm^3/s
@@ -213,36 +264,20 @@ void Cooling_heating_power_per_collisionner(double *cooling, double *heating, in
         double GH=0;
         struct col_coefs* Col_coefs=d->C;
         {
-            int i,j,k;
+            int i,k;
             k=which;
             {
 
-                int ctrans, ctemps;
+                int ctrans;
                 ctrans=(Col_coefs[k].nb_col_trans);
-                ctemps=(Col_coefs[k].nb_temps);
                 for(i=0; i<ctrans; i++)
                 {
                     //for(j=1;j<npop;j++)
                     int l=Col_coefs[k].ij[i][1]-1;
                     int u=Col_coefs[k].ij[i][0]-1;
-                    double Eul=100*C*hPl*(d->Ener[u]-d->Ener[l]);
-                    double Cul;
-                    for(j=0; j<ctemps; j++)
-                        if(Tb<=Col_coefs[k].temps[j])
-                            break;
-                    if(j==ctemps)
-                    {
-                        /*printf("\nerror Clu(Tb) outside of interpolation range");
-                        system("pause");
-                        exit(1);*/
-                        Cul=Col_coefs[k].coefs[i*ctemps+j-1];
-                    }
-                    else{
-                    ///linear fit
-                    if(j!=0)
-                    Cul=Col_coefs[k].coefs[i*ctemps+j]+(Tb-Col_coefs[k].temps[j])*(Col_coefs[k].coefs[i*ctemps+j-1]\
-                            -Col_coefs[k].coefs[i*ctemps+j])/(Col_coefs[k].temps[j-1]-Col_coefs[k].temps[j]);
-                    else Cul=Tb/Col_coefs[k].temps[j]*Col_coefs[k].coefs[i*ctemps+j];}
+                    double Eul=(d->Ener[u]-d->Ener[l]);
+                    double Cul=Cul_interpol(Col_coefs,k,i,Tb);
+
                     GH+=levels[u]*Cul*Eul;
                     LC+=levels[l]*reciprocal_coef(Tb,Eul,d->Wg[l],d->Wg[u],Cul)*Eul;
                 }
@@ -263,35 +298,20 @@ void Cooling_heating(double *cooling, double *heating, struct datfile* d, double
         double GH=0;
         struct col_coefs* Col_coefs=d->C;
         {
-            int i,j,k;
+            int i,k;
             for(k=0; k<d->Col_nb; k++)
             {
 
-                int ctrans, ctemps;
+                int ctrans;
                 ctrans=(Col_coefs[k].nb_col_trans);
-                ctemps=(Col_coefs[k].nb_temps);
                 for(i=0; i<ctrans; i++)
                 {
                     //for(j=1;j<npop;j++)
                     int l=Col_coefs[k].ij[i][1]-1;
                     int u=Col_coefs[k].ij[i][0]-1;
-                    double Eul=100*C*hPl*(d->Ener[u]-d->Ener[l]);
-                    double Cul;
-                    for(j=0; j<ctemps; j++)
-                        if(Tb<=Col_coefs[k].temps[j])
-                            break;
-                    if(j==ctemps)
-                    {
-                        /*printf("\nerror Clu(Tb) outside of interpolation range");
-                        system("pause");
-                        exit(1);*/
-                        Cul=Col_coefs[k].coefs[i*ctemps+j-1];
-                    }else{
-                    ///linear fit
-                    if(j!=0)
-                    Cul=Col_coefs[k].coefs[i*ctemps+j]+(Tb-Col_coefs[k].temps[j])*(Col_coefs[k].coefs[i*ctemps+j-1]\
-                            -Col_coefs[k].coefs[i*ctemps+j])/(Col_coefs[k].temps[j-1]-Col_coefs[k].temps[j]);
-                    else Cul=Tb/Col_coefs[k].temps[j]*Col_coefs[k].coefs[i*ctemps+j];}
+                    double Eul=(d->Ener[u]-d->Ener[l]);
+                    double Cul=Cul_interpol(Col_coefs,k,i,Tb);
+
                     GH+=n*densities[k]*levels[u]*Cul*Eul;
                     LC+=n*densities[k]*levels[l]*reciprocal_coef(Tb,Eul,d->Wg[l],d->Wg[u],Cul)*Eul;
                 }
@@ -325,12 +345,13 @@ void radexinp(double Trad, double Tbar,struct datfile* d,double* densities)
     fclose(radexOIN);
 }
 
-int specific_search_int(int (*p)[2],int n,int a, int b)
+int specific_search_int(int (*p)[2],int n,int u, int l)
 {
     int j;
     for(j=0; j<n; j++)
-        if((p[j][0]==a)&&(p[j][1]==b))
+        if((p[j][0]==u)&&(p[j][1]==l))
             break;
+    if(j==n)return -1;
     return j;
 }
 
@@ -440,3 +461,83 @@ void LVL(struct datfile* d)
 
 
 }
+
+double Plank_nu(double nu,double T)
+{
+    return 2*hPl*nu*nu*nu/C/C/(exp(hPl*nu/KB/T)-1);
+}
+
+#define TR 2
+#define TB 1
+
+#define IVRS 3
+#define NBDENS 2
+void deriv_pop_net(double t, double*y, double*dydt,void* params)
+{
+    //y0=a
+    //y1=Tb
+    //y2=Tr
+    //y3=p0
+    //y4=p1
+    //...
+    //yn=pn
+    #ifdef NOSTATEQ
+    double DC=8.0/3*TS*AR/Me/C/H0; //Compton coupling constant
+    dydt[0]=expansion(0,y[0]);
+    dydt[1]=-2*dydt[0]/y[0]*y[1]\
+            +DC*y[2]*y[2]*y[2]*y[2]*(y[2]-y[1])*1e-4;
+    dydt[2]=-y[2]*dydt[0]/y[0];
+    dydt[3]=-3*dydt[0]/y[0]*y[3];
+    dydt[4]=1e-4*dydt[3];
+    #else
+    dydt[0]=0;
+    dydt[1]=0;
+    dydt[2]=0;
+    dydt[3]=0;
+    dydt[4]=0;
+    #endif
+    struct datfile* p = (struct datfile*) params;
+
+    int n=p->npop;
+    int i,j,k;
+    double r2=0;
+    for(i=0;i<n;i++)
+    {
+        double r=0;
+        for(j=0;j<n;j++)
+        {
+            int m= i > j ? -1 : 1;
+            int u= i > j ? i : j;
+            int l= i > j ? j : i;
+
+
+
+            int i2=specific_search_int(p->A.ij,p->A.nbtrans,u+1,l+1);
+        double Eul=(p->Ener[u]-p->Ener[l]);
+            if(i2!=-1)
+            {
+            r+=m* p->A.A[i2]*y[u+IVRS+NBDENS]; //in-out spontaneous emissions
+            r-=m*p->A.Babs[i2]*y[l+IVRS+NBDENS]*Plank_nu(Eul/hPl,y[TR]); //in-out absorptions
+            r+=m*p->A.Bse[i2]*y[u+IVRS+NBDENS]*Plank_nu(Eul/hPl,y[TR]); //in-out stimulated emissions
+            }
+            for(k=0;k<p->Col_nb;k++)
+            {
+            int i5=specific_search_int(p->C[k].ij,p->C[k].nb_col_trans,u+1,l+1);
+            if(i5!=-1)
+            {
+                double Cul=Cul_interpol(p->C,k,i5,y[TB]);
+                r-=m*reciprocal_coef(y[TB],Eul,p->Wg[l],p->Wg[u],Cul)*y[l+IVRS+NBDENS]*y[IVRS+k]; //in-out collisional excitations
+                r+=m*Cul*y[u+IVRS+NBDENS]*y[IVRS+k]; //in-out collisional desexcitations
+            }
+            }
+
+        }
+    r2+=r;
+    dydt[i+IVRS+NBDENS]=r/H0;
+    }
+
+}
+#undef TR
+#undef TB
+#undef IVRS
+#undef NBDENS

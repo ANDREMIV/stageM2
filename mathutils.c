@@ -3,8 +3,8 @@
 #include <math.h>
 #include "simplecosmomodels.h"
 
-void rk62(void (*derivs)(double, double*, double*), int n\
-          ,double dt, double t, double*yo, double *Oy)
+void rk62(void (*derivs)(double, double*, double*, void*), int n\
+          ,double dt, double t, double*yo, double *Oy, void* params)
 {
     double *Y = malloc(sizeof(double)*n);
     double *k1 = malloc(sizeof(double)*n);
@@ -19,22 +19,22 @@ void rk62(void (*derivs)(double, double*, double*), int n\
                                                          b65=253.0/4096.0,c1=37.0/378.0,c3=250.0/621.0,c4=125.0/594.0,c6=512.0/1771.0;
 
     int i;
-    derivs(t,yo,k1);
+    derivs(t,yo,k1,params);
     for(i=0; i<n; i++)
         Y[i]=yo[i]+dt*(b21*k1[i]);
-    derivs(t+a2*dt,Y,k2);
+    derivs(t+a2*dt,Y,k2,params);
     for(i=0; i<n; i++)
         Y[i]=yo[i]+dt*(b31*k1[i]+b32*k2[i]);
-    derivs(t+a3*2,Y,k3);
+    derivs(t+a3*2,Y,k3,params);
     for(i=0; i<n; i++)
         Y[i]=yo[i]+dt*(b41*k1[i]+b42*k2[i]+b43*k3[i]);
-    derivs(t+a4*dt,Y,k4);
+    derivs(t+a4*dt,Y,k4,params);
     for(i=0; i<n; i++)
         Y[i]=yo[i]+dt*(b51*k1[i]+b52*k2[i]+b53*k3[i]+b54*k4[i]);
-    derivs(t+a5*dt,Y,k5);
+    derivs(t+a5*dt,Y,k5,params);
     for(i=0; i<n; i++)
         Y[i]=yo[i]+dt*(b61*k1[i]+b62*k2[i]+b63*k3[i]+b64*k4[i]+b65*k5[i]);
-    derivs(t+a6*dt,Y,k6);
+    derivs(t+a6*dt,Y,k6,params);
 
     for(i=0; i<n; i++) //final step
         Oy[i]=yo[i]+dt*(c1*k1[i]+c3*k3[i]+c4*k4[i]+c6*k6[i]);
@@ -48,8 +48,8 @@ void rk62(void (*derivs)(double, double*, double*), int n\
     free(k6);
 }
 
-void rk42(void (*derivs)(double, double*, double*), int n\
-          ,double dt, double t, double*yo, double *Oy)
+void rk42(void (*derivs)(double, double*, double*, void*), int n\
+          ,double dt, double t, double*yo, double *Oy, void* params)
 {
     double *Y = malloc(sizeof(double)*n);
     double *k1 = malloc(sizeof(double)*n);
@@ -58,16 +58,16 @@ void rk42(void (*derivs)(double, double*, double*), int n\
     double *k4 = malloc(sizeof(double)*n);
 
     int i;
-    derivs(t,yo,k1);
+    derivs(t,yo,k1,params);
     for(i=0; i<n; i++)
         Y[i]=yo[i]+dt*k1[i]/2;
-    derivs(t+dt/2,Y,k2);
+    derivs(t+dt/2,Y,k2,params);
     for(i=0; i<n; i++)
         Y[i]=yo[i]+dt*k2[i]/2;
-    derivs(t+dt/2,Y,k3);
+    derivs(t+dt/2,Y,k3,params);
     for(i=0; i<n; i++)
         Y[i]=yo[i]+dt*k3[i];
-    derivs(t+dt,Y,k4);
+    derivs(t+dt,Y,k4,params);
     for(i=0; i<n; i++) //final step
         Oy[i]=yo[i]+dt*(k1[i]+2*k2[i]+2*k3[i]+k4[i])/6;
 
@@ -121,6 +121,7 @@ for (i = 0; i < 9; i++)
         Zortho+=GH2[i]*exp(-100*C*hPl/KB*EsH2[i]/T);
 return Zpara/Zortho;
 }
+
 
 void XEplot()
 {

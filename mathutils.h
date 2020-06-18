@@ -2,13 +2,13 @@
 #define NBMEMBLOC ((int)100)
 #define D(pointer,index) (*(*(pointer+(index)/MEMORYBLOC)+((index)%MEMORYBLOC)))
 
-void rk42(void (*derivs)(double, double*, double*), int n\
-          ,double dt, double t, double*yo, double *Oy);
+void rk42(void (*derivs)(double, double*, double*, void*), int n\
+          ,double dt, double t, double*yo, double *Oy, void* params);
 
 
 
-void rk62(void (*derivs)(double, double*, double*), int n\
-          ,double dt, double t, double*yo, double *Oy);
+void rk62(void (*derivs)(double, double*, double*, void*), int n\
+          ,double dt, double t, double*yo, double *Oy, void* params);
 
 
 

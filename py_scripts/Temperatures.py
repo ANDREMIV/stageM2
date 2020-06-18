@@ -101,7 +101,7 @@ for i in range(0,L,1):
     Y[i]=float(B[2])
     Z[i]=float(B[3])
 
-plt.plot(X,Z,label="Tbar 1e-0")
+plt.plot(X,Z,label="Tb avec xe = 1e-0")
 
 f.close()
 
@@ -127,7 +127,7 @@ for i in range(0,L,1):
     Y[i]=float(B[2])
     Z[i]=float(B[3])
 
-plt.plot(X,Z,label="Tbar 1e-1")
+plt.plot(X,Z,label="Tb avec xe = 1e-1")
 
 f.close()
 
@@ -153,7 +153,7 @@ for i in range(0,L,1):
     Y[i]=float(B[2])
     Z[i]=float(B[3])
 
-plt.plot(X,Z,label="Tbar 1e-2")
+plt.plot(X,Z,label="Tb avec xe = 1e-2")
 
 f.close()
 
@@ -179,7 +179,7 @@ for i in range(0,L,1):
     Y[i]=float(B[2])
     Z[i]=float(B[3])
 
-plt.plot(X,Z,label="Tbar 1e-3")
+plt.plot(X,Z,label="Tb avec xe = 1e-3")
 
 f.close()
 
@@ -205,7 +205,7 @@ for i in range(0,L,1):
     Y[i]=float(B[2])
     Z[i]=float(B[3])
 
-plt.plot(X,Z,label="Tbar 1e-4")
+plt.plot(X,Z,label="Tb avec xe = 1e-4")
 
 f.close()
 
@@ -231,7 +231,7 @@ for i in range(0,L,1):
     Y[i]=float(B[2])
     Z[i]=float(B[3])
 
-plt.plot(X,Z,label="Tbar 1e-5")
+plt.plot(X,Z,label="Tb avec xe = 1e-5")
 
 f.close()
 
@@ -257,7 +257,7 @@ for i in range(0,L,1):
     Y[i]=float(B[2])
     Z[i]=float(B[3])
 
-#plt.plot(X,Z,label="Tbar Bxe(Tbar)")
+plt.plot(X,Z,label="Tb avec xe = 0")
 
 f.close()
 

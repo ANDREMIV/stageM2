@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "mathutils.h"
-#include "simplecosmomodels.h"
+
 #include "parsing.h"
+#include "simplecosmomodels.h"
 #include <string.h>
 ///t is the cosmic time t multiplied by Hubble constant Ho
 ///a is the scale factor
@@ -13,6 +14,7 @@
 
 struct Vector_Data GD;
 
+int expansion_calc2(double **t, double **a, double **Trad,double **Tb,struct datfile* p);
 
 int main(void)
 {
@@ -34,19 +36,17 @@ int main(void)
     *Tb= (double *)malloc(sizeof(double) * (n));
 
     GD.a=a;GD.t=t;GD.Tb=Tb;GD.Tr=Tr;
-
-
-    int imax = expansion_calc(t,a,Tr,Tb);
-
+    struct datfile h2_h,hd_h_rot,h2_h_p_rot;
+    DATinit("h2-h.dat",&h2_h);
+    DATinit("hd-h-rot.dat",&hd_h_rot);
+    DATinit("h2-h-H+-rot.dat",&h2_h_p_rot);
+    //int imax = expansion_calc(t,a,Tr,Tb);
+    int imax2 = expansion_calc2(t,a,Tr,Tb,(&h2_h));
     XEplot();
 
     /*FILE* RAD=fopen("radoutComp.txt","w"); //forces new empty file for later cat >> commands
     fclose(RAD);*/
 
-    struct datfile h2_h,hd_h_rot,h2_h_p_rot;
-    DATinit("h2-h.dat",&h2_h);
-    DATinit("hd-h-rot.dat",&hd_h_rot);
-    DATinit("h2-h-H+-rot.dat",&h2_h_p_rot);
 
     /*DummyRadexOut(2);
     double densities[8]={0};
@@ -68,10 +68,10 @@ int main(void)
         printf("\n%le\t%le\t%le",LC,GH,(LC-GH)/(6.3e-7*densities[0])*1e7);
         free(levels);*/
 
-    LVL(&h2_h_p_rot);
-    //square_cooling_power(&h2_h,0,3e3,15,"squareH2HCP.txt");
+   // LVL(&h2_h_p_rot);
+   // square_cooling_power(&h2_h,0,3e3,15,"squareH2HCP.txt");
 
-    //square_cooling_power(&h2_h_p_rot,1,100, 1000,10,"squareH2H+CP.txt");
+    square_cooling_power(&h2_h_p_rot,1,100, 1000,30,"squareH2H+CP.txt");
     //square_cooling_power(&h2_h_p_rot,0,100, 1000,10,"squareH2H'CP.txt");
     //square_cooling_power(&h2_h,0,100,1e4,50,"squareH2HCP.txt");
 

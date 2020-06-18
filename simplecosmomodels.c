@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "mathutils.h"
 #include <math.h>
+#include "parsing.h"
+#include <string.h>
 ///IN SI
 const double C=2.99792458e8;
 const double KB=1.380649e-23;
@@ -18,7 +20,7 @@ const double TI=1.579e5; //13.6eV/kb in Kelvin
 const double zeq=3402;//+-26 plank 2018
 const double Oro=9.28e-5;
 
-double reciprocal_coef(double Tkin, double Eul, int gl, int gu, double coef_ul)
+double reciprocal_coef(double Tkin, double Eul, double gl, double gu, double coef_ul)
 {
     return coef_ul*gu/gl*exp(-Eul/KB/Tkin);
 }
@@ -27,6 +29,7 @@ double expansion(double t, double a)
 {
     return  sqrt(Ol*a*a+Omo/a+Oro/a/a);
 }
+
 
 
 void derivs2(double t, double*y, double*dydt)//n=3
@@ -61,10 +64,10 @@ void desitter()
 void deLCDM()
 {
    // Oro=AR*Trado*Trado*Trado*Trado*8*M_PI*G/3/C/C/H0/H0;//=9.877e-7;
-    double expansion3(double t, double a)
+    /*double expansion3(double t, double a)
     {
         return  a;
-    }
+    }*/
     FILE* desit=fopen("expansionLCDM.txt","w");
     double a=1;
     double t0 = 0, t1 = -1, dt=-1e-5,t;
@@ -95,7 +98,7 @@ void einsteindesitter()
 
 
 
-int expansion_calc(double **t, double **a, double **Tr,double **Tb, double (*xe)(double Tbar))
+int expansion_calc(double **t, double **a, double **Tr,double **Tb)
 {
 //    Oro=AR*Trado*Trado*Trado*Trado*8*M_PI*G/3/C/C/H0/H0;//=9.877e-7;
     FILE* results=fopen("expansion.txt","w");
@@ -108,6 +111,7 @@ int expansion_calc(double **t, double **a, double **Tr,double **Tb, double (*xe)
     **t=t0;
     double DT=1e-3;
     fprintf(results,"t'\ta(t')\tTrad(t')\tTb(t')\tz(t')\ti\n------------\n");
+
 
     i=0;
     double yo[3]; //initial condition for RK
@@ -129,7 +133,8 @@ int expansion_calc(double **t, double **a, double **Tr,double **Tb, double (*xe)
 
         int j;
         for(j=0;j<100;j++){
-        rk62(derivs2,3,dt,tc,yo,Oy);
+
+        rk62(derivs2,3,dt,tc,yo,Oy,NULL);
 
         yo[0]=Oy[0];
         yo[1]=Oy[1];
@@ -159,3 +164,150 @@ int expansion_calc(double **t, double **a, double **Tr,double **Tb, double (*xe)
     fclose(results);
     return imax;
 }
+
+#define IVRS 3
+#define NBDENS 2
+int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfile* p)
+{
+//    Oro=AR*Trado*Trado*Trado*Trado*8*M_PI*G/3/C/C/H0/H0;//=9.877e-7;
+    FILE* results=fopen("expansion.txt","w");
+    int i, n = MEMORYBLOC, m=NBMEMBLOC;
+    int N=IVRS+NBDENS+p->npop;
+    double *yo=(double *)malloc(sizeof(double) * (N)); //initial condition for RK
+    double *Oy=(double *)malloc(sizeof(double) * (N)); //output of RK
+    double t0 = 0; //t0 = 0 when we are in zeq
+    double dt=1e-15;
+    **a=1.0/(zeq+1);
+    **Tr=Trado*(zeq+1);
+    **Tb=**Tr;
+    **t=t0;
+    double DT=1e-3;
+    fprintf(results,"t'\ta(t')\tTrad(t')\tTb(t')\tz(t')\ti\n------------\n");
+
+    i=0;
+
+    yo[0]=D(a,i);
+        yo[1]=D(Tb,i);
+        yo[2]=D(Tr,i);
+        yo[3]=0.05/yo[0]/yo[0]/yo[0]*H0*H0*3/8/M_PI/G/MH*1e-6;//densities must be in cm^3
+        yo[4]=1e-4*yo[3];
+        double tc=D(t,i); //current time
+
+    DummyRadexOut(p->Col_nb);
+    char com[64]= {0};
+    char mm[64]= {0};
+    memset(com, 0, sizeof(com));
+    strcpy(mm,p->DAT_file_name);
+    char* unptr=strtok(mm,".");
+    sprintf(com, "Lavels%s.txt",unptr);
+    FILE* LEVELS=fopen(com,"w");
+    radexinp(yo[2],yo[1],p,&(yo[IVRS]));
+        strcpy(mm,p->DAT_file_name);
+        unptr=strtok(mm,".");
+        strcat(mm,".inp");
+        memset(com, 0, sizeof(com));
+        strcat(com, "C:\\Radex\\bin\\radex.exe < ");
+        strcat(com,mm);
+        system(com);
+
+        double* levels;
+        levels=radexout(p);
+        #ifdef NOSTATEQ
+        {
+            int i;
+            for(i=0;i<N-IVRS-NBDENS;i++)
+                yo[i+IVRS+NBDENS]=levels[i];
+            /*for(i=0;i<N-3-2;i++)
+                printf("%lf\t",levels[i]);*/
+        }
+        #else
+        {
+            int i;
+            for(i=0;i<N-IVRS-NBDENS;i++)
+                yo[i+IVRS+NBDENS]=1.0/(N-IVRS-NBDENS);
+
+        }
+        #endif
+        free(levels);
+    char *cond=(char *)malloc(sizeof(char) * (N));
+    for (i = 0; D(a,i)<1 && i<n*m-1; i++)
+    {
+        if(!((i+1)%n))
+        {
+            (*(t+(i+1)/n))=(double *)malloc(sizeof(double) * (n));
+            (*(a+(i+1)/n))=(double *)malloc(sizeof(double) * (n));
+            (*(Tr+(i+1)/n))=(double *)malloc(sizeof(double) * (n));
+            (*(Tb+(i+1)/n))=(double *)malloc(sizeof(double) * (n));
+        }
+
+        int j; int sub=2;
+        for(j=0;j<sub;j++){
+        rk42(deriv_pop_net,N,dt,tc,yo,Oy,(void*)(p));
+        tc=tc+dt;
+        if(j==sub-1)
+        {
+            int i;
+            for(i=0;i<N;i++)
+            {
+                double TVAR=fabs(Oy[i])/fabs(yo[i]);
+                if(TVAR>1+10*DT||TVAR<1-9*DT)
+                cond[i]=0;
+                else if(TVAR<1+DT&&TVAR>1-0.9*DT)
+                cond[i]=2;
+            else
+                cond[i]=1;
+            }
+            for(i=0;i<N;i++)
+            if(!cond[i]){dt/=2;break;}
+            else if(cond[i]!=2)break;
+
+            if(i==N)dt*=1.5;
+        }
+
+        {
+            int i;
+            for(i=0;i<N;i++)
+                yo[i]=Oy[i];
+        }
+
+        }
+
+
+
+        D(a,i+1)=Oy[0];
+        //if(Oy[1]>Oy[2])Oy[1]=Oy[2];//Delete positive surcompensation
+        D(Tb,i+1)=Oy[1];
+        D(Tr,i+1)=Oy[2];
+        D(t,i+1)=tc;//+dt;
+
+        /*//Variable step
+        double TVAR=D(a,i+1)/D(a,i);
+        if(TVAR>1+10*DT)
+            dt/=2;
+        else if(TVAR<1+DT)
+            dt*=2;*/
+
+        fprintf(results,"%.7le\t%.7le\t%.7le\t%.7le\t%.7le\t§§§\t",\
+                D(t,i), D(a,i),D(Tr,i),D(Tb,i),1/D(a,i)-1);
+        {
+        int i;
+        double rfg=0;
+        for (i = 0; i < p->npop; i++)
+            rfg+=yo[i+IVRS+NBDENS];
+        fprintf(results,"%le\t$$$\t",rfg);
+        for (i = 0; i < p->npop; i++)
+            fprintf(results,"%le\t",yo[i+IVRS+NBDENS]);
+        fprintf(results,"\n");}
+    }
+    int imax=i;
+
+    fclose(results);
+    fclose(LEVELS);
+    free(yo);
+    free(Oy);
+    free(cond);
+    return imax;
+}
+#undef IVRS
+#undef NBDENS
+
