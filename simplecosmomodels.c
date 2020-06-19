@@ -170,18 +170,23 @@ int expansion_calc(double **t, double **a, double **Tr,double **Tb)
 int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfile* p)
 {
 //    Oro=AR*Trado*Trado*Trado*Trado*8*M_PI*G/3/C/C/H0/H0;//=9.877e-7;
+    #ifdef NOSTATEQ
     FILE* results=fopen("expansion.txt","w");
+    #else
+    FILE* results=fopen("STATEQlevels.txt","w");
+    #endif
     int i, n = MEMORYBLOC, m=NBMEMBLOC;
     int N=IVRS+NBDENS+p->npop;
     double *yo=(double *)malloc(sizeof(double) * (N)); //initial condition for RK
     double *Oy=(double *)malloc(sizeof(double) * (N)); //output of RK
     double t0 = 0; //t0 = 0 when we are in zeq
-    double dt=1e-15;
+    const double sdt=1e-18;
+    double dt=sdt;
     **a=1.0/(zeq+1);
     **Tr=Trado*(zeq+1);
     **Tb=**Tr;
     **t=t0;
-    double DT=1e-3;
+    double DT=1e-7;
     fprintf(results,"t'\ta(t')\tTrad(t')\tTb(t')\tz(t')\ti\n------------\n");
 
     i=0;
@@ -212,6 +217,9 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
 
         double* levels;
         levels=radexout(p);
+        for (i = 0; i < p->npop; i++)
+        fprintf(results,"v=%d___j=%d\t",p->QNs[i][0],p->QNs[i][1]);
+        fprintf(results,"\n");
         #ifdef NOSTATEQ
         {
             int i;
@@ -220,16 +228,25 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
             /*for(i=0;i<N-3-2;i++)
                 printf("%lf\t",levels[i]);*/
         }
+
         #else
         {
+            /*int i;
+            for(i=0;i<N-IVRS-NBDENS;i++)
+                yo[i+IVRS+NBDENS]=1.0/(N-IVRS-NBDENS);*/
             int i;
             for(i=0;i<N-IVRS-NBDENS;i++)
-                yo[i+IVRS+NBDENS]=1.0/(N-IVRS-NBDENS);
+                yo[i+IVRS+NBDENS]=levels[i];
+
 
         }
+        fprintf(results,"%.7le\t%.7le\t%.7le\t%.7le\t%.7le\n",\
+                D(t,i), D(a,i),D(Tr,i),D(Tb,i),1/D(a,i)-1);
         #endif
         free(levels);
     char *cond=(char *)malloc(sizeof(char) * (N));
+
+
     for (i = 0; D(a,i)<1 && i<n*m-1; i++)
     {
         if(!((i+1)%n))
@@ -242,7 +259,7 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
 
         int j; int sub=2;
         for(j=0;j<sub;j++){
-        rk42(deriv_pop_net,N,dt,tc,yo,Oy,(void*)(p));
+        rk62(deriv_pop_net,N,dt,tc,yo,Oy,(void*)(p));
         tc=tc+dt;
         if(j==sub-1)
         {
@@ -258,7 +275,7 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
                 cond[i]=1;
             }
             for(i=0;i<N;i++)
-            if(!cond[i]){dt/=2;break;}
+            if(!cond[i]){dt/=2;if(dt<sdt)dt*=2;break;}
             else if(cond[i]!=2)break;
 
             if(i==N)dt*=1.5;
@@ -286,15 +303,16 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
             dt/=2;
         else if(TVAR<1+DT)
             dt*=2;*/
-
+        #ifdef NOSTATEQ
         fprintf(results,"%.7le\t%.7le\t%.7le\t%.7le\t%.7le\t§§§\t",\
                 D(t,i), D(a,i),D(Tr,i),D(Tb,i),1/D(a,i)-1);
+        #endif // NOSTATEQ
         {
         int i;
         double rfg=0;
         for (i = 0; i < p->npop; i++)
             rfg+=yo[i+IVRS+NBDENS];
-        fprintf(results,"%le\t$$$\t",rfg);
+        fprintf(results,"%le\t",tc);
         for (i = 0; i < p->npop; i++)
             fprintf(results,"%le\t",yo[i+IVRS+NBDENS]);
         fprintf(results,"\n");}
