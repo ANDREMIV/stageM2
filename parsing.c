@@ -387,7 +387,7 @@ double* radexout(struct datfile* d)
 }
 
 ///print levels in the context of a dat file
-void LVL(struct datfile* d)
+void LVL(struct datfile* d, int zmin, int zmax, int dz)
 {
     DummyRadexOut(d->Col_nb);
     double densities[8]={0};
@@ -409,14 +409,13 @@ void LVL(struct datfile* d)
         fprintf(LEVELS,"%s\t",d->C[i].Col_name);
     fprintf(LEVELS,"\n");
 
-    int zdif=5;
-    for(z=10; z<200; z+=zdif)
+    for(z=zmin; z<zmax; z+=dz)
     {
         double LC =0;
         double GH=0;
         for(i=0; 1/D(GD.a,i)-1>z; i++);
         int ic=i;
-        for(i=0; 1/D(GD.a,i)-1>z+zdif; i++);
+        for(i=0; 1/D(GD.a,i)-1>z+dz; i++);
         double dtd= D(GD.t,ic)-D(GD.t,i);
 
         double H= 0.05*(1+z)*(1+z)*(1+z)*H0*H0*3/8/M_PI/G/MH*1e-6;//*1e-6; in cm^3

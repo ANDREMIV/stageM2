@@ -6,7 +6,7 @@ import os
 #In each pop file, you need to manually add number of levels, collisionners in y description, level file name, nbofplots
 
 os.chdir('../')
-FFile= "STATEQlevels"
+FFile= "expansion2"
 file = FFile+".txt"
 f = open(file, "r")
 
@@ -15,8 +15,8 @@ S=f.read()
 
 A=S.splitlines()
 L=len(A)
-
-S=int((L-4))
+CST=3
+S=int((L-CST))
 X=randn(S)
 nbl=54
 Y=randn(nbl,S)
@@ -24,13 +24,13 @@ Y=randn(nbl,S)
 i=2
 QNs=A[i].split('\t')
     
-
-for i in range(4,L,1):
+CST2=7
+for i in range(CST,L,1):
     B=A[i].split('\t')
-    I=int(i-4)
-    X[I]=float(B[0])   
+    I=int(i-CST)
+    X[I]=float(B[4])   
     for j in range(0,nbl,1):
-        Y[j][I]=float(B[j+1])
+        Y[j][I]=float(B[j+CST2])
         
 
 nbseparation=6
@@ -45,11 +45,12 @@ for k in range(0,nbseparation,1):
             plt.plot(X,Y[j],label=QNs[j])
     ax = plt.subplot(111)
     plt.ylim(1e-4,1)
-    plt.xlim(1e-17,1.1e-10)
-    #plt.xscale("log")
+    plt.xlim(10,3402)
+    ax.invert_xaxis()
+    plt.xscale("log")
     plt.yscale("log")
-    plt.ylabel('populations of H2--> <--h')
-    plt.xlabel('time t')
+    plt.ylabel('populations of H2--> <--h out of statistical equilibrium')
+    plt.xlabel('cosmological doppler shift Z')
     leg = plt.legend(loc='best', shadow=True, fancybox=True)
     leg.get_frame().set_alpha(0.5)
     plt.grid(b=True, which='major', color='#666666', linestyle='-')

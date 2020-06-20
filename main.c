@@ -18,9 +18,9 @@ int expansion_calc2(double **t, double **a, double **Trad,double **Tb,struct dat
 
 int main(void)
 {
-    deLCDM();
-    desitter();
-    einsteindesitter();
+    //deLCDM();
+    //desitter();
+    //einsteindesitter();
 
     double **a,**Tr, **Tb, **t;
     int n = MEMORYBLOC, m=NBMEMBLOC;
@@ -40,9 +40,9 @@ int main(void)
     DATinit("h2-h.dat",&h2_h);
     DATinit("hd-h-rot.dat",&hd_h_rot);
     DATinit("h2-h-H+-rot.dat",&h2_h_p_rot);
-    //int imax = expansion_calc(t,a,Tr,Tb);
-    int imax2 = expansion_calc2(t,a,Tr,Tb,(&h2_h));
-    XEplot();
+    int imax = expansion_calc(t,a,Tr,Tb);
+    //int imax2 = expansion_calc2(t,a,Tr,Tb,(&h2_h));
+    //XEplot();
 
     /*FILE* RAD=fopen("radoutComp.txt","w"); //forces new empty file for later cat >> commands
     fclose(RAD);*/
@@ -68,10 +68,10 @@ int main(void)
         printf("\n%le\t%le\t%le",LC,GH,(LC-GH)/(6.3e-7*densities[0])*1e7);
         free(levels);*/
 
-   // LVL(&h2_h_p_rot);
+   LVL(&h2_h,10,3402,10);
    // square_cooling_power(&h2_h,0,3e3,15,"squareH2HCP.txt");
 
-    square_cooling_power(&h2_h_p_rot,1,100, 1000,30,"squareH2H+CP.txt");
+    //square_cooling_power(&h2_h_p_rot,1,100, 1000,30,"squareH2H+CP.txt");
     //square_cooling_power(&h2_h_p_rot,0,100, 1000,10,"squareH2H'CP.txt");
     //square_cooling_power(&h2_h,0,100,1e4,50,"squareH2HCP.txt");
 

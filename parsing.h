@@ -52,7 +52,7 @@ void DATinit(char* DAT_file_name, struct datfile* d);
 void DummyRadexOut(int nb_col);
 void Cooling_heating(double *cooling, double *heating, struct datfile* d, double* levels, double n, double* densities, double Tb);
 void Cooling_heating_power_per_collisionner(double *cooling, double *heating, int which, struct datfile* d, double* levels, double Tb);
-void LVL(struct datfile* d);
+void LVL(struct datfile* d, int zmin, int zmax, int dz);
 void cube_cooling_power(struct datfile* d, int which, int Tmin, int Tmax, int STEP, char* outname);
 void square_cooling_power(struct datfile* d, int which, int Tmin, int Tmax, int STEP, char* outname);
 void deriv_pop_net(double t, double*y, double*dydt,void* params);
