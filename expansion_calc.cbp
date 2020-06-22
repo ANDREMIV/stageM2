@@ -31,8 +31,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DNOSTATEQ" />
-			<Add option="-DFROMNEQ" />
+			<Add option="-DFROMNEQA" />
 		</Compiler>
+		<Unit filename="lsoda.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

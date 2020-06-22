@@ -165,6 +165,12 @@ int expansion_calc(double **t, double **a, double **Tr,double **Tb)
     return imax;
 }
 
+void n_lsoda_terminate(void);
+typedef void    (*_lsoda_f) (double, double *, double *, void *);
+void lsoda(_lsoda_f f, int neq, double *y, double *t, double tout, int itol, double *rtol, double *atol,
+		   int itask, int *istate, int iopt, int jt,
+		   int iwork1, int iwork2, int iwork5, int iwork6, int iwork7, int iwork8, int iwork9,
+		   double rwork1, double rwork5, double rwork6, double rwork7, void *_data);
 #define IVRS 3
 #define NBDENS 2
 int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfile* p)
@@ -180,8 +186,42 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
     int N=IVRS+NBDENS+p->npop;
     double *yo=(double *)malloc(sizeof(double) * (N)); //initial condition for RK
     double *Oy=(double *)malloc(sizeof(double) * (N)); //output of RK
+
+
+        double *atol=(double *)malloc(sizeof(double) * (N+1));
+    double *rtol=(double *)malloc(sizeof(double) * (N+1));
+    double *yy=(double *)malloc(sizeof(double) * (N+1));
+    rtol[0] = 0.0;
+	atol[0] = 0.0;
+    double          rwork1, rwork5, rwork6, rwork7;
+	double          tt, tout;
+	int             iwork1, iwork2, iwork5, iwork6, iwork7, iwork8, iwork9;
+	int             neq = N;
+	int             itol, itask, istate, iopt, jt;
+
+	iwork1 = iwork2 = iwork5 = iwork6 = iwork7 = iwork8 = iwork9 = 0;
+	rwork1 = rwork5 = rwork6 = rwork7 = 0.0;
+	{
+	    int i;
+        for(i=0;i<IVRS+NBDENS;i++)
+        atol[i+1]=0;
+        for(i=IVRS+NBDENS;i<N;i++)
+        atol[i+1]=1e-4;
+        for(i=0;i<IVRS+NBDENS;i++)
+        rtol[i+1]=1e-5;
+        for(i=IVRS+NBDENS;i<N;i++)
+        rtol[i+1]=1e-2;
+	}
+		itol = 2;
+	itask = 1;
+	istate = 1;
+	iopt = 0;
+	jt = 2;
+
+
+
     double t0 = 0; //t0 = 0 when we are in zeq
-    const double sdt=1e-9;
+    const double sdt=1e-10;
     double dt=sdt;
     **a=1.0/(zeq+1);
     **Tr=Trado*(zeq+1);
@@ -191,8 +231,8 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
     fprintf(results,"t'\ta(t')\tTrad(t')\tTb(t')\tz(t')\ti\n------------\n");
         i=0;
     #ifdef FROMNEQ
-    //double TVEC[]={2.93e-008, 2.9520e-004, 9.2327e+003, 9.2239e+003, 0, 0, 2.4766e-003, 2.1882e-002, 1.1717e-002, 4.6590e-002, 1.8576e-002, 6.2303e-002, 2.2093e-002, 6.7791e-002, 2.2381e-002, 1.2944e-003, 1.1447e-002, 6.1410e-003, 2.4485e-002, 6.4705e-002, 9.7976e-003, 3.3010e-002, 2.0305e-002, 1.1768e-002, 5.6187e-002, 3.6334e-002, 1.2078e-002, 7.0183e-004, 6.2121e-003, 1.6972e-002, 3.3387e-003, 1.3347e-002, 3.5190e-002, 5.3600e-003, 4.5424e-002, 1.8139e-002, 1.1135e-002, 6.5000e-003, 1.3327e-002, 3.1092e-002, 2.0190e-002, 6.7575e-003, 3.9445e-004, 3.4945e-003, 9.4829e-003, 1.8814e-003, 3.4772e-002, 7.5414e-003, 1.9836e-002, 3.0391e-003, 2.5643e-002, 1.0329e-002, 9.9786e-003, 6.3287e-003, 3.7207e-003, 7.6046e-003, 1.7830e-002, 1.1626e-002, 2.5540e-002, 3.9174e-003};
-    double TVEC[]={4.23e-008, 2.9580e-004, 9.2051e+003, 9.1984e+003, 0, 0, 2.4845e-003, 2.1950e-002, 1.1753e-002, 4.6724e-002, 1.8625e-002, 6.2454e-002, 2.2140e-002, 6.7912e-002, 2.2412e-002, 1.2961e-003, 1.1462e-002, 6.1483e-003, 2.4510e-002, 6.4769e-002, 9.8059e-003, 3.3030e-002, 2.0316e-002, 1.1772e-002, 5.6191e-002, 3.6335e-002, 1.2074e-002, 7.0154e-004, 6.2092e-003, 1.6964e-002, 3.3368e-003, 1.3338e-002, 3.5164e-002, 5.3553e-003, 4.5380e-002, 1.8119e-002, 1.1122e-002, 6.4912e-003, 1.3307e-002, 3.1042e-002, 2.0157e-002, 6.7440e-003, 3.9364e-004, 3.4872e-003, 9.4631e-003, 1.8773e-003, 3.4698e-002, 7.5241e-003, 1.9789e-002, 3.0316e-003, 2.5576e-002, 1.0301e-002, 9.9512e-003, 6.3113e-003, 3.7098e-003, 7.5807e-003, 1.7773e-002, 1.1589e-002, 2.5455e-002, 3.9036e-003};
+
+    double TVEC[]={1.38e-003, 1.1329e-002, 1.0006e+002, 2.4057e+002, 0, 0, 1.72e-002, 1.51e-001, 8.07e-002, 3.12e-001, 1.23e-001, 2.58e-001, 1.18e-003, 1.50e-004, 5.98e-003, 3.20e-006, 2.68e-005, 1.34e-005, 4.74e-005, 4.34e-002, 1.78e-005, 5.10e-005, 2.55e-003, 1.95e-005, 2.58e-003, 4.37e-005, 1.92e-005, 1.45e-007, 1.23e-006, 1.16e-004, 6.19e-007, 2.21e-006, 3.62e-005, 8.08e-007, 1.67e-004, 2.30e-006, 1.22e-005, 7.70e-007, 8.00e-006, 1.42e-005, 1.70e-006, 5.66e-007, 1.43e-008, 1.24e-007, 3.40e-006, 6.52e-008, 1.45e-005, 2.50e-007, 1.07e-006, 9.73e-008, 1.84e-006, 3.11e-007, 5.34e-007, 2.89e-007, 1.08e-007, 3.91e-007, 5.81e-007, 3.11e-007, 1.19e-006, 1.01e-007};
     {int i;for(i=0;i<N;i++)
     yo[i]=TVEC[i+1];
     }
@@ -233,26 +273,19 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
         fprintf(results,"\n");
         printf("\n");
         #ifdef NOSTATEQ
-        /*{
-            int i;
-            for(i=0;i<N-IVRS-NBDENS;i++)
-                yo[i+IVRS+NBDENS]=levels[i];
-        }*/
 
         #else
         {
-            /*int i;
-            for(i=0;i<N-IVRS-NBDENS;i++)
-                yo[i+IVRS+NBDENS]=1.0/(N-IVRS-NBDENS);*/
-            int i;
-            for(i=0;i<N-IVRS-NBDENS;i++)
-                yo[i+IVRS+NBDENS]=levels[i];
-
-
         }
         fprintf(results,"%.7le\t%.7le\t%.7le\t%.7le\t%.7le\n",\
                 D(t,i), D(a,i),D(Tr,i),D(Tb,i),1/D(a,i)-1);
         #endif
+        #ifndef FROMNEQ
+            {int i;
+            for(i=0;i<N-IVRS-NBDENS;i++)
+                yo[i+IVRS+NBDENS]=levels[i];
+                }
+            #endif // FROMNEQ
         free(levels);
     char *cond=(char *)malloc(sizeof(char) * (N));
 
@@ -267,56 +300,74 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
             (*(Tb+(i+1)/n))=(double *)malloc(sizeof(double) * (n));
         }
 
-        int j; int sub=1;
+        int j; int sub=10;
         for(j=0;j<sub;j++){
-        rk42(deriv_pop_net,N,dt,tc,yo,Oy,(void*)(p));
+        //rk42(deriv_pop_net,N,dt,tc,yo,Oy,(void*)(p));
+        {
+    {
+	    int i;
+	    for(i=0;i<N;i++)
+        yy[i+1]=yo[i];
+		}
+
+	tt = tc;
+	tout = tc+dt;
+
+		lsoda(deriv_pop_net, neq, yy, &tt, tout, itol, rtol, atol, itask, &istate, iopt, jt,
+		      iwork1, iwork2, iwork5, iwork6, iwork7, iwork8, iwork9,
+		      rwork1, rwork5, rwork6, rwork7, (void*)(p));
+		if (istate <= 0) {
+			printf("error istate = %d\n", istate);
+			exit(0);
+		}
+		{
+	    int i;
+	    for(i=0;i<N;i++)
+        Oy[i]=yy[i+1];
+		}
+
+        }
         tc=tc+dt;
 
-        {///explosion prevention
-            int i;
-            for(i=0;i<N;i++)
-            {
-                if(Oy[i]<0)
-                Oy[i]=yo[i]*(1+1*DT);
-                if(Oy[i]<yo[i]*(0.01))
-                    Oy[i]=yo[i]*(1+0.1*DT);//yo[i]*(1-1000*DT);
-                if(Oy[i]>yo[i]*(10))
-                    Oy[i]=yo[i]*(1-0.1*DT);//yo[i]*(1+1000*DT);
-                double TVAR=Oy[i]/fabs(yo[i]);
-                //if(TVAR>1+10*100*DT)
-                //Oy[i]=yo[i];
 
-                //if(TVAR<1-9*100*DT)
-                //Oy[i]=yo[i]*(1-900*DT);
-                }
-
-        }
-        {///renormalisation
-            int i; double tot=0;
-            for (i = 0; i < p->npop; i++)
-            tot+=Oy[i+IVRS+NBDENS];
-            for (i = 0; i < p->npop; i++)
-                Oy[i+IVRS+NBDENS]/=tot;
-
-        }
-        if(j==sub-1)///time step management
+        if(j==sub-1);///time step management
+        ;;;
         {
             int i;
-            for(i=0;i<N;i++)
+            for(i=0;i<IVRS+NBDENS;i++)
             {
                 double TVAR=fabs(Oy[i])/fabs(yo[i]);
                 if(TVAR>1+10*DT||TVAR<1-9*DT)
-                cond[i]=0;
+                {cond[i]=0;break;}//lessen the time and redo calc
                 else if(TVAR<1+DT&&TVAR>1-0.9*DT)
-                cond[i]=2;
+                cond[i]=2;//augment time
             else
-                cond[i]=1;
+                cond[i]=1;//keep time
             }
-            for(i=0;i<N;i++)
-            if(!cond[i]){dt/=2;if(dt<sdt)dt*=2;break;}
-            else if(cond[i]!=2)break;
 
-            if(i==N)dt*=1.5;
+            for(i=IVRS+NBDENS;i<N;i++)
+            {
+                if(Oy[i]<0||Oy[i]>1){
+                            cond[i]=2;break;}
+                            else cond[i]=2;
+            }
+
+            for(i=0;i<N;i++)
+            if(!cond[i]){//lessen time and redo calc
+                    {int i;for(i=0;i<N;i++)
+                    Oy[i]=yo[i];}
+                    tc-=dt;
+                    j--;
+                    dt/=2;//if(dt<sdt)dt*=2;
+                    break;
+            }
+
+            if(i==N)
+            for(i=0;i<N;i++)
+            if(cond[i]!=2)break;
+
+            if(i==N)
+                dt*=2;
         }
 
         {
@@ -330,17 +381,10 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
 
 
         D(a,i+1)=Oy[0];
-        //if(Oy[1]>Oy[2])Oy[1]=Oy[2];//Delete positive surcompensation
         D(Tb,i+1)=Oy[1];
         D(Tr,i+1)=Oy[2];
         D(t,i+1)=tc;//+dt;
 
-        /*//Variable step
-        double TVAR=D(a,i+1)/D(a,i);
-        if(TVAR>1+10*DT)
-            dt/=2;
-        else if(TVAR<1+DT)
-            dt*=2;*/
         #ifdef NOSTATEQ
         fprintf(results,"%.2le\t%.4le\t%.4le\t%.4le\t%.4le\t§§§\t",\
                 tc, yo[0],yo[2],yo[1],1/yo[0]-1);
@@ -350,18 +394,11 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
         double rfg=0;
         for (i = 0; i < p->npop; i++)
             rfg+=yo[i+IVRS+NBDENS];
-        fprintf(results,"%.2le\t",tc);
+        fprintf(results,"%.2le\t%.4le\t",tc,rfg);
         for (i = 0; i < p->npop; i++)
             fprintf(results,"%.2le\t",yo[i+IVRS+NBDENS]);
         fprintf(results,"\n");}
 
-       /*{
-        int i;
-        double ortho=0;double para=0;
-        for (i = 0; i < p->npop; i++)
-            if(p->QNs[i])ortho+=yo[i+IVRS+NBDENS];
-            }
-       fprintf(ROP,"%le\t%le\t",1/yo[0]-1,yo[i+IVRS+NBDENS]);*/
     }
     int imax=i;
 
@@ -371,6 +408,10 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
     free(yo);
     free(Oy);
     free(cond);
+    free(atol);
+    free(rtol);
+    free(yy);
+        n_lsoda_terminate();
     return imax;
 }
 #undef IVRS
