@@ -24,7 +24,7 @@ Y=randn(nbl,S)
 i=2
 QNs=A[i].split('\t')
     
-CST2=8
+CST2=10
 for i in range(CST,L,1):
     B=A[i].split('\t')
     I=int(i-CST)

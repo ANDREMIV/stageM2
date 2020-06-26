@@ -35,12 +35,12 @@ for i in range(0,L,1):
 
 ax = plt.subplot(111)
 plt.ylim(0,3.2)
-plt.xlim(10,150)
+plt.xlim(10,3000)
 plt.xscale("log")
 ax.invert_xaxis()
 plt.ylabel('Ortho Para ratio')
 plt.xlabel('cosmological doppler shift Z')
-plt.plot(X,Y,label="Radex H + p")
+plt.plot(X,Y,label="Radex h2--> <-- H + p")
 plt.plot(X,W,'g-.',label="Boltzman's Trad")
 plt.plot(X,Z,'r--',label="Boltzman's Tbar")
 f.close()
@@ -67,8 +67,37 @@ for i in range(0,L,1):
     B=A[i].split('\t')
     X[i]=float(B[0])
     Y[i]=float(B[1])
+    
 
-plt.plot(X,Y,"r.",label="Flower et Pineau des Forêt (2000)")
+#plt.plot(X,Y,"r.",label="Flower et Pineau des Forêt (2000)")
+f.close()
+
+file = "expansion2.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)
+CST=3
+S=int((L-CST))
+X=randn(S)
+Y=randn(S)
+CST2=10
+
+for i in range(CST,L,1):
+    B=A[i].split('\t')
+    I=int(i-CST)
+    X[I]=float(B[4]) 
+    Y[I]=float(B[CST2-2])
+
+f.close()
+
+
+
+
+#plt.plot(X,Y,label="lsoda h2--> <-- H + p")
 leg = plt.legend(loc='best', shadow=True, fancybox=True)
 leg.get_frame().set_alpha(0.5)
 plt.grid(b=True, which='major', color='#666666', linestyle='-')

@@ -41,7 +41,7 @@ int main(void)
     DATinit("hd-h-rot.dat",&hd_h_rot);
     DATinit("h2-h-H+-rot.dat",&h2_h_p_rot);
     //int imax = expansion_calc(t,a,Tr,Tb);
-    int imax2 = expansion_calc2(t,a,Tr,Tb,(&h2_h));
+    int imax2 = expansion_calc2(t,a,Tr,Tb,(&h2_h_p_rot));
     //XEplot();
 
     /*FILE* RAD=fopen("radoutComp.txt","w"); //forces new empty file for later cat >> commands

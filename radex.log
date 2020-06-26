@@ -1,10 +1,12 @@
-/cygdrive/c/Radex/data/h2-h.dat
+/cygdrive/c/Radex/data/h2-h-H+-rot.dat
 radex.out
  1.000E+02   4.000E+05
  9.275E+03
- 1
+ 2
  H         
  1.004E+04
+ H+        
+ 1.004E+00
  9.275E+03
  1.000E+15
  1.000E+00

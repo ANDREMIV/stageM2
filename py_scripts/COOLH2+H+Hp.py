@@ -93,8 +93,34 @@ for i in range(2,L,1):
 
 
 
-plt.plot(X,YP,label='our model')
+plt.plot(X,YP,label='RADEX')
 #plt.plot(X,YN,label='<0')
+
+file = "expansion2.txt"
+f = open(file, "r")
+
+S=f.read()
+
+
+A=S.splitlines()
+L=len(A)
+CST=3
+S=int((L-CST))
+XA=randn(S)
+YA=randn(S)
+ZA=randn(S)
+CST2=10
+
+for i in range(CST,L,1):
+    B=A[i].split('\t')
+    I=int(i-CST)
+    XA[I]=float(B[4]) 
+    YA[I]=float(B[CST2-1])*1e7 #convert from J/s/cm^3 to erg/s/cm^3
+    ZA[I]=
+
+plt.plot(XA,YA,label="lsoda")
+f.close()
+
 
 leg = plt.legend(loc='best', shadow=True, fancybox=True)
 leg.get_frame().set_alpha(0.5)

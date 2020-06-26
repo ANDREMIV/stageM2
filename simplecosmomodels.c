@@ -173,6 +173,8 @@ void lsoda(_lsoda_f f, int neq, double *y, double *t, double tout, int itol, dou
 		   double rwork1, double rwork5, double rwork6, double rwork7, void *_data);
 #define IVRS 3
 #define NBDENS 2
+#define TR 2
+#define TB 1
 int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfile* p)
 {
     FILE* ROP=fopen("ROP.txt","w");
@@ -206,11 +208,11 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
         for(i=0;i<IVRS+NBDENS;i++)
         atol[i+1]=0;
         for(i=IVRS+NBDENS;i<N;i++)
-        atol[i+1]=1e-4;
+        atol[i+1]=1e-5;
         for(i=0;i<IVRS+NBDENS;i++)
         rtol[i+1]=1e-5;
         for(i=IVRS+NBDENS;i<N;i++)
-        rtol[i+1]=1e-2;
+        rtol[i+1]=1e-3;
 	}
 		itol = 2;
 	itask = 1;
@@ -391,10 +393,18 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
         #endif // NOSTATEQ
         {
         int i;
-        double rfg=0;
+        double rfg=0,zo=0,zp=0;
         for (i = 0; i < p->npop; i++)
             rfg+=yo[i+IVRS+NBDENS];
-        fprintf(results,"%.2le\t%.4le\t",tc,rfg);
+        for (i = 0; i < p->npop; i++)
+            if(!(p->QNs[i][1]%2))zp+=yo[i+IVRS+NBDENS];
+            else zo+=yo[i+IVRS+NBDENS];
+        double ROP=zo/zp;
+        double LC =0, GH=0;
+        double nH2=6.3e-7*yo[IVRS];
+        Cooling_heating(&LC,&GH,p,&(yo[IVRS+NBDENS]),nH2,&(yo[IVRS]),yo[TB]);
+
+        fprintf(results,"%.2le\t%.4le\t%.3le\t%.4le\t",tc,rfg,ROP,GH-LC);
         for (i = 0; i < p->npop; i++)
             fprintf(results,"%.2le\t",yo[i+IVRS+NBDENS]);
         fprintf(results,"\n");}
@@ -416,4 +426,6 @@ int expansion_calc2(double **t, double **a, double **Tr,double **Tb,struct datfi
 }
 #undef IVRS
 #undef NBDENS
+#undef TR
+#undef TB
 
